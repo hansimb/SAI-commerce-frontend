@@ -39,7 +39,10 @@ npm run build
 
 ## Local development
 
-To run the dev server you need .shopify/project.json secrets, which includes you shopify shop/backend information.
+To run the dev server you need .shopify/project.json secrets, which includes you shopify shop/backend information. You can do this by linking your Shopify account or alternatively you can use mock.shop.
+
+Read more from:
+https://shopify.dev/docs/storefronts/headless/hydrogen/getting-started#step-3-link-your-hydrogen-project-to-shopify
 
 ```bash
 npm run dev
