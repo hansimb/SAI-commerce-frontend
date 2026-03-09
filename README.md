@@ -2,4 +2,10 @@
 
 Spectrum Audio Instrument's official e-commerce frontend.
 
-Project is under initial planning phase. Check [docs/](/docs/project-planning/) to learn more.
+Check project initiall planning docs form [here](/docs/project-planning/) to learn more about the project.
+
+Project design prototype is located in [design-prototype/](/design-prototype/).
+
+Frontend application stack is located in [app/](/app/).
+
+Check README.md in each folder for more info.  
