@@ -1,0 +1,3 @@
+- Make the theming system consistent -> one theming system
+- Make the initial theme
+- Start building
