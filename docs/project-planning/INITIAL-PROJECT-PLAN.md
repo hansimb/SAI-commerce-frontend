@@ -1,6 +1,6 @@
 # Initial project plan
 
-Date created: 4.3.2026
+Date created: 2026-03-04
 
 By: Hans Imberg
 
@@ -41,7 +41,7 @@ After evaluating multiple approaches (fully self-hosted, open-source commerce st
 
 ### Frontend
 
-Update 12.3.2026:
+Update 2026-03-12:
 Initially tried the Shopify Hydrogen stack, but its skeleton is tightly coupled across components, making it non-modular and difficult to change/maintain. React Router nested routes and cross-dependent components made modifications risky, and the styling system relied on vanilla CSS, which would conflict with a modern theme-aware system like Chakra UI. For these reasons, a custom Next.js stack was chosen.
 
 - Next.js
