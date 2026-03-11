@@ -26,7 +26,7 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" end>
+      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
         <strong>{shop.name}</strong>
       </NavLink>
       <HeaderMenu
@@ -57,7 +57,13 @@ export function HeaderMenu({
   return (
     <nav className={className} role="navigation">
       {viewport === 'mobile' && (
-        <NavLink end onClick={close} prefetch="intent" to="/">
+        <NavLink
+          end
+          onClick={close}
+          prefetch="intent"
+          style={activeLinkStyle}
+          to="/"
+        >
           Home
         </NavLink>
       )}
@@ -78,6 +84,7 @@ export function HeaderMenu({
             key={item.id}
             onClick={close}
             prefetch="intent"
+            style={activeLinkStyle}
             to={url}
           >
             {item.title}
@@ -95,7 +102,7 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account">
+      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
@@ -209,6 +216,5 @@ function activeLinkStyle({
 }) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
   };
 }
