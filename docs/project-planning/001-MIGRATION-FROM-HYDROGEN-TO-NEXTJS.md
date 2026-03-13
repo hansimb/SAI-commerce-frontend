@@ -1,7 +1,7 @@
 # ADR 001: Migration from Shopify Hydrogen to Custom Next.js Stack
 
 **Date:** 2026-03-12  
-**Status:** Proposed
+**Status:** Approved
 
 ## Context
 
