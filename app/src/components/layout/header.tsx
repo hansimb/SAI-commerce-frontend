@@ -13,13 +13,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
-
-const Links = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
-];
+import { NavigationLinks } from "@/data/navigation-links";
 
 const NavLink = ({ label, href }: { label: string; href: string }) => (
   <Link
@@ -50,7 +44,7 @@ export default function Header() {
 
           <HStack padding={8} alignItems="center">
             <HStack as="nav" padding={4} display={{ base: "none", md: "flex" }}>
-              {Links.map((link) => (
+              {NavigationLinks.map((link) => (
                 <NavLink key={link.href} {...link} />
               ))}
             </HStack>
@@ -70,7 +64,7 @@ export default function Header() {
         {open ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as="nav" padding={2}>
-              {Links.map((link) => (
+              {NavigationLinks.map((link) => (
                 <NavLink key={link.href} {...link} />
               ))}
             </Stack>
