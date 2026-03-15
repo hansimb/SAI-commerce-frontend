@@ -14,6 +14,7 @@ import {
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { NavigationLinks } from "@/data/navigation-links";
+import { brandData } from "@/data/brand";
 
 const NavLink = ({ label, href }: { label: string; href: string }) => (
   <Link
@@ -38,9 +39,11 @@ export default function Header() {
     <Box>
       <Container>
         <Flex h={16} alignItems="center" justifyContent="space-between">
-          <Text padding={5} fontWeight="bold" fontSize="lg">
-            APP NAME
-          </Text>
+          <Stack>
+            <Text padding={0} fontWeight="bold" fontSize="xl">
+              {brandData.name}
+            </Text>
+          </Stack>
 
           <HStack padding={8} alignItems="center">
             <HStack as="nav" padding={4} display={{ base: "none", md: "flex" }}>

@@ -7,6 +7,7 @@ import {
   Separator,
   Stack,
 } from "@chakra-ui/react";
+import { brandData } from "@/data/brand";
 
 export default function Footer() {
   return (
@@ -26,7 +27,8 @@ export default function Footer() {
 
             <Separator mt={5} />
             <Text pt={8} textAlign="center">
-              © {new Date().getFullYear()} APP-NAME All rights reserved.
+              © {new Date().getFullYear()} {brandData.name} <br />
+              All rights reserved.
             </Text>
           </Stack>
         </Container>
