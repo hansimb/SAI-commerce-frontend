@@ -14,7 +14,7 @@ export const TextContentBlock = ({
   text2,
 }: TextContentBlockProps) => {
   return (
-    <Box as="section" py={12}>
+    <Box as="section" py={12} maxW={1000} mx="auto">
       <Container maxW="container.lg">
         <Stack padding={8} textAlign="center">
           {thoughtTitle && (

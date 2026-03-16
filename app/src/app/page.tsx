@@ -5,14 +5,17 @@ import {
   contentBoxesMockData,
   textContentBlockMockData,
 } from "@/data/mock-data";
-import { Container } from "@chakra-ui/react";
+import { Container, Separator } from "@chakra-ui/react";
 
 export default function Home() {
   return (
     <Container>
       <Hero />
+      <Separator />
       <TextContentBlock {...textContentBlockMockData} />
+      <Separator />
       <ContentBoxes items={contentBoxesMockData} />
+      <Separator />
     </Container>
   );
 }
