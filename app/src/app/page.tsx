@@ -15,7 +15,6 @@ export default function Home() {
       <TextContentBlock {...textContentBlockMockData} />
       <Separator />
       <ContentBoxes items={contentBoxesMockData} />
-      <Separator />
     </Container>
   );
 }
