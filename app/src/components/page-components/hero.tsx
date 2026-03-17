@@ -5,7 +5,6 @@ import {
   Text,
   Button,
   Stack,
-  Image,
 } from "@chakra-ui/react";
 import { brandData } from "@/data/brand";
 
