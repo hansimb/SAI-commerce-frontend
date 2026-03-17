@@ -10,23 +10,30 @@ import {
   Stack,
   Container,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { NavigationLinks } from "@/data/navigation-links";
 import { brandData } from "@/data/brand";
 
-const NavLink = ({ label, href }: { label: string; href: string }) => (
+const NavLink = ({
+  label,
+  href,
+  onClick,
+}: {
+  label: string;
+  href: string;
+  onClick?: () => void;
+}) => (
   <Link
     as={NextLink}
     px={3}
     py={2}
     rounded="md"
-    _hover={{
-      textDecoration: "none",
-      bg: "gray.500",
-    }}
+    _hover={{ textDecoration: "none", bg: "gray.500" }}
     href={href}
+    onClick={onClick}
   >
     {label}
   </Link>
@@ -68,7 +75,7 @@ export default function Header() {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as="nav" padding={2}>
               {NavigationLinks.map((link) => (
-                <NavLink key={link.href} {...link} />
+                <NavLink key={link.href} {...link} onClick={onClose} />
               ))}
             </Stack>
           </Box>
