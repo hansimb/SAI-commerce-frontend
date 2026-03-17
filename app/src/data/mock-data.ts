@@ -70,3 +70,22 @@ export const quoteBlockMockData: QuoteBlockData = {
   author: "Marcus Chen",
   subtitle: "Founder & Master Craftsman",
 };
+
+import type { ProductCardData } from "@/components/page-components/product-card";
+
+export const productCardMockData: ProductCardData = {
+  categoryLabel: "Amplifiers",
+  title: "Signature Tube Amplifier",
+  subtitle: "Pure analog warmth meets modern precision",
+  description:
+    "Handcrafted vacuum tube amplifier delivering 50W of pristine Class-A power. Each unit is individually tested and matched for optimal sonic performance.",
+  imageUrl: "/path/to/amp-image.jpg",
+  price: "$4,500",
+  priceSubtitle: "USD",
+  specs: [
+    { label: "Power Output", value: "50W Class‑A" },
+    { label: "Tubes", value: "4× EL34, 4× 12AX7" },
+    { label: "Frequency Response", value: "10Hz – 45kHz (±0.5dB)" },
+  ],
+  ctaText: "View Details",
+};
