@@ -35,3 +35,38 @@ export const contentBoxesMockData: ContentBoxItem[] = [
       "We design for generations, not quarters. Our lifetime warranty on transformers isn’t marketing—it’s our promise.",
   },
 ];
+
+import type { ProcessStepItem } from "@/components/page-components/process-steps";
+
+export const processStepsMockData: ProcessStepItem[] = [
+  {
+    number: "01",
+    icon: "zap",
+    title: "Design & Planning",
+    description:
+      "Each build begins with a detailed review of specifications and customization options. For custom builds, this includes a personal consultation.",
+  },
+  {
+    number: "02",
+    icon: "tool",
+    title: "Precision Assembly",
+    description:
+      "Point-to-point wiring, hand-matched components, and meticulous soldering. No shortcuts, no compromises.",
+  },
+  {
+    number: "03",
+    icon: "shield",
+    title: "Testing & Burn-In",
+    description:
+      "Every unit undergoes 72 hours of burn-in and comprehensive electrical testing before it leaves our workshop.",
+  },
+];
+
+import type { QuoteBlockData } from "@/components/page-components/quote-block";
+
+export const quoteBlockMockData: QuoteBlockData = {
+  quote:
+    "We don’t make audio equipment. We craft instruments for experiencing music the way it was meant to be heard.",
+  author: "Marcus Chen",
+  subtitle: "Founder & Master Craftsman",
+};
