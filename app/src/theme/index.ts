@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra-ui/react";
 import { themeTokens } from "./tokens";
 
 const customConfig = defineConfig({
@@ -13,6 +13,17 @@ const customConfig = defineConfig({
       background: "bg",
       color: "fg",
       fontFamily: "body",
+      lineHeight: themeTokens.typography.bodyLineHeight,
+    },
+    "h1, h2, h3, h4, h5, h6": {
+      color: "fgHeading",
+      fontFamily: "heading",
+      fontWeight: themeTokens.typography.headingWeight,
+      lineHeight: themeTokens.typography.headingLineHeight,
+      letterSpacing: themeTokens.typography.headingLetterSpacing,
+    },
+    "hr": {
+      borderColor: "separator",
     },
   },
   theme: {
@@ -20,6 +31,13 @@ const customConfig = defineConfig({
       fonts: themeTokens.fonts,
     },
     semanticTokens: themeTokens.semanticTokens,
+    recipes: {
+      separator: defineRecipe({
+        base: {
+          borderColor: "separator",
+        },
+      }),
+    },
   },
 });
 

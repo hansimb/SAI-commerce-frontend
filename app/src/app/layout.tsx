@@ -29,7 +29,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
-          <Box maxW="1200px" mx="auto" w="full">
+          <Box maxW="1200px" mx="auto" w="full" bg="layoutBg">
             <Header />
             <Separator />
             {children}
