@@ -8,54 +8,14 @@ export const themeTokens = {
   },
   semanticTokens: {
     colors: {
-      bg: {
-        value: {
-          _light: brandTheme.colors.background.light,
-          _dark: brandTheme.colors.background.dark,
-        },
-      },
-      layoutBg: {
-        value: {
-          _light: brandTheme.colors.layout.light,
-          _dark: brandTheme.colors.layout.dark,
-        },
-      },
-      fg: {
-        value: {
-          _light: brandTheme.colors.text.light,
-          _dark: brandTheme.colors.text.dark,
-        },
-      },
-      fgMuted: {
-        value: {
-          _light: brandTheme.colors.textMuted.light,
-          _dark: brandTheme.colors.textMuted.dark,
-        },
-      },
-      fgHeading: {
-        value: {
-          _light: brandTheme.colors.heading.light,
-          _dark: brandTheme.colors.heading.dark,
-        },
-      },
-      border: {
-        value: {
-          _light: brandTheme.colors.border.light,
-          _dark: brandTheme.colors.border.dark,
-        },
-      },
-      separator: {
-        value: {
-          _light: brandTheme.colors.separator.light,
-          _dark: brandTheme.colors.separator.dark,
-        },
-      },
-      accent: {
-        value: {
-          _light: brandTheme.colors.accent.light,
-          _dark: brandTheme.colors.accent.dark,
-        },
-      },
+      bg: { value: brandTheme.colors.background },
+      layoutBg: { value: brandTheme.colors.layout },
+      fg: { value: brandTheme.colors.text },
+      fgMuted: { value: brandTheme.colors.textMuted },
+      fgHeading: { value: brandTheme.colors.heading },
+      border: { value: brandTheme.colors.border },
+      separator: { value: brandTheme.colors.separator },
+      accent: { value: brandTheme.colors.accent },
     },
   },
   typography: brandTheme.typography,

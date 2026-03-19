@@ -4,10 +4,7 @@ import { themeTokens } from "./tokens";
 const customConfig = defineConfig({
   globalCss: {
     html: {
-      colorScheme: "light",
-      _dark: {
-        colorScheme: "dark",
-      },
+      colorScheme: "dark",
     },
     body: {
       background: "bg",
