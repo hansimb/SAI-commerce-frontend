@@ -1,4 +1,5 @@
 export const brandTheme = {
+  layoutWidth: "",
   fonts: {
     body: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
     heading: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
@@ -6,13 +7,16 @@ export const brandTheme = {
   },
   colors: {
     background: "#0a0a0a",
-    layout: "#242424",
+    layout: "#121212",
     text: "#adadad",
     textMuted: "#c7c7c7",
     heading: "#f5f5f5",
     border: "#333333",
-    separator: "#b06d00",
-    accent: "#df8d45",
+    accent: {
+      bright: "#ff9d00",
+      default: "#db8700",
+      dim: "#ba7300",
+    },
   },
   typography: {
     bodyLineHeight: "1.5",

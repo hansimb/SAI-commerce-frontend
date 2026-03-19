@@ -14,7 +14,7 @@ import { contactData } from "@/data/contact";
 
 export default function Footer() {
   return (
-    <Box>
+    <Box bg="layoutBg">
       <Flex gap={5} align="center" padding={10}>
         <Container>
           <Stack direction={{ base: "column", md: "row" }} gap="10">

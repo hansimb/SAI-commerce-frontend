@@ -4,6 +4,7 @@ import { Provider } from "@/components/ui/provider";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Box, Separator } from "@chakra-ui/react";
+import { themeTokens } from "@/theme/tokens";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
-          <Box maxW="1200px" mx="auto" w="full" bg="layoutBg">
+          <Box maxW={themeTokens.layoutWidth} mx="auto" w="full">
             <Header />
             <Separator />
             {children}

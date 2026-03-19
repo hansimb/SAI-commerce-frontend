@@ -42,7 +42,7 @@ export default function Header() {
   const { open, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box>
+    <Box bg="layoutBg">
       <Container>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Link href="/">

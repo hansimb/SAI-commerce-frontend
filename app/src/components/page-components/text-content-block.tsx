@@ -18,7 +18,15 @@ export const TextContentBlock = ({
       <Container maxW="container.lg">
         <Stack padding={8} textAlign="center">
           {thoughtTitle && (
-            <Text as="p" fontSize="sm" fontWeight="semibold">
+            <Text
+              as="p"
+              fontSize="sm"
+              fontWeight="semibold"
+              color={"accentBright"}
+              textUnderlineOffset={1}
+              textDecoration={"underline"}
+              textUnderlinePosition={"under"}
+            >
               {thoughtTitle}
             </Text>
           )}

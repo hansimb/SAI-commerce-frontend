@@ -1,4 +1,9 @@
-import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra-ui/react";
+import {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  defineRecipe,
+} from "@chakra-ui/react";
 import { themeTokens } from "./tokens";
 
 const customConfig = defineConfig({
@@ -19,8 +24,11 @@ const customConfig = defineConfig({
       lineHeight: themeTokens.typography.headingLineHeight,
       letterSpacing: themeTokens.typography.headingLetterSpacing,
     },
-    "hr": {
+    hr: {
       borderColor: "separator",
+    },
+    ".chakra-icon": {
+      color: "accent",
     },
   },
   theme: {
@@ -29,6 +37,11 @@ const customConfig = defineConfig({
     },
     semanticTokens: themeTokens.semanticTokens,
     recipes: {
+      icon: defineRecipe({
+        base: {
+          color: "accentDim",
+        },
+      }),
       separator: defineRecipe({
         base: {
           borderColor: "separator",
