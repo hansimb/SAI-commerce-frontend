@@ -8,7 +8,7 @@ export const brandTheme = {
   colors: {
     background: "#0a0a0a",
     layout: "#121212",
-    text: "#adadad",
+    text: "#cccccc",
     textMuted: "#c7c7c7",
     heading: "#f5f5f5",
     border: "#333333",

@@ -45,8 +45,9 @@ export const ProductCard = ({ data }: ProductCardProps) => {
             fontWeight="semibold"
             letterSpacing="wide"
             mb={3}
+            color={"accentBright"}
           >
-            ⚡ {data.categoryLabel}
+            {data.categoryLabel}
           </Text>
 
           <Heading as="h2" size="2xl" mb={2}>
