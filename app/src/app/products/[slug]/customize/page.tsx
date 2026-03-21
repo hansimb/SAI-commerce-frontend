@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Container } from "@chakra-ui/react";
-import { ProductCustomization } from "@/components/page-components/product-customization";
+import { ProductCustomization } from "@/components/page-components/customization/product-customization";
 import { getProductCustomizationPageData } from "@/data/pages/products";
 
 interface ProductCustomizeRouteProps {
