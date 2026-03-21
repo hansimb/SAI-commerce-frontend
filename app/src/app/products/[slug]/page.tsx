@@ -45,8 +45,10 @@ export default async function ProductDetailRoute({
             <ProductHighlightsCard highlights={data.highlights} />
             <ProductPurchasePanel
               slug={data.slug}
+              title={data.title}
               price={data.price}
               priceSubtitle={data.priceSubtitle}
+              imageUrl={data.imageUrl}
               addToCartLabel={data.addToCartLabel}
               customizeLabel={data.customizeLabel}
             />

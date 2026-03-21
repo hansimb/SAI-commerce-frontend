@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { CartIconButton } from "@/components/cart/cart-icon-button";
 import { NavigationLinks } from "@/data/navigation-links";
 import { brandData } from "@/data/brand";
 
@@ -57,17 +58,18 @@ export default function Header() {
                 <NavLink key={link.href} {...link} />
               ))}
             </HStack>
-          </HStack>
 
-          <IconButton
-            margin={3}
-            size="md"
-            aria-label="Open Menu"
-            display={{ md: "none" }}
-            onClick={open ? onClose : onOpen}
-          >
-            <GiHamburgerMenu />
-          </IconButton>
+            <CartIconButton />
+            <IconButton
+              margin={3}
+              size="md"
+              aria-label="Open Menu"
+              display={{ md: "none" }}
+              onClick={open ? onClose : onOpen}
+            >
+              <GiHamburgerMenu />
+            </IconButton>
+          </HStack>
         </Flex>
 
         {open ? (

@@ -19,7 +19,7 @@ export const Hero = ({
   return (
     <Box
       position="relative"
-      height="500px"
+      height="600px"
       backgroundImage={`url(${backgroundImage})`}
       backgroundSize="cover"
       backgroundPosition="center"

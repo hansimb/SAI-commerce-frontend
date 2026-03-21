@@ -6,6 +6,9 @@ import Footer from "@/components/layout/footer";
 import { Box, Separator } from "@chakra-ui/react";
 import { themeTokens } from "@/theme/tokens";
 
+import { CartProvider } from "@/components/cart/cart-provider";
+import { CartSidebar } from "@/components/cart/cart-sidebar";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,11 +34,14 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
           <Box maxW={themeTokens.layoutWidth} mx="auto" w="full">
-            <Header />
-            <Separator />
-            {children}
-            <Separator />
-            <Footer />
+            <CartProvider>
+              <Header />
+              <Separator />
+              {children}
+              <Separator />
+              <Footer />
+              <CartSidebar />
+            </CartProvider>
           </Box>
         </Provider>
       </body>

@@ -1,18 +1,23 @@
 import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import Link from "next/link";
 
 interface ProductPurchasePanelProps {
   slug: string;
+  title: string;
   price: string;
   priceSubtitle: string;
+  imageUrl: string;
   addToCartLabel: string;
   customizeLabel: string;
 }
 
 export function ProductPurchasePanel({
   slug,
+  title,
   price,
   priceSubtitle,
+  imageUrl,
   addToCartLabel,
   customizeLabel,
 }: ProductPurchasePanelProps) {
@@ -36,7 +41,13 @@ export function ProductPurchasePanel({
       </Stack>
 
       <Flex gap={4} wrap="wrap">
-        <Button>{addToCartLabel}</Button>
+        <AddToCartButton
+          slug={slug}
+          title={title}
+          price={price}
+          imageUrl={imageUrl}
+          label={addToCartLabel}
+        />
         <Button asChild variant="outline">
           <Link href={`/products/${slug}/customize`}>{customizeLabel}</Link>
         </Button>
