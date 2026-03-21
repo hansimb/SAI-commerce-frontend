@@ -1,20 +1,34 @@
-import { Box, Container, Heading, Text, Button, Stack } from "@chakra-ui/react";
+"use client";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Link as ChakraLink,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { brandData } from "@/data/brand";
+import Link from "next/link";
 
 interface HeroProps {
   backgroundImage?: string;
   title?: string;
   subtitle?: string;
-  ctaText?: string;
-  onCtaClick?: () => void;
+  primaryCtaText?: string;
+  primaryCtaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
 }
 
 export const Hero = ({
   backgroundImage = "/hero-bg.jpg",
   title = brandData.name,
   subtitle = brandData.slogan,
-  ctaText = "View products",
-  onCtaClick,
+  primaryCtaText = "View products",
+  primaryCtaHref = "/products",
+  secondaryCtaText = "Read articles",
+  secondaryCtaHref = "/articles",
 }: HeroProps) => {
   return (
     <Box
@@ -56,16 +70,19 @@ export const Hero = ({
 
           <Stack direction="row" padding={4} justify="center">
             <Button
+              asChild
               size="lg"
               bg="whiteAlpha.900"
               color="gray.900"
               _hover={{ bg: "white" }}
               fontWeight="bold"
-              onClick={onCtaClick}
             >
-              {ctaText}
+              <ChakraLink as={Link} href={primaryCtaHref}>
+                {primaryCtaText}
+              </ChakraLink>
             </Button>
             <Button
+              asChild
               size="lg"
               variant="outline"
               color="white"
@@ -73,7 +90,9 @@ export const Hero = ({
               _hover={{ bg: "whiteAlpha.200" }}
               fontWeight="bold"
             >
-              Learn More
+              <ChakraLink as={Link} href={secondaryCtaHref}>
+                {secondaryCtaText}
+              </ChakraLink>
             </Button>
           </Stack>
         </Stack>

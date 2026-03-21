@@ -60,7 +60,6 @@ export default function Footer() {
           <Separator mt={10} />
           <Text pt={8} textAlign="center">
             © {new Date().getFullYear()} {brandData.name} <br />
-            All rights reserved.
           </Text>
         </Container>
       </Flex>
