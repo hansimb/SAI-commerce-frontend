@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import type { ProductDetailPageData } from "@/data/mock-data";
+import type { ProductDetailPageData } from "@/types/products";
 
 interface ProductDetailPageProps {
   data: ProductDetailPageData;

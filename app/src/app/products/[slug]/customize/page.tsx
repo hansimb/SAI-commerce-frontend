@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container } from "@chakra-ui/react";
 import { ProductCustomization } from "@/components/page-components/product-customization";
-import { productCustomizationMockDataBySlug } from "@/data/mock-data";
+import { getProductCustomizationPageData } from "@/data/pages/products";
 
 interface ProductCustomizeRouteProps {
   params: Promise<{
@@ -13,7 +13,7 @@ export default async function ProductCustomizeRoute({
   params,
 }: ProductCustomizeRouteProps) {
   const { slug } = await params;
-  const data = productCustomizationMockDataBySlug[slug];
+  const data = getProductCustomizationPageData(slug);
 
   if (!data) {
     notFound();

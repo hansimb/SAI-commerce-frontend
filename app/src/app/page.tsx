@@ -3,27 +3,24 @@ import { Hero } from "@/components/page-components/hero";
 import { ProcessSteps } from "@/components/page-components/process-steps";
 import { QuoteBlock } from "@/components/page-components/quote-block";
 import { TextContentBlock } from "@/components/page-components/text-content-block";
-import {
-  contentBoxesMockData,
-  processStepsMockData,
-  quoteBlockMockData,
-  textContentBlockMockData,
-} from "@/data/mock-data";
+import { getHomePageData } from "@/data/pages/home";
 import { Container, Separator } from "@chakra-ui/react";
 
 export default function Home() {
+  const homePageData = getHomePageData();
+
   return (
     <Container>
       <Hero />
       <Separator />
-      <TextContentBlock {...textContentBlockMockData} />
-      <ContentBoxes items={contentBoxesMockData} />
+      <TextContentBlock {...homePageData.intro} />
+      <ContentBoxes items={homePageData.contentBoxes} />
       <Separator />
 
-      <TextContentBlock {...textContentBlockMockData} />
-      <ProcessSteps steps={processStepsMockData} />
+      <TextContentBlock {...homePageData.intro} />
+      <ProcessSteps steps={homePageData.processSteps} />
       <Separator />
-      <QuoteBlock data={quoteBlockMockData} />
+      <QuoteBlock data={homePageData.quote} />
     </Container>
   );
 }

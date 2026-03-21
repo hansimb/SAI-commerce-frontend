@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container, Separator } from "@chakra-ui/react";
 import { ProductDetailPage } from "@/components/page-components/product-detail-page";
-import { productDetailMockDataBySlug } from "@/data/mock-data";
+import { getProductPageData } from "@/data/pages/products";
 
 interface ProductDetailRouteProps {
   params: Promise<{
@@ -13,7 +13,7 @@ export default async function ProductDetailRoute({
   params,
 }: ProductDetailRouteProps) {
   const { slug } = await params;
-  const data = productDetailMockDataBySlug[slug];
+  const data = getProductPageData(slug);
 
   if (!data) {
     notFound();

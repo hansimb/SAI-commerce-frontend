@@ -9,19 +9,7 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
-
-export interface ProductCardData {
-  slug?: string;
-  categoryLabel: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  imageUrl: string;
-  price: string;
-  priceSubtitle: string;
-  specs: { label: string; value: string }[];
-  ctaText: string;
-}
+import type { ProductCardData } from "@/types/products";
 
 interface ProductCardProps {
   data: ProductCardData;

@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
-import type { ProductCustomizationPageData } from "@/data/mock-data";
+import type { ProductCustomizationPageData } from "@/types/products";
 
 interface ProductCustomizationProps {
   data: ProductCustomizationPageData;

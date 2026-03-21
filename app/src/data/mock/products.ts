@@ -1,133 +1,17 @@
-import type { ContentBoxItem } from "@/components/page-components/content-boxes";
-import type { ProcessStepItem } from "@/components/page-components/process-steps";
-import type { ProductCardData } from "@/components/page-components/product-card";
-import type { QuoteBlockData } from "@/components/page-components/quote-block";
+import type {
+  ProductCardData,
+  ProductCustomizationPageData,
+  ProductDetailPageData,
+  ProductListItem,
+  ProductsPageIntroData,
+} from "@/types/products";
 
-export const textContentBlockMockData = {
-  thoughtTitle: "Our Philosophy",
-  mainTitle: "Timeless Design,\nUncompromising Quality",
+export const productsPageIntroMockData: ProductsPageIntroData = {
+  thoughtTitle: "Products",
+  mainTitle: "Built for engineers, listeners, and long-term ownership",
   text1:
-    "At Resonance, we believe that audio equipment should be more than just functional-it should be an object of desire, a piece of art, and a lifelong companion in your musical journey.",
-  text2:
-    "Every component is meticulously crafted in our Portland workshop, combining time-honored techniques with modern innovation. We use vintage-inspired aesthetics with contemporary technology to create pieces that stand the test of time.",
+    "This first pass keeps the products area intentionally simple. The page is driven by temporary mock content now, but the structure is aimed at a later Shopify-backed product flow.",
 };
-
-export const contentBoxesMockData: ContentBoxItem[] = [
-  {
-    icon: "tool",
-    title: "Master Craftsmanship",
-    description:
-      "Every component is assembled by hand in our Portland workshop. We do not chase volume-we pursue perfection.",
-  },
-  {
-    icon: "award",
-    title: "Uncompromising Quality",
-    description:
-      "From aerospace-grade aluminum to NOS vacuum tubes, we source only the finest materials available.",
-  },
-  {
-    icon: "users",
-    title: "Personal Service",
-    description:
-      "When you buy from Resonance, you are not just a customer-you are part of our community of audio enthusiasts.",
-  },
-  {
-    icon: "heart",
-    title: "Built to Last",
-    description:
-      "We design for generations, not quarters. Our lifetime warranty on transformers is not marketing-it is our promise.",
-  },
-];
-
-export const processStepsMockData: ProcessStepItem[] = [
-  {
-    number: "01",
-    icon: "zap",
-    title: "Design & Planning",
-    description:
-      "Each build begins with a detailed review of specifications and customization options. For custom builds, this includes a personal consultation.",
-  },
-  {
-    number: "02",
-    icon: "tool",
-    title: "Precision Assembly",
-    description:
-      "Point-to-point wiring, hand-matched components, and meticulous soldering. No shortcuts, no compromises.",
-  },
-  {
-    number: "03",
-    icon: "shield",
-    title: "Testing & Burn-In",
-    description:
-      "Every unit undergoes 72 hours of burn-in and comprehensive electrical testing before it leaves our workshop.",
-  },
-];
-
-export const quoteBlockMockData: QuoteBlockData = {
-  quote:
-    "We do not make audio equipment. We craft instruments for experiencing music the way it was meant to be heard.",
-  author: "Marcus Chen",
-  subtitle: "Founder & Master Craftsman",
-};
-
-export interface ProductListItem extends ProductCardData {
-  slug: string;
-}
-
-export interface ProductDetailPageData {
-  slug: string;
-  categoryLabel: string;
-  title: string;
-  subtitle: string;
-  intro: string;
-  description: string[];
-  imageUrl: string;
-  gallery: { src: string; alt: string }[];
-  price: string;
-  priceSubtitle: string;
-  specs: { label: string; value: string }[];
-  highlights: string[];
-  addToCartLabel: string;
-  customizeLabel: string;
-}
-
-export interface ProductCustomizationPageData {
-  slug: string;
-  title: string;
-  intro: string;
-  optionGroups: {
-    title: string;
-    description: string;
-    options: string[];
-  }[];
-  note: string;
-  ctaLabel: string;
-}
-
-export interface ArticleListItem {
-  slug: string;
-  category: string;
-  title: string;
-  excerpt: string;
-  author?: string;
-  publishedAt?: string;
-}
-
-export interface ContactPageData {
-  eyebrow: string;
-  title: string;
-  intro: string;
-  contactMethods: {
-    label: string;
-    value: string;
-    detail?: string;
-  }[];
-  studioTitle: string;
-  studioText: string;
-  inquiryTitle: string;
-  inquiryText: string;
-  ctaLabel: string;
-}
 
 export const productsListMockData: ProductListItem[] = [
   {
@@ -283,65 +167,4 @@ export const productCustomizationMockDataBySlug: Record<
       "The final flow will later connect to product rules, pricing, and Shopify-backed product data.",
     ctaLabel: "Request a build consultation",
   },
-};
-
-export const articlesListMockData: ArticleListItem[] = [
-  {
-    slug: "how-we-voice-our-amplifiers",
-    category: "Workshop Notes",
-    title: "How We Voice Our Amplifiers",
-    excerpt:
-      "A short look at the listening tests, component choices, and tradeoffs that shape our final amplifier sound.",
-    author: "Marcus Chen",
-    publishedAt: "March 2026",
-  },
-  {
-    slug: "why-monitor-control-still-matters",
-    category: "Technical Writing",
-    title: "Why Monitor Control Still Matters",
-    excerpt:
-      "Why precise level control and routing remain foundational even in highly digital studio workflows.",
-    author: "Elena Brooks",
-    publishedAt: "February 2026",
-  },
-  {
-    slug: "serviceability-as-a-design-principle",
-    category: "Design",
-    title: "Serviceability As A Design Principle",
-    excerpt:
-      "We treat repairability and long-term ownership as part of the original product design, not as an afterthought.",
-    author: "Marcus Chen",
-    publishedAt: "January 2026",
-  },
-];
-
-export const contactPageMockData: ContactPageData = {
-  eyebrow: "Contact",
-  title: "Talk to the workshop",
-  intro:
-    "This page is intentionally still an early first pass, but it already shows the structure we could later connect to a proper inquiry flow or Shopify-backed contact experience.",
-  contactMethods: [
-    {
-      label: "Email",
-      value: "studio@spectrum-audio.test",
-      detail: "Best for project discussions and general inquiries",
-    },
-    {
-      label: "Phone",
-      value: "+358 40 123 4567",
-      detail: "Available on weekdays during studio hours",
-    },
-    {
-      label: "Location",
-      value: "Turku, Finland",
-      detail: "Visits and demos by appointment",
-    },
-  ],
-  studioTitle: "Studio and consultation",
-  studioText:
-    "We can later expand this into a fuller section about showroom visits, demo listening, build lead times, and consultation availability.",
-  inquiryTitle: "Inquiry outline",
-  inquiryText:
-    "A future version of this page could include a structured contact form, project type selection, and product interest routing.",
-  ctaLabel: "Start a conversation",
 };

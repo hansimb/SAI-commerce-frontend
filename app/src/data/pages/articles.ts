@@ -1,0 +1,12 @@
+import {
+  articlesListMockData,
+  articlesPageIntroMockData,
+} from "@/data/mock/articles";
+import type { ArticlesPageData } from "@/types/articles";
+
+export function getArticlesPageData(): ArticlesPageData {
+  return {
+    intro: articlesPageIntroMockData,
+    items: articlesListMockData,
+  };
+}

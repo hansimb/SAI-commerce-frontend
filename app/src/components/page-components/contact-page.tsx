@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
-import type { ContactPageData } from "@/data/mock-data";
+import type { ContactPageData } from "@/types/contact";
 
 interface ContactPageProps {
   data: ContactPageData;

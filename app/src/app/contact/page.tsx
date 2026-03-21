@@ -1,11 +1,13 @@
 import { Container } from "@chakra-ui/react";
 import { ContactPage } from "@/components/page-components/contact-page";
-import { contactPageMockData } from "@/data/mock-data";
+import { getContactPageData } from "@/data/pages/contact";
 
 export default function ContactRoutePage() {
+  const contactPageData = getContactPageData();
+
   return (
     <Container>
-      <ContactPage data={contactPageMockData} />
+      <ContactPage data={contactPageData} />
     </Container>
   );
 }

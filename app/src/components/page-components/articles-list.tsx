@@ -1,5 +1,5 @@
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
-import type { ArticleListItem } from "@/data/mock-data";
+import type { ArticleListItem } from "@/types/articles";
 
 interface ArticlesListProps {
   items: ArticleListItem[];
