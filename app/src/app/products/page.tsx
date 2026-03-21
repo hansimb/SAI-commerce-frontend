@@ -1,7 +1,8 @@
+"use client";
 import { ProductCard } from "@/components/page-components/product-card";
 import { TextContentBlock } from "@/components/page-components/text-content-block";
 import {
-  productCardMockData,
+  productsListMockData,
   textContentBlockMockData,
 } from "@/data/mock-data";
 import { Container, Separator } from "@chakra-ui/react";
@@ -11,8 +12,9 @@ export default function Home() {
     <Container>
       <TextContentBlock {...textContentBlockMockData} />
       <Separator />
-      <ProductCard data={productCardMockData} />
-      <ProductCard data={productCardMockData} />
+      {productsListMockData.map((product) => (
+        <ProductCard key={product.slug} data={product} />
+      ))}
     </Container>
   );
 }

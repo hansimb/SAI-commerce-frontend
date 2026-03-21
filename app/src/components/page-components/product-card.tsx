@@ -6,9 +6,12 @@ import {
   Text,
   Button,
   Stack,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export interface ProductCardData {
+  slug?: string;
   categoryLabel: string;
   title: string;
   subtitle: string;
@@ -89,7 +92,15 @@ export const ProductCard = ({ data }: ProductCardProps) => {
                 {data.priceSubtitle}
               </Text>
             </Stack>
-            <Button size="lg">{data.ctaText}</Button>
+            {data.slug ? (
+              <Button asChild size="lg">
+                <ChakraLink as={Link} href={`/products/${data.slug}`}>
+                  {data.ctaText}
+                </ChakraLink>
+              </Button>
+            ) : (
+              <Button size="lg">{data.ctaText}</Button>
+            )}
           </Flex>
         </Box>
       </Flex>

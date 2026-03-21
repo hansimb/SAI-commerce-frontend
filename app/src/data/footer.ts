@@ -8,10 +8,10 @@ export const footerLinks = [
   {
     title: "Products",
     links: [
-      { label: "Produdct 1", href: "/Produdct-1" },
-      { label: "Produdct 2", href: "/Produdct-2" },
-      { label: "Produdct 3", href: "/Produdct-3" },
-      { label: "Produdct 4", href: "/Produdct-4" },
+      { label: "Product 1", href: "/Product-1" },
+      { label: "Product 2", href: "/Product-2" },
+      { label: "Product 3", href: "/Product-3" },
+      { label: "Product 4", href: "/Product-4" },
     ],
   },
 ];
