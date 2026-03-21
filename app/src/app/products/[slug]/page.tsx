@@ -5,7 +5,7 @@ import { ProductDetailSummary } from "@/components/page-components/product/produ
 import { ProductHighlightsCard } from "@/components/page-components/product/product-highlights-card";
 import { ProductPurchasePanel } from "@/components/page-components/product/product-purchase-panel";
 import { ProductSpecsCard } from "@/components/page-components/product/product-specs-card";
-import { getProductPageData } from "@/data/pages/products";
+import { getProductPageData } from "@/data/loaders/products";
 
 interface ProductDetailRouteProps {
   params: Promise<{

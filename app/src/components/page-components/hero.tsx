@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-  Button,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Text, Button, Stack } from "@chakra-ui/react";
 import { brandData } from "@/data/brand";
 
 interface HeroProps {
@@ -20,7 +13,7 @@ export const Hero = ({
   backgroundImage = "/hero-bg.jpg",
   title = brandData.name,
   subtitle = brandData.slogan,
-  ctaText = "Shop Now",
+  ctaText = "View products",
   onCtaClick,
 }: HeroProps) => {
   return (

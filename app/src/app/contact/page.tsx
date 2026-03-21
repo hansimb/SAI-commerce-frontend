@@ -2,7 +2,7 @@ import { Container, Stack } from "@chakra-ui/react";
 import { ContactInquiryCard } from "@/components/page-components/contact/contact-inquiry-card";
 import { ContactIntroCard } from "@/components/page-components/contact/contact-intro-card";
 import { ContactMethodsCard } from "@/components/page-components/contact/contact-methods-card";
-import { getContactPageData } from "@/data/pages/contact";
+import { getContactPageData } from "@/data/loaders/contact";
 
 export default function ContactRoutePage() {
   const contactPageData = getContactPageData();

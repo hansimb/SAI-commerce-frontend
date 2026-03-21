@@ -8,11 +8,13 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { brandData } from "@/data/brand";
-import { footerLinks } from "@/data/footer";
+import { footerLabels } from "@/data/footer";
+import { getFooterData } from "@/data/loaders/footer";
 import Link from "next/link";
-import { contactMethodsData } from "@/data/contact";
 
 export default function Footer() {
+  const footerData = getFooterData();
+
   return (
     <Box bg="layoutBg">
       <Flex gap={5} align="center" padding={10}>
@@ -23,7 +25,7 @@ export default function Footer() {
             <Spacer />
 
             {/* Link boxes: */}
-            {footerLinks.map((linkBox) => (
+            {footerData.linkGroups.map((linkBox) => (
               <Stack key={linkBox.title} flex={"1"}>
                 <Text fontWeight="bold">{linkBox.title}</Text>
 
@@ -37,9 +39,9 @@ export default function Footer() {
 
             {/* Contact box: */}
             <Stack flex={"1"}>
-              <Text fontWeight="bold">Contact</Text>
+              <Text fontWeight="bold">{footerLabels.contact}</Text>
 
-              {contactMethodsData.map((item) => (
+              {footerData.contactItems.map((item) => (
                 <Text key={item.label}>{item.value}</Text>
               ))}
             </Stack>
