@@ -17,7 +17,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ data }: ProductCardProps) => {
   return (
-    <Box as="section" p={10}>
+    <Box as="section" py={10}>
       <Flex direction={{ base: "column", md: "row" }} gap={8}>
         <Box flex="1" p={6} borderWidth="1px" rounded="lg">
           <Image

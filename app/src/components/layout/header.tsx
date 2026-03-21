@@ -44,16 +44,16 @@ export default function Header() {
 
   return (
     <Box bg="layoutBg">
-      <Container>
+      <Container py={3}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Link href="/">
-            <Text padding={0} fontWeight="bold" fontSize="xl">
+            <Text fontWeight="bold" fontSize="xl">
               {brandData.name}
             </Text>
           </Link>
 
-          <HStack padding={8} alignItems="center">
-            <HStack as="nav" padding={4} display={{ base: "none", md: "flex" }}>
+          <HStack padding={0} alignItems="center">
+            <HStack as="nav" padding={2} display={{ base: "none", md: "flex" }}>
               {NavigationLinks.map((link) => (
                 <NavLink key={link.href} {...link} />
               ))}

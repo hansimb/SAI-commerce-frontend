@@ -31,7 +31,7 @@ export const ContentBoxes = ({ items }: ContentBoxesProps) => {
 
           return (
             <Box key={item.title} borderWidth="1px" rounded="md" p={8}>
-              <Stack padding={8}>
+              <Stack padding={4}>
                 <Icon as={IconComponent} boxSize={8} />
                 <Heading as="h3" size="lg">
                   {item.title}

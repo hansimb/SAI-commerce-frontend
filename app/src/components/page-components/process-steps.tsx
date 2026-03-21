@@ -21,14 +21,14 @@ interface ProcessStepsProps {
 
 export const ProcessSteps = ({ steps }: ProcessStepsProps) => {
   return (
-    <Box as="section" py={12}>
-      <SimpleGrid columns={{ base: 1, md: 3 }} padding={8} gap={10}>
+    <Box as="section" pb={12}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={10}>
         {steps.map((step) => {
           const IconComponent = iconMap[step.icon];
 
           return (
             <Box key={step.number} borderWidth="1px" rounded="md" p={6}>
-              <Stack padding={8}>
+              <Stack padding={2}>
                 <Text fontSize="3xl" fontWeight="bold">
                   {step.number}
                 </Text>

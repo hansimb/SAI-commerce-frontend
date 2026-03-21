@@ -14,9 +14,9 @@ export const TextContentBlock = ({
   text2,
 }: TextContentBlockProps) => {
   return (
-    <Box as="section" pt={12} maxW={1000} mx="auto">
+    <Box as="section" pt={12} maxW={800} mx="auto">
       <Container maxW="container.lg">
-        <Stack padding={8} textAlign="center">
+        <Stack paddingY={3} textAlign="center">
           {thoughtTitle && (
             <Text
               as="p"
@@ -32,20 +32,20 @@ export const TextContentBlock = ({
           )}
 
           {mainTitle && (
-            <Heading as="h2" size="2xl" fontWeight="bold">
+            <Heading pt={1} as="h2" size="2xl" fontWeight="bold">
               {mainTitle}
             </Heading>
           )}
 
-          <Stack padding={6}>
+          <Stack pb={4}>
             {text1 && (
-              <Text as="p" fontSize="md" lineHeight="tall">
+              <Text pt={2} as="p" fontSize="md" lineHeight="tall">
                 {text1}
               </Text>
             )}
 
             {text2 && (
-              <Text as="p" fontSize="md" lineHeight="tall">
+              <Text pt={2} as="p" fontSize="md" lineHeight="tall">
                 {text2}
               </Text>
             )}
