@@ -10,7 +10,7 @@ import {
 import { brandData } from "@/data/brand";
 import { footerLinks } from "@/data/footer";
 import Link from "next/link";
-import { contactData } from "@/data/contact";
+import { contactMethodsData } from "@/data/contact";
 
 export default function Footer() {
   return (
@@ -36,15 +36,13 @@ export default function Footer() {
             ))}
 
             {/* Contact box: */}
-            {contactData.map((contactInfo) => (
-              <Stack key={contactInfo.title} flex={"1"}>
-                <Text fontWeight="bold">{contactInfo.title}</Text>
+            <Stack flex={"1"}>
+              <Text fontWeight="bold">Contact</Text>
 
-                {contactInfo.text.map((text) => (
-                  <Text key={text.label}>{text.label}</Text>
-                ))}
-              </Stack>
-            ))}
+              {contactMethodsData.map((item) => (
+                <Text key={item.label}>{item.value}</Text>
+              ))}
+            </Stack>
           </Stack>
 
           <Separator mt={10} />
