@@ -21,7 +21,17 @@ export default function Footer() {
         <Container>
           <Stack direction={{ base: "column", md: "row" }} gap="10">
             {/* Branding box: */}
-            <Box h="5">Branding mock box</Box>
+            <Stack flex="1" gap={4} maxW="320px">
+              <Flex align="center" gap={4}>
+                <Box>
+                  <Text fontWeight="bold">Image here</Text>
+                  <Text fontWeight="bold">{brandData.name}</Text>
+                  <Text fontSize="sm" color="fgMuted">
+                    {brandData.slogan}
+                  </Text>
+                </Box>
+              </Flex>
+            </Stack>
             <Spacer />
 
             {/* Link boxes: */}
