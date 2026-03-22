@@ -9,7 +9,7 @@ import {
   useDisclosure,
   Stack,
   Container,
-  Text,
+  Heading,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -44,12 +44,12 @@ export default function Header() {
 
   return (
     <Box bg="layoutBg">
-      <Container py={3}>
+      <Container py={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Link href="/">
-            <Text fontWeight="bold" fontSize="xl">
+            <Heading fontWeight="bold" fontSize="2xl">
               {brandData.name}
-            </Text>
+            </Heading>
           </Link>
 
           <HStack padding={0} alignItems="center">

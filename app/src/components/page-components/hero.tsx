@@ -60,7 +60,7 @@ export const Hero = ({
         zIndex={1}
       >
         <Stack padding={6} textAlign="center" color="white" maxW="800px">
-          <Heading as="h1" size="2xl" fontWeight="bold" letterSpacing="tight">
+          <Heading as="h1" size="4xl" fontWeight="bold" letterSpacing="tight">
             {title}
           </Heading>
 

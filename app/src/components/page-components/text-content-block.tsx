@@ -32,7 +32,7 @@ export const TextContentBlock = ({
           )}
 
           {mainTitle && (
-            <Heading pt={1} as="h2" size="2xl" fontWeight="bold">
+            <Heading p={3} as="h2" size="4xl" fontWeight="bold">
               {mainTitle}
             </Heading>
           )}

@@ -2,7 +2,7 @@ export const brandTheme = {
   layoutWidth: "",
   fonts: {
     body: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
-    heading: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
+    heading: "var(--font-playfair-display), Georgia, serif",
     mono: "var(--font-geist-mono), monospace",
   },
   colors: {
