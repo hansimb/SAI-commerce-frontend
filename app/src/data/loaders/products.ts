@@ -1,6 +1,7 @@
-import { productBasicDataBySlug, productsPageIntroMockData } from "@/data/mock/products/basic";
-import { productCustomizationDataBySlug } from "@/data/mock/products/customization";
-import { productPageDataBySlug } from "@/data/mock/products/page";
+import { productBasicDataBySlug } from "@/data/mock/products/product-basic";
+import { productCustomizationCardDataBySlug } from "@/data/mock/products/customization-card";
+import { productPageDataBySlug } from "@/data/mock/products/product-page";
+import { productsIntroTextContentBlock } from "@/data/mock/products/text-content-block";
 import type {
   ProductDetailPageData,
   ProductListItem,
@@ -33,7 +34,7 @@ function toListItem(slug: string): ProductListItem | undefined {
 
 export function getProductsPageData(): ProductsPageData {
   return {
-    intro: productsPageIntroMockData,
+    textContentBlock: productsIntroTextContentBlock,
     items: Object.keys(productBasicDataBySlug)
       .map(toListItem)
       .filter((item): item is ProductListItem => Boolean(item)),
@@ -45,7 +46,7 @@ export function getProductPageData(
 ): ProductDetailPageData | undefined {
   const basic = productBasicDataBySlug[slug];
   const page = productPageDataBySlug[slug];
-  const customization = productCustomizationDataBySlug[slug];
+  const customization = productCustomizationCardDataBySlug[slug];
 
   if (!basic || !page || !customization) {
     return undefined;

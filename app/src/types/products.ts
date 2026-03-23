@@ -118,7 +118,7 @@ export interface ProductDetailPageData {
   verticalSpecs: ProductVerticalImageSpecsSectionData;
 }
 
-export interface ProductsPageIntroData {
+export interface ProductsTextContentBlockData {
   thoughtTitle?: string;
   mainTitle?: string;
   text1?: string;
@@ -126,6 +126,6 @@ export interface ProductsPageIntroData {
 }
 
 export interface ProductsPageData {
-  intro: ProductsPageIntroData;
+  textContentBlock: ProductsTextContentBlockData;
   items: ProductListItem[];
 }

@@ -1,6 +1,6 @@
 import type { ProductCustomizationData } from "@/types/products";
 
-export const productCustomizationDataBySlug: Record<
+export const productCustomizationCardDataBySlug: Record<
   string,
   ProductCustomizationData
 > = {

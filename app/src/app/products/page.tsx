@@ -4,12 +4,12 @@ import { TextContentBlock } from "@/components/page-components/text-content-bloc
 import { getProductsPageData } from "@/data/loaders/products";
 import { Container, Separator } from "@chakra-ui/react";
 
-export default function Home() {
+export default function ProductsList() {
   const productsPageData = getProductsPageData();
 
   return (
     <Container>
-      <TextContentBlock {...productsPageData.intro} />
+      <TextContentBlock {...productsPageData.textContentBlock} />
       <Separator />
       {productsPageData.items.map((product) => (
         <ProductCard key={product.slug} data={product} />

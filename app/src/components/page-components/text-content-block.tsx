@@ -1,12 +1,4 @@
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-  Stack,
-  Button,
-  Link as ChakraLink,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Text, Stack, Button } from "@chakra-ui/react";
 import Link from "next/link";
 
 interface TextContentBlockProps {
