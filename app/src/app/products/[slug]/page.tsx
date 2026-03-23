@@ -8,6 +8,7 @@ import { ImageSpecsVertical } from "@/components/page-components/product-section
 import { KeySpecs } from "@/components/page-components/product-sections/key-specs";
 import { LargeImage } from "@/components/page-components/product-sections/large-image";
 import { getProductPageData } from "@/data/loaders/products";
+import { TextContentBlock } from "@/components/page-components/text-content-block";
 
 interface ProductDetailRouteProps {
   params: Promise<{
@@ -47,8 +48,11 @@ export default async function ProductDetailRoute({
         <Separator />
 
         <CustomizationCard section={data.customization} />
+        <Separator />
         <ImageSpecsHorizontal section={data.horizontalSpecs} />
+        <Separator />
         <ImageSpecsVertical section={data.verticalSpecs} />
+        <TextContentBlock ctaBtnText="Buy now" href="/" />
       </Stack>
       <Separator />
     </Container>

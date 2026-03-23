@@ -1,10 +1,21 @@
-import { Box, Container, Heading, Text, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Stack,
+  Button,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
 interface TextContentBlockProps {
   thoughtTitle?: string;
   mainTitle?: string;
   text1?: string;
   text2?: string;
+  ctaBtnText?: string;
+  href?: string;
 }
 
 export const TextContentBlock = ({
@@ -12,6 +23,8 @@ export const TextContentBlock = ({
   mainTitle,
   text1,
   text2,
+  ctaBtnText,
+  href,
 }: TextContentBlockProps) => {
   return (
     <Box as="section" pt={12} maxW={800} mx="auto">
@@ -48,6 +61,11 @@ export const TextContentBlock = ({
               <Text pt={2} as="p" fontSize="md" lineHeight="tall">
                 {text2}
               </Text>
+            )}
+            {ctaBtnText && href && (
+              <Link href={href}>
+                <Button>{ctaBtnText}</Button>
+              </Link>
             )}
           </Stack>
         </Stack>
