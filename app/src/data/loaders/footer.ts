@@ -1,9 +1,11 @@
 import { contactMethodsData } from "@/data/contact";
-import { productsListMockData } from "@/data/mock/products";
+import { getProductsPageData } from "@/data/loaders/products";
 import { NavigationLinks } from "@/data/navigation-links";
 import type { FooterData } from "@/types/footer";
 
 export function getFooterData(): FooterData {
+  const { items } = getProductsPageData();
+
   return {
     linkGroups: [
       {
@@ -12,7 +14,7 @@ export function getFooterData(): FooterData {
       },
       {
         title: "Products",
-        links: productsListMockData.map((product) => ({
+        links: items.map((product) => ({
           label: product.title,
           href: `/products/${product.slug}`,
         })),
