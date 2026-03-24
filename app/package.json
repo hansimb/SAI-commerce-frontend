@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "shopify:test": "node --env-file=.env ./shopify/storefront/scripts/test-shop-name.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.34.0",
