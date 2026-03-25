@@ -14,7 +14,8 @@ import {
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CartIconButton } from "@/components/cart/cart-icon-button";
-import { NavigationLinks } from "@/data/navigation-links";
+import { hasArticlesContent } from "@/data/loaders/articles";
+import { getNavigationLinks } from "@/data/navigation-links";
 import { brandData } from "@/data/brand";
 
 const NavLink = ({
@@ -41,6 +42,7 @@ const NavLink = ({
 
 export default function Header() {
   const { open, onOpen, onClose } = useDisclosure();
+  const navigationLinks = getNavigationLinks(hasArticlesContent());
 
   return (
     <Box bg="layoutBg">
@@ -54,7 +56,7 @@ export default function Header() {
 
           <HStack padding={0} alignItems="center">
             <HStack as="nav" padding={2} display={{ base: "none", md: "flex" }}>
-              {NavigationLinks.map((link) => (
+              {navigationLinks.map((link) => (
                 <NavLink key={link.href} {...link} />
               ))}
             </HStack>
@@ -75,7 +77,7 @@ export default function Header() {
         {open ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as="nav" padding={2}>
-              {NavigationLinks.map((link) => (
+              {navigationLinks.map((link) => (
                 <NavLink key={link.href} {...link} onClick={onClose} />
               ))}
             </Stack>
