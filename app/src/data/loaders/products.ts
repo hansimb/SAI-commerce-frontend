@@ -1,39 +1,96 @@
-import { productBasicDataBySlug } from "@/data/mock/products/product-basic";
+import {
+  productBasicDataBySlug,
+  productBasicMockData,
+} from "@/data/mock/products/product-basic";
 import { productCustomizationCardDataBySlug } from "@/data/mock/products/customization-card";
 import { productPageDataBySlug } from "@/data/mock/products/product-page";
 import { productsIntroTextContentBlock } from "@/data/mock/products/text-content-block";
+import {
+  mapProductBasicToListItem,
+  mapStorefrontProductToListItem,
+  mapTextContentBlockReference,
+} from "@/data/products/mappers";
+import { storefrontQuery } from "@/data/shopify/storefront-client";
+import type {
+  ShopifyMetaobjectField,
+  ShopifyProductNode,
+  ShopifyProductsPageQueryData,
+} from "@/data/shopify/types";
 import { isShopifyDataSource } from "@/data/source";
 import type {
   ProductDetailPageData,
-  ProductListItem,
   ProductsPageData,
 } from "@/types/products";
 
 const ctaLabel = "Add to cart";
-const ctaText = "View Details";
+const productsPageMetaobjectType = "products_page";
+const productsPageMetaobjectHandle = "products-page";
 
-function toListItem(slug: string): ProductListItem | undefined {
-  const basic = productBasicDataBySlug[slug];
-
-  if (!basic) {
-    return undefined;
+const productsPageQuery = `
+  query ProductsPageMetaobject($type: String!, $handle: String!) {
+    metaobject(handle: { type: $type, handle: $handle }) {
+      id
+      type
+      handle
+      fields {
+        key
+        value
+        type
+        reference {
+          __typename
+          ... on Metaobject {
+            fields {
+              key
+              value
+              type
+            }
+          }
+        }
+        references(first: 50) {
+          nodes {
+            __typename
+            ... on Product {
+              id
+              handle
+              title
+              description
+              productType
+              metafield(namespace: "custom", key: "product_card_specs_list") {
+                type
+                value
+                reference {
+                  __typename
+                  ... on Metaobject {
+                    id
+                    type
+                    handle
+                    fields {
+                      key
+                      value
+                      type
+                    }
+                  }
+                }
+              }
+              featuredImage {
+                url
+                altText
+              }
+              priceRange {
+                minVariantPrice {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
+`;
 
-  return {
-    slug: basic.slug,
-    categoryLabel: basic.categoryLabel,
-    title: basic.title,
-    subtitle: basic.subtitle,
-    description: basic.description,
-    imageUrl: basic.image.src,
-    price: basic.price,
-    priceSubtitle: basic.priceSubtitle,
-    specs: basic.cardSpecs,
-    ctaText,
-  };
-}
-
-export function getProductsPageData(): ProductsPageData {
+export async function getProductsPageData(): Promise<ProductsPageData> {
   if (isShopifyDataSource()) {
     return getShopifyProductsPageData();
   }
@@ -44,9 +101,7 @@ export function getProductsPageData(): ProductsPageData {
 function getMockProductsPageData(): ProductsPageData {
   return {
     textContentBlock: productsIntroTextContentBlock,
-    items: Object.keys(productBasicDataBySlug)
-      .map(toListItem)
-      .filter((item): item is ProductListItem => Boolean(item)),
+    items: productBasicMockData.map(mapProductBasicToListItem),
   };
 }
 
@@ -109,12 +164,47 @@ function getMockProductPageData(
   };
 }
 
-function getShopifyProductsPageData(): ProductsPageData {
-  return getMockProductsPageData();
+async function getShopifyProductsPageData(): Promise<ProductsPageData> {
+  const data = await storefrontQuery<ShopifyProductsPageQueryData>(
+    productsPageQuery,
+    {
+      type: productsPageMetaobjectType,
+      handle: productsPageMetaobjectHandle,
+    },
+  );
+
+  if (!data.metaobject) {
+    throw new Error("Products page metaobject was not found in Shopify");
+  }
+
+  const introField = data.metaobject.fields.find(
+    (field) => field.key === "products_intro_text_content_block",
+  );
+  const productsField = data.metaobject.fields.find(
+    (field) => field.key === "products_list",
+  );
+
+  return {
+    textContentBlock: mapTextContentBlockReference(
+      introField,
+      productsIntroTextContentBlock,
+    ),
+    items: mapProductsList(productsField),
+  };
 }
 
 function getShopifyProductPageData(
   slug: string,
 ): ProductDetailPageData | undefined {
   return getMockProductPageData(slug);
+}
+
+function mapProductsList(
+  field: ShopifyMetaobjectField | undefined,
+){
+  const products = field?.references?.nodes ?? [];
+
+  return products
+    .filter((node): node is ShopifyProductNode => node.__typename === "Product")
+    .map(mapStorefrontProductToListItem);
 }

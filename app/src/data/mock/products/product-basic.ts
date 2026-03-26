@@ -1,7 +1,7 @@
 import type { ProductBasicData } from "@/types/products";
 
-export const productBasicDataBySlug: Record<string, ProductBasicData> = {
-  "signature-tube-amplifier": {
+export const productBasicMockData: ProductBasicData[] = [
+  {
     slug: "signature-tube-amplifier",
     categoryLabel: "Amplifiers",
     title: "Signature Tube Amplifier",
@@ -20,7 +20,7 @@ export const productBasicDataBySlug: Record<string, ProductBasicData> = {
       { label: "Response", value: "10Hz - 45kHz" },
     ],
   },
-  "reference-monitor-controller": {
+  {
     slug: "reference-monitor-controller",
     categoryLabel: "Controllers",
     title: "Reference Monitor Controller",
@@ -39,4 +39,7 @@ export const productBasicDataBySlug: Record<string, ProductBasicData> = {
       { label: "Attenuation", value: "Relay stepped" },
     ],
   },
-};
+];
+
+export const productBasicDataBySlug: Record<string, ProductBasicData> =
+  Object.fromEntries(productBasicMockData.map((product) => [product.slug, product]));

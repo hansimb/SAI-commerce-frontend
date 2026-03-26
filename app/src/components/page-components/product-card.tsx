@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Flex,
@@ -30,37 +32,43 @@ export const ProductCard = ({ data }: ProductCardProps) => {
         </Box>
 
         <Box flex="1" p={6}>
-          <Text
-            textTransform="uppercase"
-            fontSize="sm"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={3}
-            color={"accentBright"}
-          >
-            {data.categoryLabel}
-          </Text>
+          {data.categoryLabel ? (
+            <Text
+              textTransform="uppercase"
+              fontSize="sm"
+              fontWeight="semibold"
+              letterSpacing="wide"
+              mb={3}
+              color={"accentBright"}
+            >
+              {data.categoryLabel}
+            </Text>
+          ) : null}
 
           <Heading as="h2" size="2xl" mb={2}>
             {data.title}
           </Heading>
 
-          <Text fontSize="lg" fontStyle="italic" mb={4}>
-            {data.subtitle}
-          </Text>
+          {data.subtitle ? (
+            <Text fontSize="lg" fontStyle="italic" mb={4}>
+              {data.subtitle}
+            </Text>
+          ) : null}
 
-          <Text mb={6}>{data.description}</Text>
+          {data.description ? <Text mb={6}>{data.description}</Text> : null}
 
-          <Box borderWidth="1px" rounded="md" p={5} mb={6}>
-            {data.specs.map((spec) => (
-              <Flex key={spec.label} justify="space-between" py={2}>
-                <Text fontSize="sm" color="gray.400">
-                  {spec.label}
-                </Text>
-                <Text fontWeight="semibold">{spec.value}</Text>
-              </Flex>
-            ))}
-          </Box>
+          {data.specs.length > 0 ? (
+            <Box borderWidth="1px" rounded="md" p={5} mb={6}>
+              {data.specs.map((spec) => (
+                <Flex key={spec.label} justify="space-between" py={2}>
+                  <Text fontSize="sm" color="gray.400">
+                    {spec.label}
+                  </Text>
+                  <Text fontWeight="semibold">{spec.value}</Text>
+                </Flex>
+              ))}
+            </Box>
+          ) : null}
 
           <Text
             fontSize="sm"

@@ -12,8 +12,8 @@ import { footerLabels } from "@/data/footer";
 import { getFooterData } from "@/data/loaders/footer";
 import Link from "next/link";
 
-export default function Footer() {
-  const footerData = getFooterData();
+export default async function Footer() {
+  const footerData = await getFooterData();
 
   return (
     <Box bg="layoutBg">

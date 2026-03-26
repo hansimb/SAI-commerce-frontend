@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "shopify:test": "node --env-file=.env ./shopify/storefront/scripts/test-shop-name.mjs",
-    "shopify:metaobject": "node --env-file=.env ./shopify/storefront/scripts/print-metaobject.mjs"
+    "shopify:metaobject": "node --env-file=.env ./shopify/storefront/scripts/print-metaobject.mjs",
+    "shopify:product": "node --env-file=.env ./shopify/storefront/scripts/print-product.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.34.0",

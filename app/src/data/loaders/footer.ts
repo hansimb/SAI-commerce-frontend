@@ -4,8 +4,8 @@ import { getProductsPageData } from "@/data/loaders/products";
 import { getNavigationLinks } from "@/data/navigation-links";
 import type { FooterData } from "@/types/footer";
 
-export function getFooterData(): FooterData {
-  const { items } = getProductsPageData();
+export async function getFooterData(): Promise<FooterData> {
+  const { items } = await getProductsPageData();
   const navigationLinks = getNavigationLinks(hasArticlesContent());
 
   return {
