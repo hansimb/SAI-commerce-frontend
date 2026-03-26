@@ -2,6 +2,7 @@ import { productBasicDataBySlug } from "@/data/mock/products/product-basic";
 import { productCustomizationCardDataBySlug } from "@/data/mock/products/customization-card";
 import { productPageDataBySlug } from "@/data/mock/products/product-page";
 import { productsIntroTextContentBlock } from "@/data/mock/products/text-content-block";
+import { isShopifyDataSource } from "@/data/source";
 import type {
   ProductDetailPageData,
   ProductListItem,
@@ -33,6 +34,14 @@ function toListItem(slug: string): ProductListItem | undefined {
 }
 
 export function getProductsPageData(): ProductsPageData {
+  if (isShopifyDataSource()) {
+    return getShopifyProductsPageData();
+  }
+
+  return getMockProductsPageData();
+}
+
+function getMockProductsPageData(): ProductsPageData {
   return {
     textContentBlock: productsIntroTextContentBlock,
     items: Object.keys(productBasicDataBySlug)
@@ -42,6 +51,16 @@ export function getProductsPageData(): ProductsPageData {
 }
 
 export function getProductPageData(
+  slug: string,
+): ProductDetailPageData | undefined {
+  if (isShopifyDataSource()) {
+    return getShopifyProductPageData(slug);
+  }
+
+  return getMockProductPageData(slug);
+}
+
+function getMockProductPageData(
   slug: string,
 ): ProductDetailPageData | undefined {
   const basic = productBasicDataBySlug[slug];
@@ -88,4 +107,14 @@ export function getProductPageData(
       specs: page.verticalSpecs,
     },
   };
+}
+
+function getShopifyProductsPageData(): ProductsPageData {
+  return getMockProductsPageData();
+}
+
+function getShopifyProductPageData(
+  slug: string,
+): ProductDetailPageData | undefined {
+  return getMockProductPageData(slug);
 }
