@@ -55,7 +55,10 @@ const productsPageQuery = `
               title
               description
               productType
-              metafield(namespace: "custom", key: "product_card_specs_list") {
+              cardSpecsMetafield: metafield(
+                namespace: "custom"
+                key: "product_card_specs_list"
+              ) {
                 type
                 value
                 reference {
@@ -71,6 +74,13 @@ const productsPageQuery = `
                     }
                   }
                 }
+              }
+              subtitleMetafield: metafield(
+                namespace: "custom"
+                key: "product_subtitle"
+              ) {
+                type
+                value
               }
               featuredImage {
                 url

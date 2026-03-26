@@ -40,12 +40,12 @@ export function mapStorefrontProductToListItem(
     slug: product.handle,
     categoryLabel: product.productType || "",
     title: product.title,
-    subtitle: product.productType || "",
+    subtitle: product.subtitleMetafield?.value || "",
     description: product.description || "",
     imageUrl: product.featuredImage?.url || "/globe.svg",
     price: formatMoney(product.priceRange.minVariantPrice.amount),
     priceSubtitle: product.priceRange.minVariantPrice.currencyCode,
-    specs: mapProductCardSpecs(product.metafield?.reference?.fields),
+    specs: mapProductCardSpecs(product.cardSpecsMetafield?.reference?.fields),
     ctaText: "View Details",
   };
 }

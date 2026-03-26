@@ -45,7 +45,8 @@ export interface ShopifyProductNode {
       currencyCode: string;
     };
   };
-  metafield: ShopifyProductMetafield | null;
+  cardSpecsMetafield: ShopifyProductMetafield | null;
+  subtitleMetafield: ShopifyProductMetafield | null;
 }
 
 export interface ShopifyProductsPageQueryData {
