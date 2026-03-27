@@ -1,8 +1,8 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import type { ProductKeySpecsSectionData } from "@/types/products";
+import type { ProductSpecsSectionData } from "@/types/products";
 
 interface KeySpecsProps {
-  section: ProductKeySpecsSectionData;
+  section: ProductSpecsSectionData;
 }
 
 export function KeySpecs({ section }: KeySpecsProps) {

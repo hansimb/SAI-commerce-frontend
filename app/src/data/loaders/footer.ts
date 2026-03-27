@@ -1,6 +1,6 @@
 import { contactMethodsData } from "@/data/contact";
 import { hasArticlesContent } from "@/data/loaders/articles";
-import { getProductsPageData } from "@/data/loaders/products";
+import { getProductsPageData } from "@/data/products/products-page";
 import { getNavigationLinks } from "@/data/navigation-links";
 import type { FooterData } from "@/types/footer";
 

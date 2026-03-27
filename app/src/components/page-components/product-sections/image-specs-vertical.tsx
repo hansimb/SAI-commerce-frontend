@@ -1,8 +1,8 @@
 import { Box, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import type { ProductVerticalImageSpecsSectionData } from "@/types/products";
+import type { ProductSpecsSectionData } from "@/types/products";
 
 interface ImageSpecsVerticalProps {
-  section: ProductVerticalImageSpecsSectionData;
+  section: ProductSpecsSectionData;
 }
 
 export function ImageSpecsVertical({ section }: ImageSpecsVerticalProps) {
@@ -21,14 +21,16 @@ export function ImageSpecsVertical({ section }: ImageSpecsVerticalProps) {
           alignItems="center"
           justifyContent="center"
         >
-          <Image
-            src={section.image.src}
-            alt={section.image.alt}
-            w="full"
-            h="full"
-            maxH={{ base: "320px", md: "660px" }}
-            objectFit="contain"
-          />
+          {section.image ? (
+            <Image
+              src={section.image.src}
+              alt={section.image.alt}
+              w="full"
+              h="full"
+              maxH={{ base: "320px", md: "660px" }}
+              objectFit="contain"
+            />
+          ) : null}
         </Box>
 
         <Stack flex="1" justify="space-around" py={{ base: 0, lg: 8 }} gap={8}>

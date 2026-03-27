@@ -1,9 +1,4 @@
-import {
-  productBasicDataBySlug,
-  productBasicMockData,
-} from "@/data/mock/products/product-basic";
-import { productCustomizationCardDataBySlug } from "@/data/mock/products/customization-card";
-import { productPageDataBySlug } from "@/data/mock/products/product-page";
+import { productBasicMockData } from "@/data/mock/products/product-basic";
 import { productsIntroTextContentBlock } from "@/data/mock/products/text-content-block";
 import {
   mapProductBasicToListItem,
@@ -17,12 +12,8 @@ import type {
   ShopifyProductsPageQueryData,
 } from "@/data/shopify/types";
 import { isShopifyDataSource } from "@/data/source";
-import type {
-  ProductDetailPageData,
-  ProductsPageData,
-} from "@/types/products";
+import type { ProductSummary, ProductsPageData } from "@/types/products";
 
-const ctaLabel = "Add to cart";
 const productsPageMetaobjectType = "products_page";
 const productsPageMetaobjectHandle = "products-page";
 
@@ -115,65 +106,6 @@ function getMockProductsPageData(): ProductsPageData {
   };
 }
 
-export function getProductPageData(
-  slug: string,
-): ProductDetailPageData | undefined {
-  if (isShopifyDataSource()) {
-    return getShopifyProductPageData(slug);
-  }
-
-  return getMockProductPageData(slug);
-}
-
-function getMockProductPageData(
-  slug: string,
-): ProductDetailPageData | undefined {
-  const basic = productBasicDataBySlug[slug];
-  const page = productPageDataBySlug[slug];
-  const customization = productCustomizationCardDataBySlug[slug];
-
-  if (!basic || !page || !customization) {
-    return undefined;
-  }
-
-  return {
-    slug,
-    hero: {
-      title: basic.title,
-      price: basic.price,
-      image: basic.image,
-      ctaLabel,
-    },
-    largeImage: {
-      title: page.largeImageTitle,
-      image: basic.image,
-    },
-    keySpecs: {
-      title: page.keySpecsTitle,
-      specs: page.keySpecs,
-    },
-    highlights: {
-      title: page.highlightsTitle,
-      items: page.highlights,
-    },
-    customization: {
-      title: customization.title,
-      image: customization.image,
-      optionGroups: customization.optionGroups,
-    },
-    horizontalSpecs: {
-      title: page.horizontalSpecsTitle,
-      image: basic.image,
-      specs: page.horizontalSpecs,
-    },
-    verticalSpecs: {
-      title: page.verticalSpecsTitle,
-      image: basic.image,
-      specs: page.verticalSpecs,
-    },
-  };
-}
-
 async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   const data = await storefrontQuery<ShopifyProductsPageQueryData>(
     productsPageQuery,
@@ -203,15 +135,9 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   };
 }
 
-function getShopifyProductPageData(
-  slug: string,
-): ProductDetailPageData | undefined {
-  return getMockProductPageData(slug);
-}
-
 function mapProductsList(
   field: ShopifyMetaobjectField | undefined,
-){
+): ProductSummary[] {
   const products = field?.references?.nodes ?? [];
 
   return products

@@ -1,11 +1,10 @@
-import type { ProductCustomizationData } from "@/types/products";
+import type { ProductCustomizationSectionData } from "@/types/products";
 
 export const productCustomizationCardDataBySlug: Record<
   string,
-  ProductCustomizationData
+  ProductCustomizationSectionData
 > = {
   "signature-tube-amplifier": {
-    slug: "signature-tube-amplifier",
     title: "Customization",
     image: {
       src: "/window.svg",
@@ -31,7 +30,6 @@ export const productCustomizationCardDataBySlug: Record<
     ],
   },
   "reference-monitor-controller": {
-    slug: "reference-monitor-controller",
     title: "Customization",
     image: {
       src: "/globe.svg",

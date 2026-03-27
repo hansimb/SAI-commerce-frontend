@@ -1,16 +1,17 @@
 import { Box, Heading, Image, Stack } from "@chakra-ui/react";
-import type { ProductLargeImageSectionData } from "@/types/products";
+import type { ProductImageAsset } from "@/types/products";
 
 interface LargeImageProps {
-  section: ProductLargeImageSectionData;
+  title?: string;
+  image: ProductImageAsset;
 }
 
-export function LargeImage({ section }: LargeImageProps) {
+export function LargeImage({ title, image }: LargeImageProps) {
   return (
     <Stack gap={6}>
-      {section.title ? (
+      {title ? (
         <Heading as="h2" size="2xl" textAlign="center">
-          {section.title}
+          {title}
         </Heading>
       ) : null}
 
@@ -24,8 +25,8 @@ export function LargeImage({ section }: LargeImageProps) {
         justifyContent="center"
       >
         <Image
-          src={section.image.src}
-          alt={section.image.alt}
+          src={image.src}
+          alt={image.alt}
           w="full"
           h="full"
           maxH={{ base: "320px", md: "540px" }}

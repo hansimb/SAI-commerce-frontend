@@ -1,8 +1,8 @@
 import { Box, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import type { ProductCustomizationCardData } from "@/types/products";
+import type { ProductCustomizationSectionData } from "@/types/products";
 
 interface CustomizationCardProps {
-  section: ProductCustomizationCardData;
+  section: ProductCustomizationSectionData;
 }
 
 export function CustomizationCard({

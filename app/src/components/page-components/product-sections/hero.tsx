@@ -1,17 +1,17 @@
 import { Box, Heading, Image, Stack } from "@chakra-ui/react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
-import type { ProductHeroSectionData } from "@/types/products";
+import type { ProductSummary } from "@/types/products";
 
 interface HeroProps {
-  slug: string;
-  section: ProductHeroSectionData;
+  product: ProductSummary;
+  ctaLabel: string;
 }
 
-export function Hero({ slug, section }: HeroProps) {
+export function Hero({ product, ctaLabel }: HeroProps) {
   return (
     <Stack gap={{ base: 6, md: 8 }} align="center">
       <Heading as="h1" size="4xl" textAlign="center">
-        {section.title}
+        {product.title}
       </Heading>
 
       <Box
@@ -25,8 +25,8 @@ export function Hero({ slug, section }: HeroProps) {
         justifyContent="center"
       >
         <Image
-          src={section.image.src}
-          alt={section.image.alt}
+          src={product.image.src}
+          alt={product.image.alt}
           w="full"
           h="full"
           maxH={{ base: "300px", md: "540px" }}
@@ -35,11 +35,11 @@ export function Hero({ slug, section }: HeroProps) {
       </Box>
 
       <AddToCartButton
-        slug={slug}
-        title={section.title}
-        price={section.price}
-        imageUrl={section.image.src}
-        label={section.ctaLabel}
+        slug={product.slug}
+        title={product.title}
+        price={product.price}
+        imageUrl={product.image.src}
+        label={ctaLabel}
       />
     </Stack>
   );

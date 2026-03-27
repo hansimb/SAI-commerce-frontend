@@ -1,6 +1,5 @@
 import type {
-  ProductBasicData,
-  ProductListItem,
+  ProductSummary,
   ProductsTextContentBlockData,
 } from "@/types/products";
 import type {
@@ -17,36 +16,29 @@ const fallbackProductsTextContentBlock: ProductsTextContentBlockData = {
 };
 
 export function mapProductBasicToListItem(
-  product: ProductBasicData,
-): ProductListItem {
+  product: ProductSummary,
+): ProductSummary {
   return {
-    slug: product.slug,
-    categoryLabel: product.categoryLabel,
-    title: product.title,
-    subtitle: product.subtitle,
-    description: product.description,
-    imageUrl: product.image.src,
-    price: product.price,
-    priceSubtitle: product.priceSubtitle,
-    specs: product.cardSpecs,
-    ctaText: "View Details",
+    ...product,
   };
 }
 
 export function mapStorefrontProductToListItem(
   product: ShopifyProductNode,
-): ProductListItem {
+): ProductSummary {
   return {
     slug: product.handle,
     categoryLabel: product.productType || "",
     title: product.title,
     subtitle: product.subtitleMetafield?.value || "",
     description: product.description || "",
-    imageUrl: product.featuredImage?.url || "/globe.svg",
+    image: {
+      src: product.featuredImage?.url || "/globe.svg",
+      alt: product.featuredImage?.altText || product.title,
+    },
     price: formatMoney(product.priceRange.minVariantPrice.amount),
     priceSubtitle: product.priceRange.minVariantPrice.currencyCode,
     specs: mapProductCardSpecs(product.cardSpecsMetafield?.reference?.fields),
-    ctaText: "View Details",
   };
 }
 

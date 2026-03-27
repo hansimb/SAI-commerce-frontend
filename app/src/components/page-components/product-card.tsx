@@ -11,10 +11,10 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import type { ProductCardData } from "@/types/products";
+import type { ProductSummary } from "@/types/products";
 
 interface ProductCardProps {
-  data: ProductCardData;
+  data: ProductSummary;
 }
 
 export const ProductCard = ({ data }: ProductCardProps) => {
@@ -23,7 +23,7 @@ export const ProductCard = ({ data }: ProductCardProps) => {
       <Flex direction={{ base: "column", md: "row" }} gap={8}>
         <Box flex="1" p={6} borderWidth="1px" rounded="lg">
           <Image
-            src={data.imageUrl}
+            src={data.image.src}
             alt={data.title}
             w="full"
             h="auto"
@@ -91,11 +91,11 @@ export const ProductCard = ({ data }: ProductCardProps) => {
             {data.slug ? (
               <Button asChild size="lg">
                 <ChakraLink as={Link} href={`/products/${data.slug}`}>
-                  {data.ctaText}
+                  View Details
                 </ChakraLink>
               </Button>
             ) : (
-              <Button size="lg">{data.ctaText}</Button>
+              <Button size="lg">View Details</Button>
             )}
           </Flex>
         </Box>

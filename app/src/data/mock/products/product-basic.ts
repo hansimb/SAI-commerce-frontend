@@ -1,6 +1,6 @@
-import type { ProductBasicData } from "@/types/products";
+import type { ProductSummary } from "@/types/products";
 
-export const productBasicMockData: ProductBasicData[] = [
+export const productBasicMockData: ProductSummary[] = [
   {
     slug: "signature-tube-amplifier",
     categoryLabel: "Amplifiers",
@@ -14,7 +14,7 @@ export const productBasicMockData: ProductBasicData[] = [
       src: "/window.svg",
       alt: "Signature Tube Amplifier",
     },
-    cardSpecs: [
+    specs: [
       { label: "Power Output", value: "50W Class-A" },
       { label: "Tubes", value: "4x EL34, 4x 12AX7" },
       { label: "Response", value: "10Hz - 45kHz" },
@@ -33,7 +33,7 @@ export const productBasicMockData: ProductBasicData[] = [
       src: "/globe.svg",
       alt: "Reference Monitor Controller",
     },
-    cardSpecs: [
+    specs: [
       { label: "Inputs", value: "3 stereo" },
       { label: "Outputs", value: "3 speaker pairs" },
       { label: "Attenuation", value: "Relay stepped" },
@@ -41,5 +41,5 @@ export const productBasicMockData: ProductBasicData[] = [
   },
 ];
 
-export const productBasicDataBySlug: Record<string, ProductBasicData> =
+export const productBasicDataBySlug: Record<string, ProductSummary> =
   Object.fromEntries(productBasicMockData.map((product) => [product.slug, product]));

@@ -1,8 +1,8 @@
 import { Box, Heading, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
-import type { ProductHorizontalImageSpecsSectionData } from "@/types/products";
+import type { ProductSpecsSectionData } from "@/types/products";
 
 interface ImageSpecsHorizontalProps {
-  section: ProductHorizontalImageSpecsSectionData;
+  section: ProductSpecsSectionData;
 }
 
 export function ImageSpecsHorizontal({
@@ -21,14 +21,16 @@ export function ImageSpecsHorizontal({
         alignItems="center"
         justifyContent="center"
       >
-        <Image
-          src={section.image.src}
-          alt={section.image.alt}
-          w="full"
-          h="full"
-          maxH={{ base: "240px", md: "400px" }}
-          objectFit="contain"
-        />
+        {section.image ? (
+          <Image
+            src={section.image.src}
+            alt={section.image.alt}
+            w="full"
+            h="full"
+            maxH={{ base: "240px", md: "400px" }}
+            objectFit="contain"
+          />
+        ) : null}
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: section.specs.length }} gap={6}>

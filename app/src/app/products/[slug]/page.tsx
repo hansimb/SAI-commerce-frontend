@@ -7,7 +7,7 @@ import { ImageSpecsHorizontal } from "@/components/page-components/product-secti
 import { ImageSpecsVertical } from "@/components/page-components/product-sections/image-specs-vertical";
 import { KeySpecs } from "@/components/page-components/product-sections/key-specs";
 import { LargeImage } from "@/components/page-components/product-sections/large-image";
-import { getProductPageData } from "@/data/loaders/products";
+import { getProductDetailPageData } from "@/data/products/product-detail-page";
 import { TextContentBlock } from "@/components/page-components/text-content-block";
 
 interface ProductDetailRouteProps {
@@ -20,7 +20,7 @@ export default async function ProductDetailRoute({
   params,
 }: ProductDetailRouteProps) {
   const { slug } = await params;
-  const data = getProductPageData(slug);
+  const data = getProductDetailPageData(slug);
 
   if (!data) {
     notFound();
@@ -29,9 +29,9 @@ export default async function ProductDetailRoute({
   return (
     <Container>
       <Stack gap={{ base: 16, md: 24 }} py={{ base: 10, md: 14 }}>
-        <Hero slug={data.slug} section={data.hero} />
+        <Hero product={data.product} ctaLabel={data.ctaLabel} />
         <Separator />
-        <LargeImage section={data.largeImage} />
+        <LargeImage title={data.detail.largeImageTitle} image={data.product.image} />
         <Separator />
 
         <SimpleGrid
@@ -42,16 +42,16 @@ export default async function ProductDetailRoute({
           mx="auto"
           justifyItems="center"
         >
-          <KeySpecs section={data.keySpecs} />
-          <Highlights section={data.highlights} />
+          <KeySpecs section={data.detail.keySpecs} />
+          <Highlights section={data.detail.highlights} />
         </SimpleGrid>
         <Separator />
 
         <CustomizationCard section={data.customization} />
         <Separator />
-        <ImageSpecsHorizontal section={data.horizontalSpecs} />
+        <ImageSpecsHorizontal section={data.detail.horizontalSpecs} />
         <Separator />
-        <ImageSpecsVertical section={data.verticalSpecs} />
+        <ImageSpecsVertical section={data.detail.verticalSpecs} />
         <TextContentBlock ctaBtnText="Buy now" href="/" />
       </Stack>
       <Separator />
