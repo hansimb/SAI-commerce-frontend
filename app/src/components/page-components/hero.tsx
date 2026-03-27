@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { brandData } from "@/data/brand";
 import Link from "next/link";
 
 interface HeroProps {
@@ -23,8 +22,8 @@ interface HeroProps {
 
 export const Hero = ({
   backgroundImage = "/hero-bg.jpg",
-  title = brandData.name,
-  subtitle = brandData.slogan,
+  title = "Spectrum Audio Instruments",
+  subtitle = "Vintage sound. Modern precision.",
   primaryCtaText = "View products",
   primaryCtaHref = "/products",
   secondaryCtaText = "Read articles",

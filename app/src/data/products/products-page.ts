@@ -5,6 +5,7 @@ import {
   mapStorefrontProductToListItem,
   mapTextContentBlockReference,
 } from "@/data/products/mappers";
+import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMetaobjectField,
@@ -15,9 +16,6 @@ import type {
 } from "@/data/shopify/types";
 import { isShopifyDataSource } from "@/data/source";
 import type { ProductSummary, ProductsPageData } from "@/types/products";
-
-const productsPageMetaobjectType = "products_page";
-const productsPageMetaobjectHandle = "products-page";
 
 const productsPageQuery = `
   query ProductsPageMetaobject($type: String!, $handle: String!) {
@@ -91,7 +89,7 @@ const productsPageQuery = `
         }
       }
     }
-    detailPages: metaobjects(type: "product_details_page", first: 50) {
+    detailPages: metaobjects(type: "${shopifyMetaobjects.productDetailsPage.type}", first: 50) {
       nodes {
         handle
         fields {
@@ -130,8 +128,8 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   const data = await storefrontQuery<ShopifyProductsPageQueryData>(
     productsPageQuery,
     {
-      type: productsPageMetaobjectType,
-      handle: productsPageMetaobjectHandle,
+      type: shopifyMetaobjects.productsPage.type,
+      handle: shopifyMetaobjects.productsPage.handle,
     },
   );
 

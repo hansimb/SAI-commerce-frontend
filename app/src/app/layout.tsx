@@ -9,6 +9,7 @@ import { themeTokens } from "@/theme/tokens";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { hasArticlesContent } from "@/data/loaders/articles";
+import { getBrandData } from "@/data/brand";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const hasArticles = await hasArticlesContent();
+  const brand = await getBrandData();
 
   return (
     <html suppressHydrationWarning lang="en">
@@ -45,11 +47,11 @@ export default async function RootLayout({
         <Provider>
           <Box maxW={themeTokens.layoutWidth} mx="auto" w="full">
             <CartProvider>
-              <Header hasArticles={hasArticles} />
+              <Header hasArticles={hasArticles} brand={brand} />
               <Separator />
               {children}
               <Separator />
-              <Footer />
+              <Footer brand={brand} />
               <CartSidebar />
             </CartProvider>
           </Box>

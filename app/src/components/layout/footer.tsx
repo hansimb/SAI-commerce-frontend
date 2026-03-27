@@ -6,13 +6,18 @@ import {
   Spacer,
   Separator,
   Stack,
+  Image,
 } from "@chakra-ui/react";
-import { brandData } from "@/data/brand";
+import type { BrandData } from "@/data/brand";
 import { footerLabels } from "@/data/footer";
 import { getFooterData } from "@/data/loaders/footer";
 import Link from "next/link";
 
-export default async function Footer() {
+interface FooterProps {
+  brand: BrandData;
+}
+
+export default async function Footer({ brand }: FooterProps) {
   const footerData = await getFooterData();
 
   return (
@@ -20,23 +25,30 @@ export default async function Footer() {
       <Flex gap={5} align="center" padding={10}>
         <Container>
           <Stack direction={{ base: "column", md: "row" }} gap="10">
-            {/* Branding box: */}
             <Stack flex="1" gap={4} maxW="320px">
               <Flex align="center" gap={4}>
                 <Box>
-                  <Text fontWeight="bold">Image here</Text>
-                  <Text fontWeight="bold">{brandData.name}</Text>
+                  {brand.logoHorizontal ? (
+                    <Image
+                      src={brand.logoHorizontal}
+                      alt={brand.name}
+                      h="40px"
+                      w="auto"
+                      objectFit="contain"
+                      mb={3}
+                    />
+                  ) : null}
+                  <Text fontWeight="bold">{brand.name}</Text>
                   <Text fontSize="sm" color="fgMuted">
-                    {brandData.slogan}
+                    {brand.slogan}
                   </Text>
                 </Box>
               </Flex>
             </Stack>
             <Spacer />
 
-            {/* Link boxes: */}
             {footerData.linkGroups.map((linkBox) => (
-              <Stack key={linkBox.title} flex={"1"}>
+              <Stack key={linkBox.title} flex="1">
                 <Text fontWeight="bold">{linkBox.title}</Text>
 
                 {linkBox.links.map((link) => (
@@ -47,8 +59,7 @@ export default async function Footer() {
               </Stack>
             ))}
 
-            {/* Contact box: */}
-            <Stack flex={"1"}>
+            <Stack flex="1">
               <Text fontWeight="bold">{footerLabels.contact}</Text>
 
               {footerData.contactItems.map((item) => (
@@ -59,7 +70,7 @@ export default async function Footer() {
 
           <Separator mt={10} />
           <Text pt={8} textAlign="center">
-            © {new Date().getFullYear()} {brandData.name} <br />
+            © Copyright {new Date().getFullYear()} {brand.name}
           </Text>
         </Container>
       </Flex>

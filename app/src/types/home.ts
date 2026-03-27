@@ -1,0 +1,24 @@
+import type { ContentBoxItem } from "@/components/page-components/content-boxes";
+import type { ProcessStepItem } from "@/components/page-components/process-steps";
+import type { QuoteBlockData } from "@/components/page-components/quote-block";
+import type { ProductImageAsset, ProductsTextContentBlockData } from "@/types/products";
+
+export interface HomeHeroData {
+  backgroundImage?: string;
+  title?: string;
+  subtitle?: string;
+  primaryCtaText?: string;
+  primaryCtaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+}
+
+export interface HomePageData {
+  hero: HomeHeroData;
+  textContentBlock1: ProductsTextContentBlockData;
+  contentBoxes: ContentBoxItem[];
+  largeImage?: ProductImageAsset;
+  textContentBlock2: ProductsTextContentBlockData;
+  processSteps: ProcessStepItem[];
+  quote: QuoteBlockData;
+}

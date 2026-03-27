@@ -1,4 +1,4 @@
-import { contactMethodsData } from "@/data/contact";
+import { contactMethodsFallbackData } from "@/data/contact";
 import type { ContactPageData } from "@/types/contact";
 
 export const contactPageMockData: ContactPageData = {
@@ -6,7 +6,7 @@ export const contactPageMockData: ContactPageData = {
   title: "Talk to the workshop",
   intro:
     "This page is intentionally still an early first pass, but it already shows the structure we could later connect to a proper inquiry flow or Shopify-backed contact experience.",
-  contactMethods: contactMethodsData,
+  contactMethods: contactMethodsFallbackData,
   studioTitle: "Studio and consultation",
   studioText:
     "We can later expand this into a fuller section about showroom visits, demo listening, build lead times, and consultation availability.",

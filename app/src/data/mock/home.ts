@@ -1,6 +1,11 @@
 import type { ContentBoxItem } from "@/components/page-components/content-boxes";
 import type { ProcessStepItem } from "@/components/page-components/process-steps";
 import type { QuoteBlockData } from "@/components/page-components/quote-block";
+import type { HomeHeroData } from "@/types/home";
+
+export const homeHeroMockData: HomeHeroData = {
+  backgroundImage: "/hero-bg.jpg",
+};
 
 export const homeIntroMockData = {
   thoughtTitle: "Our Philosophy",
@@ -67,4 +72,9 @@ export const homeQuoteMockData: QuoteBlockData = {
     "We do not make audio equipment. We craft instruments for experiencing music the way it was meant to be heard.",
   author: "Marcus Chen",
   subtitle: "Founder & Master Craftsman",
+};
+
+export const homeLargeImageMockData = {
+  src: "/hero-bg.jpg",
+  alt: "Workshop image",
 };

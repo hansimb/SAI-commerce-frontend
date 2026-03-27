@@ -4,6 +4,7 @@ import {
   Box,
   Flex,
   HStack,
+  Image,
   Link,
   IconButton,
   useDisclosure,
@@ -15,7 +16,7 @@ import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CartIconButton } from "@/components/cart/cart-icon-button";
 import { getNavigationLinks } from "@/data/navigation-links";
-import { brandData } from "@/data/brand";
+import type { BrandData } from "@/data/brand";
 
 const NavLink = ({
   label,
@@ -41,9 +42,10 @@ const NavLink = ({
 
 interface HeaderProps {
   hasArticles: boolean;
+  brand: BrandData;
 }
 
-export default function Header({ hasArticles }: HeaderProps) {
+export default function Header({ hasArticles, brand }: HeaderProps) {
   const { open, onOpen, onClose } = useDisclosure();
   const navigationLinks = getNavigationLinks(hasArticles);
 
@@ -52,9 +54,19 @@ export default function Header({ hasArticles }: HeaderProps) {
       <Container py={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Link href="/">
-            <Heading fontWeight="bold" fontSize="2xl">
-              {brandData.name}
-            </Heading>
+            {brand.logoVertical ? (
+              <Image
+                src={brand.logoVertical}
+                alt={brand.name}
+                h="56px"
+                w="auto"
+                objectFit="contain"
+              />
+            ) : (
+              <Heading fontWeight="bold" fontSize="2xl">
+                {brand.name}
+              </Heading>
+            )}
           </Link>
 
           <HStack padding={0} alignItems="center">

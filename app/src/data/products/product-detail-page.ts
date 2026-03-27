@@ -5,6 +5,7 @@ import {
   mapProductDetailsMetaobject,
   mapStorefrontProductToListItem,
 } from "@/data/products/mappers";
+import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMetaobjectNode,
@@ -18,7 +19,7 @@ const ctaLabel = "Buy";
 
 const productDetailPagesQuery = `
   query ProductDetailPages {
-    detailPages: metaobjects(type: "product_details_page", first: 50) {
+    detailPages: metaobjects(type: "${shopifyMetaobjects.productDetailsPage.type}", first: 50) {
       nodes {
         handle
         fields {
