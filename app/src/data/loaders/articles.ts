@@ -1,11 +1,26 @@
-import {
-  articlesListMockData,
-  articlesPageIntroMockData,
-} from "@/data/mock/articles";
 import { isShopifyDataSource } from "@/data/source";
-import type { ArticlesPageData } from "@/types/articles";
+import { storefrontQuery } from "@/data/shopify/storefront-client";
+import { articlesListMockData } from "@/data/mock/articles";
 
-export function hasArticlesContent(): boolean {
+interface ShopifyArticlesPresenceQueryData {
+  articles: {
+    nodes: Array<{
+      handle: string;
+    }>;
+  };
+}
+
+const articlesPresenceQuery = `
+  query ArticlesPresence {
+    articles(first: 1, sortKey: PUBLISHED_AT, reverse: true) {
+      nodes {
+        handle
+      }
+    }
+  }
+`;
+
+export async function hasArticlesContent(): Promise<boolean> {
   if (isShopifyDataSource()) {
     return hasArticlesShopifyContent();
   }
@@ -17,25 +32,9 @@ function hasArticlesMockContent(): boolean {
   return articlesListMockData.length > 0;
 }
 
-export function getArticlesPageData(): ArticlesPageData {
-  if (isShopifyDataSource()) {
-    return getShopifyArticlesPageData();
-  }
+async function hasArticlesShopifyContent(): Promise<boolean> {
+  const data =
+    await storefrontQuery<ShopifyArticlesPresenceQueryData>(articlesPresenceQuery);
 
-  return getMockArticlesPageData();
-}
-
-function getMockArticlesPageData(): ArticlesPageData {
-  return {
-    intro: articlesPageIntroMockData,
-    items: articlesListMockData,
-  };
-}
-
-function hasArticlesShopifyContent(): boolean {
-  return hasArticlesMockContent();
-}
-
-function getShopifyArticlesPageData(): ArticlesPageData {
-  return getMockArticlesPageData();
+  return data.articles.nodes.length > 0;
 }

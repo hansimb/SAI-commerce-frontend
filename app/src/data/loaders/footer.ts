@@ -6,7 +6,7 @@ import type { FooterData } from "@/types/footer";
 
 export async function getFooterData(): Promise<FooterData> {
   const { items } = await getProductsPageData();
-  const navigationLinks = getNavigationLinks(hasArticlesContent());
+  const navigationLinks = getNavigationLinks(await hasArticlesContent());
 
   return {
     linkGroups: [

@@ -7,6 +7,11 @@ export interface ArticleListItem {
   publishedAt?: string;
 }
 
+export interface ArticleImage {
+  src: string;
+  alt?: string;
+}
+
 export interface ArticlesPageIntroData {
   thoughtTitle?: string;
   mainTitle?: string;
@@ -17,4 +22,15 @@ export interface ArticlesPageIntroData {
 export interface ArticlesPageData {
   intro: ArticlesPageIntroData;
   items: ArticleListItem[];
+}
+
+export interface ArticleDetailPageData {
+  slug: string;
+  category: string;
+  title: string;
+  excerpt?: string;
+  author?: string;
+  publishedAt?: string;
+  image?: ArticleImage;
+  contentHtml: string;
 }

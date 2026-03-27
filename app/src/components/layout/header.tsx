@@ -14,7 +14,6 @@ import {
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CartIconButton } from "@/components/cart/cart-icon-button";
-import { hasArticlesContent } from "@/data/loaders/articles";
 import { getNavigationLinks } from "@/data/navigation-links";
 import { brandData } from "@/data/brand";
 
@@ -40,9 +39,13 @@ const NavLink = ({
   </Link>
 );
 
-export default function Header() {
+interface HeaderProps {
+  hasArticles: boolean;
+}
+
+export default function Header({ hasArticles }: HeaderProps) {
   const { open, onOpen, onClose } = useDisclosure();
-  const navigationLinks = getNavigationLinks(hasArticlesContent());
+  const navigationLinks = getNavigationLinks(hasArticles);
 
   return (
     <Box bg="layoutBg">
