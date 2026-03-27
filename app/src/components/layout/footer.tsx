@@ -3,7 +3,6 @@ import {
   Container,
   Text,
   Flex,
-  Spacer,
   Separator,
   Stack,
   Image,
@@ -24,18 +23,19 @@ export default async function Footer({ brand }: FooterProps) {
     <Box bg="layoutBg">
       <Flex gap={5} align="center" padding={10}>
         <Container>
-          <Stack direction={{ base: "column", md: "row" }} gap="10">
-            <Stack flex="1" gap={4} maxW="320px">
-              <Flex align="center" gap={4}>
-                <Box>
+          <Stack direction={{ base: "column", md: "row" }} gap={12}>
+            <Stack gap={4} align={{ base: "center", md: "stretch" }}>
+              <Flex justify="center">
+                <Box textAlign="center">
                   {brand.logoHorizontal ? (
                     <Image
                       src={brand.logoHorizontal}
                       alt={brand.name}
-                      h="40px"
+                      h="80px"
                       w="auto"
+                      mx="auto"
                       objectFit="contain"
-                      mb={3}
+                      mb={2}
                     />
                   ) : null}
                   <Text fontWeight="bold">{brand.name}</Text>
@@ -45,27 +45,34 @@ export default async function Footer({ brand }: FooterProps) {
                 </Box>
               </Flex>
             </Stack>
-            <Spacer />
+            <Box width="48px" />
 
-            {footerData.linkGroups.map((linkBox) => (
-              <Stack key={linkBox.title} flex="1">
-                <Text fontWeight="bold">{linkBox.title}</Text>
+            <Flex
+              direction={{ base: "column", md: "row" }}
+              gap={8}
+              flex="1"
+              justify="space-between"
+            >
+              {footerData.linkGroups.map((linkBox) => (
+                <Stack key={linkBox.title} gap={3}>
+                  <Text fontWeight="bold">{linkBox.title}</Text>
 
-                {linkBox.links.map((link) => (
-                  <Link key={link.label} href={link.href}>
-                    {link.label}
-                  </Link>
+                  {linkBox.links.map((link) => (
+                    <Link key={link.label} href={link.href}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </Stack>
+              ))}
+
+              <Stack gap={3}>
+                <Text fontWeight="bold">{footerLabels.contact}</Text>
+
+                {footerData.contactItems.map((item) => (
+                  <Text key={item.label}>{item.value}</Text>
                 ))}
               </Stack>
-            ))}
-
-            <Stack flex="1">
-              <Text fontWeight="bold">{footerLabels.contact}</Text>
-
-              {footerData.contactItems.map((item) => (
-                <Text key={item.label}>{item.value}</Text>
-              ))}
-            </Stack>
+            </Flex>
           </Stack>
 
           <Separator mt={10} />
