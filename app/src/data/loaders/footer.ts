@@ -16,10 +16,12 @@ export async function getFooterData(): Promise<FooterData> {
       },
       {
         title: "Products",
-        links: items.map((product) => ({
+        links: items
+          .filter((product) => product.hasDetails)
+          .map((product) => ({
           label: product.title,
           href: `/products/${product.slug}`,
-        })),
+          })),
       },
     ],
     contactItems: contactMethodsData,

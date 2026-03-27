@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, List, Stack, Text } from "@chakra-ui/react";
 import type { ProductHighlightsSectionData } from "@/types/products";
 
 interface HighlightsProps {
@@ -18,11 +18,15 @@ export function Highlights({ section }: HighlightsProps) {
         {section.title}
       </Text>
 
-      <Stack gap={4}>
+      <List.Root gap={4}>
         {section.items.map((item) => (
-          <Text key={item}>{item}</Text>
+          <List.Item key={item}>
+            <Stack gap={1}>
+              <Text lineHeight="tall">{item}</Text>
+            </Stack>
+          </List.Item>
         ))}
-      </Stack>
+      </List.Root>
     </Box>
   );
 }

@@ -1,9 +1,18 @@
 import type {
+  ProductDetailContentData,
+  ProductHighlightsSectionData,
+  ProductImageAsset,
+  ProductImageSpecsSectionData,
+  ProductSpecItem,
+  ProductSpecsSectionData,
   ProductSummary,
   ProductsTextContentBlockData,
 } from "@/types/products";
 import type {
+  ShopifyMediaImageReference,
   ShopifyMetaobjectField,
+  ShopifyMetaobjectNode,
+  ShopifyMetaobjectReference,
   ShopifyProductNode,
   ShopifyScalarMetaobjectField,
 } from "@/data/shopify/types";
@@ -25,9 +34,12 @@ export function mapProductBasicToListItem(
 
 export function mapStorefrontProductToListItem(
   product: ShopifyProductNode,
+  hasDetails = false,
 ): ProductSummary {
   return {
     slug: product.handle,
+    hasDetails,
+    availableForSale: product.availableForSale,
     categoryLabel: product.productType || "",
     title: product.title,
     subtitle: product.subtitleMetafield?.value || "",
@@ -50,7 +62,16 @@ export function mapTextContentBlockReference(
     return fallback;
   }
 
-  const fields = field.reference.fields;
+  return mapTextContentBlockFields(field.reference.fields, fallback);
+}
+
+export function mapTextContentBlockFields(
+  fields: ShopifyScalarMetaobjectField[] | undefined,
+  fallback: ProductsTextContentBlockData = {},
+): ProductsTextContentBlockData {
+  if (!fields?.length) {
+    return fallback;
+  }
 
   return {
     thoughtTitle:
@@ -64,7 +85,155 @@ export function mapTextContentBlockReference(
   };
 }
 
-function getMetaobjectTextValue(
+export function mapProductCardSpecs(
+  fields: ShopifyScalarMetaobjectField[] | undefined,
+  limit?: number,
+): ProductSpecItem[] {
+  return mapSpecsFromMetaobjectFields(fields, "spec_description", "spec_detail", limit);
+}
+
+export function mapSpecsFromMetaobjectFields(
+  fields: ShopifyScalarMetaobjectField[] | undefined,
+  labelKey: string,
+  valueKey: string,
+  limit?: number,
+): ProductSpecItem[] {
+  if (!fields?.length) {
+    return [];
+  }
+
+  const labels = parseStringList(getMetaobjectTextValue(fields, labelKey));
+  const values = parseStringList(getMetaobjectTextValue(fields, valueKey));
+
+  const specs = labels
+    .map((label, index) => ({
+      label,
+      value: values[index] || "",
+    }))
+    .filter((spec) => spec.label && spec.value);
+
+  return typeof limit === "number" ? specs.slice(0, limit) : specs;
+}
+
+export function mapMediaImageReference(
+  reference: ShopifyMediaImageReference | null | undefined,
+  fallbackAlt: string,
+): ProductImageAsset | undefined {
+  const image = reference?.image;
+
+  if (!image?.url) {
+    return undefined;
+  }
+
+  return {
+    src: image.url,
+    alt: image.altText || fallbackAlt,
+  };
+}
+
+export function mapProductDetailsMetaobject(
+  metaobject: ShopifyMetaobjectNode,
+  product: ProductSummary,
+): ProductDetailContentData {
+  const fields = metaobject.fields;
+
+  const heroImage =
+    mapMediaImageReference(
+      getMetaobjectFieldReference<ShopifyMediaImageReference>(
+        fields,
+        "large_hero_image",
+        "MediaImage",
+      ),
+      `${product.title} hero image`,
+    ) || product.image;
+
+  const largeImage =
+    mapMediaImageReference(
+      getMetaobjectFieldReference<ShopifyMediaImageReference>(
+        fields,
+        "large_image",
+        "MediaImage",
+      ),
+      `${product.title} detail image`,
+    ) || heroImage;
+
+  const largeImage2 = mapMediaImageReference(
+    getMetaobjectFieldReference<ShopifyMediaImageReference>(
+      fields,
+      "large_image_2",
+      "MediaImage",
+    ),
+    `${product.title} secondary detail image`,
+  );
+
+  const keySpecs = mapMetaobjectSpecsSection(
+    getMetaobjectFieldReference<ShopifyMetaobjectReference>(
+      fields,
+      "key_specs",
+      "Metaobject",
+    )?.fields,
+    {
+      title: "Key specs",
+      specs: product.specs.slice(0, 3),
+    },
+    3,
+  );
+
+  const highlights: ProductHighlightsSectionData = {
+    title: "Highlights",
+    items: parseStringList(getMetaobjectTextValue(fields, "highlights")).slice(0, 4),
+  };
+
+  const horizontalSection = mapImageSpecsSection(
+    getMetaobjectFieldReference<ShopifyMetaobjectReference>(
+      fields,
+      "image_specs_horizontal",
+      "Metaobject",
+    ),
+    "horizontal",
+    "Performance",
+    `${product.title} horizontal specs image`,
+  );
+
+  const verticalSection = mapImageSpecsSection(
+    getMetaobjectFieldReference<ShopifyMetaobjectReference>(
+      fields,
+      "image_specs_vertical",
+      "Metaobject",
+    ),
+    "vertical",
+    "Build",
+    `${product.title} vertical specs image`,
+  );
+
+  return {
+    slug: product.slug,
+    heroImage,
+    textContentBlock: mapTextContentBlockFields(
+      getMetaobjectFieldReference<ShopifyMetaobjectReference>(
+        fields,
+        "chosen_text_contents",
+        "Metaobject",
+      )?.fields,
+    ),
+    textContentBlock2: mapTextContentBlockFields(
+      getMetaobjectFieldReference<ShopifyMetaobjectReference>(
+        fields,
+        "chosen_text_contents_2",
+        "Metaobject",
+      )?.fields,
+    ),
+    largeImage,
+    largeImage2,
+    keySpecs,
+    highlights,
+    imageSpecsSections: [horizontalSection, verticalSection].filter(
+      (section): section is ProductImageSpecsSectionData => Boolean(section),
+    ),
+  };
+}
+
+export function getMetaobjectTextValue(
   fields: Array<{
     key: string;
     value: string | null;
@@ -74,27 +243,7 @@ function getMetaobjectTextValue(
   return fields.find((field) => field.key === key)?.value ?? undefined;
 }
 
-function mapProductCardSpecs(
-  fields: ShopifyScalarMetaobjectField[] | undefined,
-) {
-  if (!fields?.length) {
-    return [];
-  }
-
-  const descriptions = parseStringList(
-    getMetaobjectTextValue(fields, "spec_description"),
-  );
-  const details = parseStringList(getMetaobjectTextValue(fields, "spec_detail"));
-
-  return descriptions
-    .map((label, index) => ({
-      label,
-      value: details[index] || "",
-    }))
-    .filter((spec) => spec.label && spec.value);
-}
-
-function parseStringList(value: string | undefined): string[] {
+export function parseStringList(value: string | undefined): string[] {
   if (!value) {
     return [];
   }
@@ -110,6 +259,94 @@ function parseStringList(value: string | undefined): string[] {
   } catch {
     return [];
   }
+}
+
+function mapMetaobjectSpecsSection(
+  fields: ShopifyScalarMetaobjectField[] | undefined,
+  fallback: ProductSpecsSectionData,
+  limit?: number,
+): ProductSpecsSectionData {
+  if (!fields?.length) {
+    return fallback;
+  }
+
+  const specs = mapProductCardSpecs(fields, limit);
+
+  return {
+    title: fallback.title,
+    specs: specs.length > 0 ? specs : fallback.specs,
+  };
+}
+
+function mapImageSpecsSection(
+  metaobject: ShopifyMetaobjectReference | undefined,
+  layout: ProductImageSpecsSectionData["layout"],
+  title: string,
+  fallbackAlt: string,
+): ProductImageSpecsSectionData | undefined {
+  const fields = metaobject?.fields;
+
+  if (!fields?.length) {
+    return undefined;
+  }
+
+  const image =
+    mapMediaImageReference(
+      getMetaobjectNestedReference<ShopifyMediaImageReference>(
+        fields,
+        "large_image",
+        "MediaImage",
+      ),
+      fallbackAlt,
+    ) || {
+      src: "/globe.svg",
+      alt: fallbackAlt,
+    };
+
+  const specs = mapSpecsFromMetaobjectFields(fields, "specs_titles", "specs_text", 4);
+
+  if (specs.length === 0) {
+    return undefined;
+  }
+
+  return {
+    title,
+    image,
+    specs,
+    layout,
+  };
+}
+
+function getMetaobjectFieldReference<TReference extends { __typename: string }>(
+  fields: ShopifyMetaobjectField[] | ShopifyScalarMetaobjectField[],
+  key: string,
+  typename: TReference["__typename"],
+): TReference | undefined {
+  const field = fields.find((item) => item.key === key) as ShopifyMetaobjectField | undefined;
+  const reference = field?.reference;
+
+  if (!reference || reference.__typename !== typename) {
+    return undefined;
+  }
+
+  return reference as unknown as TReference;
+}
+
+function getMetaobjectNestedReference<
+  TReference extends { __typename: string },
+>(
+  fields: ShopifyScalarMetaobjectField[],
+  key: string,
+  typename: TReference["__typename"],
+): TReference | undefined {
+  const field = fields.find((item) => item.key === key);
+  const reference = field?.reference;
+
+  if (!reference || reference.__typename !== typename) {
+    return undefined;
+  }
+
+  return reference as unknown as TReference;
 }
 
 function formatMoney(amount: string): string {

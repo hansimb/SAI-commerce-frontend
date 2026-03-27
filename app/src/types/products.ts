@@ -10,6 +10,8 @@ export interface ProductImageAsset {
 
 export interface ProductSummary {
   slug: string;
+  hasDetails: boolean;
+  availableForSale: boolean;
   categoryLabel: string;
   title: string;
   subtitle: string;
@@ -43,6 +45,13 @@ export interface ProductHighlightsSectionData {
   items: string[];
 }
 
+export interface ProductImageSpecsSectionData {
+  title?: string;
+  image: ProductImageAsset;
+  specs: ProductSpecItem[];
+  layout: "horizontal" | "vertical";
+}
+
 export interface ProductCustomizationOption {
   label: string;
   active?: boolean;
@@ -61,16 +70,19 @@ export interface ProductCustomizationSectionData {
 
 export interface ProductDetailContentData {
   slug: string;
-  largeImageTitle?: string;
+  heroImage: ProductImageAsset;
+  textContentBlock?: ProductsTextContentBlockData;
+  textContentBlock2?: ProductsTextContentBlockData;
+  largeImage: ProductImageAsset;
+  largeImage2?: ProductImageAsset;
   keySpecs: ProductSpecsSectionData;
   highlights: ProductHighlightsSectionData;
-  horizontalSpecs: ProductSpecsSectionData;
-  verticalSpecs: ProductSpecsSectionData;
+  imageSpecsSections: ProductImageSpecsSectionData[];
 }
 
 export interface ProductDetailPageData {
   product: ProductSummary;
   detail: ProductDetailContentData;
-  customization: ProductCustomizationSectionData;
+  customization?: ProductCustomizationSectionData;
   ctaLabel: string;
 }

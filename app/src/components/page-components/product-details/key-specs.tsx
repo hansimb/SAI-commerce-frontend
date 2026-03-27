@@ -1,4 +1,5 @@
-import { Box, Flex, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
+import { ProductSpecsList } from "@/components/page-components/product-details/product-specs-list";
 import type { ProductSpecsSectionData } from "@/types/products";
 
 interface KeySpecsProps {
@@ -19,16 +20,7 @@ export function KeySpecs({ section }: KeySpecsProps) {
       </Text>
 
       <Stack gap={4}>
-        {section.specs.map((spec) => (
-          <Flex key={spec.label} justify="space-between" gap={4} borderTopWidth="1px" pt={4}>
-            <Text fontSize="sm" color="fgMuted">
-              {spec.label}
-            </Text>
-            <Text fontWeight="semibold" textAlign="right">
-              {spec.value}
-            </Text>
-          </Flex>
-        ))}
+        <ProductSpecsList specs={section.specs} />
       </Stack>
     </Box>
   );

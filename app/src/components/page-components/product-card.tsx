@@ -11,6 +11,7 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { ProductSpecsList } from "@/components/page-components/product-details/product-specs-list";
 import type { ProductSummary } from "@/types/products";
 
 interface ProductCardProps {
@@ -58,15 +59,8 @@ export const ProductCard = ({ data }: ProductCardProps) => {
           {data.description ? <Text mb={6}>{data.description}</Text> : null}
 
           {data.specs.length > 0 ? (
-            <Box borderWidth="1px" rounded="md" p={5} mb={6}>
-              {data.specs.map((spec) => (
-                <Flex key={spec.label} justify="space-between" py={2}>
-                  <Text fontSize="sm" color="gray.400">
-                    {spec.label}
-                  </Text>
-                  <Text fontWeight="semibold">{spec.value}</Text>
-                </Flex>
-              ))}
+            <Box mb={6}>
+              <ProductSpecsList specs={data.specs} />
             </Box>
           ) : null}
 
@@ -88,15 +82,13 @@ export const ProductCard = ({ data }: ProductCardProps) => {
                 {data.priceSubtitle}
               </Text>
             </Stack>
-            {data.slug ? (
+            {data.hasDetails ? (
               <Button asChild size="lg">
                 <ChakraLink as={Link} href={`/products/${data.slug}`}>
                   View Details
                 </ChakraLink>
               </Button>
-            ) : (
-              <Button size="lg">View Details</Button>
-            )}
+            ) : null}
           </Flex>
         </Box>
       </Flex>

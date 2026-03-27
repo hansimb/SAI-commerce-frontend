@@ -3,6 +3,8 @@ import type { ProductSummary } from "@/types/products";
 export const productBasicMockData: ProductSummary[] = [
   {
     slug: "signature-tube-amplifier",
+    hasDetails: true,
+    availableForSale: true,
     categoryLabel: "Amplifiers",
     title: "Signature Tube Amplifier",
     subtitle: "Pure analog warmth meets modern precision",
@@ -22,6 +24,8 @@ export const productBasicMockData: ProductSummary[] = [
   },
   {
     slug: "reference-monitor-controller",
+    hasDetails: true,
+    availableForSale: true,
     categoryLabel: "Controllers",
     title: "Reference Monitor Controller",
     subtitle: "Analog control for critical listening",

@@ -2,9 +2,25 @@ export interface ShopifyScalarMetaobjectField {
   key: string;
   value: string | null;
   type: string;
+  reference?: ShopifyReference | null;
 }
 
-export interface ShopifyReferencedMetaobject {
+export interface ShopifyMediaImageReference {
+  __typename: "MediaImage";
+  image: {
+    url: string;
+    altText: string | null;
+  } | null;
+}
+
+export interface ShopifyProductReference {
+  __typename: "Product";
+  id?: string;
+  handle: string;
+  title: string;
+}
+
+export interface ShopifyMetaobjectReference {
   __typename: "Metaobject";
   id?: string;
   type?: string;
@@ -12,11 +28,16 @@ export interface ShopifyReferencedMetaobject {
   fields: ShopifyScalarMetaobjectField[];
 }
 
+export type ShopifyReference =
+  | ShopifyMediaImageReference
+  | ShopifyMetaobjectReference
+  | ShopifyProductReference;
+
 export interface ShopifyMetaobjectField {
   key: string;
   value: string | null;
   type: string;
-  reference: ShopifyReferencedMetaobject | null;
+  reference: ShopifyReference | null;
   references: {
     nodes: ShopifyProductNode[];
   } | null;
@@ -25,7 +46,7 @@ export interface ShopifyMetaobjectField {
 export interface ShopifyProductMetafield {
   type: string;
   value: string | null;
-  reference: ShopifyReferencedMetaobject | null;
+  reference: ShopifyMetaobjectReference | null;
 }
 
 export interface ShopifyProductNode {
@@ -34,6 +55,7 @@ export interface ShopifyProductNode {
   handle: string;
   title: string;
   description: string;
+  availableForSale: boolean;
   productType: string;
   featuredImage: {
     url: string;
@@ -49,6 +71,13 @@ export interface ShopifyProductNode {
   subtitleMetafield: ShopifyProductMetafield | null;
 }
 
+export interface ShopifyMetaobjectNode {
+  id?: string;
+  type?: string;
+  handle: string;
+  fields: ShopifyMetaobjectField[];
+}
+
 export interface ShopifyProductsPageQueryData {
   metaobject: {
     id: string;
@@ -56,4 +85,13 @@ export interface ShopifyProductsPageQueryData {
     handle: string;
     fields: ShopifyMetaobjectField[];
   } | null;
+  detailPages: {
+    nodes: ShopifyMetaobjectNode[];
+  };
+}
+
+export interface ShopifyProductDetailPagesQueryData {
+  detailPages: {
+    nodes: ShopifyMetaobjectNode[];
+  };
 }

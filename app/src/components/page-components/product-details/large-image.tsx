@@ -1,22 +1,14 @@
-import { Box, Heading, Image, Stack } from "@chakra-ui/react";
+import { Box, Image, Stack } from "@chakra-ui/react";
 import type { ProductImageAsset } from "@/types/products";
 
 interface LargeImageProps {
-  title?: string;
   image: ProductImageAsset;
 }
 
-export function LargeImage({ title, image }: LargeImageProps) {
+export function LargeImage({ image }: LargeImageProps) {
   return (
     <Stack gap={6}>
-      {title ? (
-        <Heading as="h2" size="2xl" textAlign="center">
-          {title}
-        </Heading>
-      ) : null}
-
       <Box
-        borderWidth="1px"
         rounded="3xl"
         p={{ base: 6, md: 10 }}
         minH={{ base: "340px", md: "560px" }}

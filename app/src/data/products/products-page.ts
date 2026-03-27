@@ -8,7 +8,9 @@ import {
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMetaobjectField,
+  ShopifyMetaobjectNode,
   ShopifyProductNode,
+  ShopifyProductReference,
   ShopifyProductsPageQueryData,
 } from "@/data/shopify/types";
 import { isShopifyDataSource } from "@/data/source";
@@ -45,6 +47,7 @@ const productsPageQuery = `
               handle
               title
               description
+              availableForSale
               productType
               cardSpecsMetafield: metafield(
                 namespace: "custom"
@@ -88,6 +91,23 @@ const productsPageQuery = `
         }
       }
     }
+    detailPages: metaobjects(type: "product_details_page", first: 50) {
+      nodes {
+        handle
+        fields {
+          key
+          value
+          type
+          reference {
+            __typename
+            ... on Product {
+              handle
+              title
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -125,22 +145,45 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   const productsField = data.metaobject.fields.find(
     (field) => field.key === "products_list",
   );
+  const detailPageHandles = getDetailPageProductHandles(data.detailPages.nodes);
 
   return {
     textContentBlock: mapTextContentBlockReference(
       introField,
       productsIntroTextContentBlock,
     ),
-    items: mapProductsList(productsField),
+    items: mapProductsList(productsField, detailPageHandles),
   };
 }
 
 function mapProductsList(
   field: ShopifyMetaobjectField | undefined,
+  detailPageHandles: Set<string>,
 ): ProductSummary[] {
   const products = field?.references?.nodes ?? [];
 
   return products
     .filter((node): node is ShopifyProductNode => node.__typename === "Product")
-    .map(mapStorefrontProductToListItem);
+    .map((product) =>
+      mapStorefrontProductToListItem(
+        product,
+        detailPageHandles.has(product.handle),
+      ),
+    );
+}
+
+function getDetailPageProductHandles(
+  detailPages: ShopifyMetaobjectNode[],
+): Set<string> {
+  return new Set(
+    detailPages
+      .map((detailPage) =>
+        detailPage.fields.find((field) => field.key === "product")?.reference,
+      )
+      .filter(
+        (reference): reference is ShopifyProductReference =>
+          reference != null && reference.__typename === "Product",
+      )
+      .map((reference) => reference.handle),
+  );
 }
