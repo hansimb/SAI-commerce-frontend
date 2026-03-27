@@ -9,9 +9,4 @@ export interface ContactPageData {
   title: string;
   intro: string;
   contactMethods: ContactMethod[];
-  studioTitle: string;
-  studioText: string;
-  inquiryTitle: string;
-  inquiryText: string;
-  ctaLabel: string;
 }

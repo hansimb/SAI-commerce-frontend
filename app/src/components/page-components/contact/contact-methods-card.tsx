@@ -2,15 +2,34 @@ import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import type { ContactPageData } from "@/types/contact";
 
 interface ContactMethodsCardProps {
+  eyebrow: string;
+  title: string;
+  intro: string;
   items: ContactPageData["contactMethods"];
 }
 
-export function ContactMethodsCard({ items }: ContactMethodsCardProps) {
+export function ContactMethodsCard({
+  eyebrow,
+  title,
+  intro,
+  items,
+}: ContactMethodsCardProps) {
   return (
-    <Box flex="1" borderWidth="1px" rounded="lg" p={8}>
-      <Heading as="h2" size="lg" mb={5}>
-        Contact methods
+    <Box borderWidth="1px" rounded="lg" p={8}>
+      <Text
+        fontSize="sm"
+        fontWeight="semibold"
+        color="accentBright"
+        textTransform="uppercase"
+        mb={3}
+      >
+        {eyebrow}
+      </Text>
+      <Heading as="h1" size="2xl" mb={4}>
+        {title}
       </Heading>
+      <Text mb={8}>{intro}</Text>
+
       <Stack gap={5}>
         {items.map((item) => (
           <Box key={item.label}>

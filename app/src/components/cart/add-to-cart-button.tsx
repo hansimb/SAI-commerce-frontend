@@ -2,6 +2,7 @@
 
 import { Button } from "@chakra-ui/react";
 import { useCart } from "@/components/cart/cart-provider";
+import { shouldShowCart } from "@/data/source";
 
 interface AddToCartButtonProps {
   slug: string;
@@ -19,6 +20,10 @@ export function AddToCartButton({
   label,
 }: AddToCartButtonProps) {
   const { addItem } = useCart();
+
+  if (!shouldShowCart()) {
+    return null;
+  }
 
   return (
     <Button

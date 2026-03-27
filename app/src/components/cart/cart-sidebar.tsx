@@ -13,11 +13,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useCart } from "@/components/cart/cart-provider";
+import { shouldShowCart } from "@/data/source";
 
 export function CartSidebar() {
   const { isOpen, closeCart, itemCount, items, removeItem } = useCart();
 
-  if (!isOpen) {
+  if (!shouldShowCart() || !isOpen) {
     return null;
   }
 
