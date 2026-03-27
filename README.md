@@ -1,25 +1,45 @@
 # SAI-commerce-frontend
 
-Spectrum Audio Instrument's official e-commerce frontend.
+Spectrum Audio Instruments frontend.
 
-Check project initiall planning docs form [here](/docs/project-planning/) to learn more about the project.
+## Structure
 
-Project design prototype is located in [design-prototype/](/design-prototype/).
+- `app/` Next.js application
+- `docs/` project notes and planning docs
+- `design-prototype/` early design material
 
-Frontend application stack is located in [app/](/app/).
+## Data
 
-Check README.md in each folder for more info.
+- data source is selected with `NEXT_PUBLIC_DATA_SOURCE`
+- supported values: `mock` or `shopify`
+- Shopify content is loaded through Storefront API
+- shared Shopify metaobject constants live in `app/src/data/shopify/metaobjects.ts`
 
-## Use mock data or your own data
+## Main Shopify content
 
-Project is using mock data or Shopify storefrint API data. data/loaders is deciding witch one to use, based on your .env variables.
+- `shared_brand_data`
+- `shared_contact_data`
+- `home_page`
+- `products_page`
+- `product_details_page`
 
-Add following env variables:
+## Env
 
-```
-NEXT_PUBLIC_DATA_SOURCE= # mock or shopify
+Set these in `app/` env files:
+
+```env
+NEXT_PUBLIC_DATA_SOURCE=mock|shopify
+NEXT_PUBLIC_SHOW_CHART=true|false
 SHOPIFY_STORE_DOMAIN=
 SHOPIFY_STOREFRONT_API_VERSION=
 SHOPIFY_STOREFRONT_PUBLIC_TOKEN=
+```
 
+## Commands
+
+```bash
+cd app
+npm run dev
+npm run lint
+npm run build
 ```
