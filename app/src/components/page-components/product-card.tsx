@@ -22,7 +22,7 @@ export const ProductCard = ({ data }: ProductCardProps) => {
   return (
     <Box as="section" py={10}>
       <Flex direction={{ base: "column", md: "row" }} gap={8}>
-        <Box flex="1" p={6} borderWidth="1px" rounded="lg">
+        <Box flex="1" p={6} rounded="lg">
           <Image
             src={data.image.src}
             alt={data.title}
