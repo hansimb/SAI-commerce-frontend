@@ -13,23 +13,27 @@ export default async function Home() {
   const homePageData = await getHomePageData();
 
   return (
-    <Container>
+    <>
       <Hero
         {...homePageData.hero}
         title={homePageData.hero.title || brand.name}
         subtitle={homePageData.hero.subtitle || brand.slogan}
       />
       <Separator />
-      <TextContentBlock {...homePageData.textContentBlock1} />
-      <ContentBoxes items={homePageData.contentBoxes} />
-      <Separator />
+      <Container>
+        <TextContentBlock {...homePageData.textContentBlock1} />
+        <ContentBoxes items={homePageData.contentBoxes} />
+        <Separator />
 
-      {homePageData.largeImage ? <LargeImageSection image={homePageData.largeImage} /> : null}
-      <Separator />
-      <TextContentBlock {...homePageData.textContentBlock2} />
-      <ProcessSteps steps={homePageData.processSteps} />
-      <Separator />
-      <QuoteBlock data={homePageData.quote} />
-    </Container>
+        {homePageData.largeImage ? (
+          <LargeImageSection image={homePageData.largeImage} />
+        ) : null}
+        <Separator />
+        <TextContentBlock {...homePageData.textContentBlock2} />
+        <ProcessSteps steps={homePageData.processSteps} />
+        <Separator />
+        <QuoteBlock data={homePageData.quote} />
+      </Container>
+    </>
   );
 }
