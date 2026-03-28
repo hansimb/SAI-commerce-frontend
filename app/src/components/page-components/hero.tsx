@@ -26,8 +26,8 @@ export const Hero = ({
   subtitle = "Vintage sound. Modern precision.",
   primaryCtaText = "View products",
   primaryCtaHref = "/products",
-  secondaryCtaText = "Read articles",
-  secondaryCtaHref = "/articles",
+  secondaryCtaText = "Contact",
+  secondaryCtaHref = "/contact",
 }: HeroProps) => {
   return (
     <Box

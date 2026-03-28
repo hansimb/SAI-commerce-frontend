@@ -46,7 +46,7 @@ export default async function ProductDetailRoute({
     process.env.NODE_ENV === "development" && Boolean(data.customization);
 
   return (
-    <Container>
+    <Container maxW="8xl">
       <Stack gap={{ base: 16, md: 24 }} py={{ base: 10, md: 14 }}>
         <Hero
           product={data.product}

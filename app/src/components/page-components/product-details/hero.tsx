@@ -18,8 +18,8 @@ export function Hero({ product, image, ctaLabel }: HeroProps) {
       <Box
         w="full"
         rounded="3xl"
-        p={{ base: 6, md: 10 }}
-        minH={{ base: "320px", md: "560px" }}
+        p={{ base: 2, md: 4 }}
+        minH={{ base: "360px", md: "720px", xl: "820px" }}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -29,7 +29,7 @@ export function Hero({ product, image, ctaLabel }: HeroProps) {
           alt={image.alt}
           w="full"
           h="full"
-          maxH={{ base: "300px", md: "540px" }}
+          maxH={{ base: "340px", md: "700px", xl: "800px" }}
           objectFit="contain"
         />
       </Box>

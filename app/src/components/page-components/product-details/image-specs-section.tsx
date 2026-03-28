@@ -13,10 +13,10 @@ export function ImageSpecsSection({ section }: ImageSpecsSectionProps) {
 
         <Stack direction={{ base: "column", lg: "row" }} gap={{ base: 8, lg: 16 }}>
           <Box
-            flex="0 0 48%"
+            flex="0 0 54%"
             rounded="3xl"
-            p={{ base: 6, md: 8 }}
-            minH={{ base: "320px", md: "680px" }}
+            p={{ base: 2, md: 4 }}
+            minH={{ base: "380px", md: "780px", xl: "860px" }}
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -26,7 +26,7 @@ export function ImageSpecsSection({ section }: ImageSpecsSectionProps) {
               alt={section.image.alt}
               w="full"
               h="full"
-              maxH={{ base: "320px", md: "660px" }}
+              maxH={{ base: "360px", md: "760px", xl: "840px" }}
               objectFit="contain"
             />
           </Box>
@@ -54,8 +54,8 @@ export function ImageSpecsSection({ section }: ImageSpecsSectionProps) {
 
       <Box
         rounded="3xl"
-        p={{ base: 6, md: 8 }}
-        minH={{ base: "260px", md: "420px" }}
+        p={{ base: 2, md: 4 }}
+        minH={{ base: "340px", md: "620px", xl: "700px" }}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -65,14 +65,14 @@ export function ImageSpecsSection({ section }: ImageSpecsSectionProps) {
           alt={section.image.alt}
           w="full"
           h="full"
-          maxH={{ base: "240px", md: "400px" }}
+          maxH={{ base: "320px", md: "600px", xl: "680px" }}
           objectFit="contain"
         />
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={6}>
         {section.specs.map((spec) => (
-          <Stack key={spec.label} gap={1}>
+          <Stack key={spec.label} gap={1} align="center" textAlign="center">
             <Heading as="h3" size="lg">
               {spec.value}
             </Heading>

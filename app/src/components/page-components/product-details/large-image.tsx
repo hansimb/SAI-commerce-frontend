@@ -10,8 +10,8 @@ export function LargeImage({ image }: LargeImageProps) {
     <Stack gap={6}>
       <Box
         rounded="3xl"
-        p={{ base: 6, md: 10 }}
-        minH={{ base: "340px", md: "560px" }}
+        p={{ base: 2, md: 4 }}
+        minH={{ base: "380px", md: "760px", xl: "860px" }}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -21,7 +21,7 @@ export function LargeImage({ image }: LargeImageProps) {
           alt={image.alt}
           w="full"
           h="full"
-          maxH={{ base: "320px", md: "540px" }}
+          maxH={{ base: "360px", md: "740px", xl: "840px" }}
           objectFit="contain"
         />
       </Box>
