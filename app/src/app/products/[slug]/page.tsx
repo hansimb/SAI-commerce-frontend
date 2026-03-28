@@ -32,6 +32,14 @@ export default async function ProductDetailRoute({
   const verticalImageSpecsSection = data.detail.imageSpecsSections.find(
     (section) => section.layout === "vertical",
   );
+  const specsOverviewSections = [
+    data.detail.keySpecs ? (
+      <KeySpecs key="key-specs" section={data.detail.keySpecs} />
+    ) : null,
+    data.detail.highlights ? (
+      <Highlights key="highlights" section={data.detail.highlights} />
+    ) : null,
+  ].filter(Boolean);
   const hasSpecsOverview =
     Boolean(data.detail.keySpecs) || Boolean(data.detail.highlights);
   const showCustomization =
@@ -53,7 +61,6 @@ export default async function ProductDetailRoute({
         ) : null}
         {data.detail.largeImage ? (
           <>
-            <Separator />
             <LargeImage image={data.detail.largeImage} />
           </>
         ) : null}
@@ -61,21 +68,22 @@ export default async function ProductDetailRoute({
         {hasSpecsOverview ? (
           <>
             <Separator />
-            <SimpleGrid
-              columns={{ base: 1, xl: 2 }}
-              gap={6}
-              w="full"
-              maxW="5xl"
-              mx="auto"
-              justifyItems="center"
-            >
-              {data.detail.keySpecs ? (
-                <KeySpecs section={data.detail.keySpecs} />
-              ) : null}
-              {data.detail.highlights ? (
-                <Highlights section={data.detail.highlights} />
-              ) : null}
-            </SimpleGrid>
+            {specsOverviewSections.length === 1 ? (
+              <Stack w="full" maxW="5xl" mx="auto" align="center">
+                {specsOverviewSections}
+              </Stack>
+            ) : (
+              <SimpleGrid
+                columns={{ base: 1, xl: 2 }}
+                gap={6}
+                w="full"
+                maxW="5xl"
+                mx="auto"
+                justifyItems="center"
+              >
+                {specsOverviewSections}
+              </SimpleGrid>
+            )}
           </>
         ) : null}
 
@@ -102,7 +110,6 @@ export default async function ProductDetailRoute({
 
         {data.detail.largeImage2 ? (
           <>
-            <Separator />
             <LargeImage image={data.detail.largeImage2} />
           </>
         ) : null}

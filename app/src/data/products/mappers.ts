@@ -35,6 +35,7 @@ export function mapProductBasicToListItem(
 export function mapStorefrontProductToListItem(
   product: ShopifyProductNode,
   hasDetails = false,
+  overrideSpecs?: ProductSpecItem[],
 ): ProductSummary {
   return {
     slug: product.handle,
@@ -50,7 +51,10 @@ export function mapStorefrontProductToListItem(
     },
     price: formatMoney(product.priceRange.minVariantPrice.amount),
     priceSubtitle: product.priceRange.minVariantPrice.currencyCode,
-    specs: mapProductCardSpecs(product.cardSpecsMetafield?.reference?.fields),
+    specs:
+      overrideSpecs && overrideSpecs.length > 0
+        ? overrideSpecs
+        : mapProductCardSpecs(product.cardSpecsMetafield?.reference?.fields),
   };
 }
 
@@ -195,7 +199,6 @@ export function mapProductDetailsMetaobject(
       "Metaobject",
     ),
     "horizontal",
-    "Performance",
     `${product.title} horizontal specs image`,
   );
 
@@ -206,7 +209,6 @@ export function mapProductDetailsMetaobject(
       "Metaobject",
     ),
     "vertical",
-    "Build",
     `${product.title} vertical specs image`,
   );
 
@@ -289,7 +291,6 @@ function mapMetaobjectSpecsSection(
 function mapImageSpecsSection(
   metaobject: ShopifyMetaobjectReference | undefined,
   layout: ProductImageSpecsSectionData["layout"],
-  title: string,
   fallbackAlt: string,
 ): ProductImageSpecsSectionData | undefined {
   const fields = metaobject?.fields;
@@ -315,7 +316,6 @@ function mapImageSpecsSection(
   }
 
   return {
-    title,
     image,
     specs,
     layout,

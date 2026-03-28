@@ -7,7 +7,13 @@ interface HighlightsProps {
 
 export function Highlights({ section }: HighlightsProps) {
   return (
-    <Box borderWidth="1px" rounded="3xl" p={{ base: 6, md: 8 }} maxW="2xl" w="full">
+    <Box
+      borderWidth="1px"
+      rounded="3xl"
+      p={{ base: 6, md: 8 }}
+      maxW="2xl"
+      w="full"
+    >
       <Text
         fontSize="sm"
         textTransform="uppercase"

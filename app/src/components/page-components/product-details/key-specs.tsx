@@ -8,7 +8,7 @@ interface KeySpecsProps {
 
 export function KeySpecs({ section }: KeySpecsProps) {
   return (
-    <Box borderWidth="1px" rounded="3xl" p={{ base: 6, md: 8 }} maxW="2xl" w="full">
+    <Box borderWidth="1px" rounded="2xl" p={{ base: 6, md: 8 }} maxW="2xl" w="full">
       <Text
         fontSize="sm"
         textTransform="uppercase"
@@ -20,7 +20,7 @@ export function KeySpecs({ section }: KeySpecsProps) {
       </Text>
 
       <Stack gap={4}>
-        <ProductSpecsList specs={section.specs} />
+        <ProductSpecsList specs={section.specs} boxed={false} />
       </Stack>
     </Box>
   );
