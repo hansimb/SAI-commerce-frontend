@@ -119,7 +119,7 @@ async function getShopifyHomePageData(): Promise<HomePageData> {
     textContentBlock1: mapTextContentBlockFields(
       getMetaobjectFields(fields, ["text_content_block_1", "text-content-block-1"]),
       fallback.textContentBlock1,
-    ),
+    ) ?? fallback.textContentBlock1,
     contentBoxes: mapContentBoxes(
       getMetaobjectFields(fields, ["content_boxes", "content-boxes"]),
       fallback.contentBoxes,
@@ -132,7 +132,7 @@ async function getShopifyHomePageData(): Promise<HomePageData> {
     textContentBlock2: mapTextContentBlockFields(
       getMetaobjectFields(fields, ["text_content_block_2", "text-content-block-2"]),
       fallback.textContentBlock2,
-    ),
+    ) ?? fallback.textContentBlock2,
     processSteps: mapProcessSteps(
       getMetaobjectFields(fields, ["process_steps", "process-steps"]),
       fallback.processSteps,

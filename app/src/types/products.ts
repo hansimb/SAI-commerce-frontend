@@ -73,10 +73,10 @@ export interface ProductDetailContentData {
   heroImage: ProductImageAsset;
   textContentBlock?: ProductsTextContentBlockData;
   textContentBlock2?: ProductsTextContentBlockData;
-  largeImage: ProductImageAsset;
+  largeImage?: ProductImageAsset;
   largeImage2?: ProductImageAsset;
-  keySpecs: ProductSpecsSectionData;
-  highlights: ProductHighlightsSectionData;
+  keySpecs?: ProductSpecsSectionData;
+  highlights?: ProductHighlightsSectionData;
   imageSpecsSections: ProductImageSpecsSectionData[];
 }
 

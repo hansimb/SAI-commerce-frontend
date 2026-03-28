@@ -32,6 +32,8 @@ export default async function ProductDetailRoute({
   const verticalImageSpecsSection = data.detail.imageSpecsSections.find(
     (section) => section.layout === "vertical",
   );
+  const hasSpecsOverview =
+    Boolean(data.detail.keySpecs) || Boolean(data.detail.highlights);
   const showCustomization =
     process.env.NODE_ENV === "development" && Boolean(data.customization);
 
@@ -49,21 +51,33 @@ export default async function ProductDetailRoute({
             <TextContentBlock {...data.detail.textContentBlock} />
           </>
         ) : null}
-        <Separator />
-        <LargeImage image={data.detail.largeImage} />
-        <Separator />
+        {data.detail.largeImage ? (
+          <>
+            <Separator />
+            <LargeImage image={data.detail.largeImage} />
+          </>
+        ) : null}
 
-        <SimpleGrid
-          columns={{ base: 1, xl: 2 }}
-          gap={6}
-          w="full"
-          maxW="5xl"
-          mx="auto"
-          justifyItems="center"
-        >
-          <KeySpecs section={data.detail.keySpecs} />
-          <Highlights section={data.detail.highlights} />
-        </SimpleGrid>
+        {hasSpecsOverview ? (
+          <>
+            <Separator />
+            <SimpleGrid
+              columns={{ base: 1, xl: 2 }}
+              gap={6}
+              w="full"
+              maxW="5xl"
+              mx="auto"
+              justifyItems="center"
+            >
+              {data.detail.keySpecs ? (
+                <KeySpecs section={data.detail.keySpecs} />
+              ) : null}
+              {data.detail.highlights ? (
+                <Highlights section={data.detail.highlights} />
+              ) : null}
+            </SimpleGrid>
+          </>
+        ) : null}
 
         {showCustomization && data.customization ? (
           <>
