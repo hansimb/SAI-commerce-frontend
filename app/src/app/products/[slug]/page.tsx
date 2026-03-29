@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container, Separator, SimpleGrid, Stack } from "@chakra-ui/react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { ContactCtaButton } from "@/components/cart/contact-cta-button";
 import { CustomizationCard } from "@/components/page-components/product-details/customization-card";
 import { Hero } from "@/components/page-components/product-details/hero";
 import { Highlights } from "@/components/page-components/product-details/highlights";
@@ -121,20 +122,20 @@ export default async function ProductDetailRoute({
           </>
         ) : null}
 
-        {data.product.availableForSale ? (
-          <>
-            <Separator />
-            <Stack align="center">
-              <AddToCartButton
-                slug={data.product.slug}
-                title={data.product.title}
-                price={data.product.price}
-                imageUrl={data.detail.heroImage.src}
-                label={data.ctaLabel}
-              />
-            </Stack>
-          </>
-        ) : null}
+        <Separator />
+        <Stack align="center">
+          {data.product.availableForSale ? (
+            <AddToCartButton
+              slug={data.product.slug}
+              title={data.product.title}
+              price={data.product.price}
+              imageUrl={data.detail.heroImage.src}
+              label={data.ctaLabel}
+            />
+          ) : (
+            <ContactCtaButton />
+          )}
+        </Stack>
       </Stack>
       <Separator />
     </Container>

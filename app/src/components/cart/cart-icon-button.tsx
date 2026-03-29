@@ -1,22 +1,13 @@
 "use client";
 
 import { Circle, Icon, IconButton, Text } from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
 import { LuShoppingCart } from "react-icons/lu";
 import { useCart } from "@/components/cart/cart-provider";
-import { shouldShowCart } from "@/data/source";
 
 export function CartIconButton() {
-  const pathname = usePathname();
   const { itemCount, openCart } = useCart();
 
-  if (!shouldShowCart()) {
-    return null;
-  }
-
-  const shouldShow = itemCount > 0 || pathname.startsWith("/products");
-
-  if (!shouldShow) {
+  if (itemCount === 0) {
     return null;
   }
 

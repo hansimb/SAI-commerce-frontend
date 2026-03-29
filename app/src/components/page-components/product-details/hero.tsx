@@ -1,5 +1,6 @@
 import { Box, Heading, Image, Stack } from "@chakra-ui/react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { ContactCtaButton } from "@/components/cart/contact-cta-button";
 import type { ProductImageAsset, ProductSummary } from "@/types/products";
 
 interface HeroProps {
@@ -42,7 +43,9 @@ export function Hero({ product, image, ctaLabel }: HeroProps) {
           imageUrl={image.src}
           label={ctaLabel}
         />
-      ) : null}
+      ) : (
+        <ContactCtaButton />
+      )}
     </Stack>
   );
 }
