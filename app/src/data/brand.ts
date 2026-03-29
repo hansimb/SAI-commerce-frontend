@@ -22,6 +22,8 @@ interface ShopifyBrandQueryData {
 const brandFallbackData: BrandData = {
   name: "Spectrum Audio Instruments",
   slogan: "Vintage sound. Modern precision.",
+  logoVertical: "/logo_vertical.png",
+  logoHorizontal: "/logo_horizontal.png",
 };
 
 const brandQuery = `
@@ -65,14 +67,16 @@ export async function getBrandData(): Promise<BrandData> {
   return {
     name: getMetaobjectTextValue(fields, "name") || brandFallbackData.name,
     slogan: getMetaobjectTextValue(fields, "slogan") || brandFallbackData.slogan,
-    logoVertical: mapMediaImageReference(
-      getMediaImageReference(fields, ["logo_vertical", "logo-vertical"]),
-      "Vertical brand logo",
-    )?.src,
-    logoHorizontal: mapMediaImageReference(
-      getMediaImageReference(fields, ["logo_horizontal", "logo-horizontal"]),
-      "Horizontal brand logo",
-    )?.src,
+    logoVertical:
+      mapMediaImageReference(
+        getMediaImageReference(fields, ["logo_vertical", "logo-vertical"]),
+        "Vertical brand logo",
+      )?.src || brandFallbackData.logoVertical,
+    logoHorizontal:
+      mapMediaImageReference(
+        getMediaImageReference(fields, ["logo_horizontal", "logo-horizontal"]),
+        "Horizontal brand logo",
+      )?.src || brandFallbackData.logoHorizontal,
   };
 }
 
