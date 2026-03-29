@@ -1,7 +1,7 @@
 import { contactMethodsFallbackData } from "@/data/contact";
 import type { ContactPageData } from "@/types/contact";
 
-export const contactPageMockData: ContactPageData = {
+export const contactPageIntroData: ContactPageData = {
   eyebrow: "Contact",
   title: "Get in touch",
   intro:

@@ -5,7 +5,7 @@ export const shopifyMetaobjects = {
   },
   sharedContactData: {
     type: "shared_contact_data",
-    handle: "test-test-com",
+    handle: "shared-contact-data",
   },
   homePage: {
     type: "home_page",

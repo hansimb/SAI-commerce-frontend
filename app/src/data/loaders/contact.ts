@@ -1,5 +1,5 @@
 import { getContactMethodsData } from "@/data/contact";
-import { contactPageMockData } from "@/data/mock/contact";
+import { contactPageIntroData } from "@/data/contact-page-intro";
 import { isShopifyDataSource } from "@/data/source";
 import type { ContactPageData } from "@/types/contact";
 
@@ -8,16 +8,16 @@ export async function getContactPageData(): Promise<ContactPageData> {
     return getShopifyContactPageData();
   }
 
-  return getMockContactPageData();
+  return getContactPageIntroData();
 }
 
-function getMockContactPageData(): ContactPageData {
-  return contactPageMockData;
+function getContactPageIntroData(): ContactPageData {
+  return contactPageIntroData;
 }
 
 async function getShopifyContactPageData(): Promise<ContactPageData> {
   return {
-    ...getMockContactPageData(),
+    ...getContactPageIntroData(),
     contactMethods: await getContactMethodsData(),
   };
 }
