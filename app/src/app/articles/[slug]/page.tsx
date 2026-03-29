@@ -1,11 +1,36 @@
+import type { Metadata } from "next";
 import { Box, Container, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { getArticleDetailPageData } from "@/data/articles/article-detail-page";
+import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 interface ArticleDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ArticleDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticleDetailPageData(slug);
+
+  if (!article) {
+    return createMetadata({
+      title: buildPageTitle("Article not found"),
+      description: "The requested article could not be found.",
+      path: `/articles/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  return createMetadata({
+    title: buildPageTitle(article.title),
+    description: createDescription(article.excerpt, article.category),
+    path: `/articles/${article.slug}`,
+    image: article.image?.src || "/logo_horizontal.png",
+  });
 }
 
 export default async function ArticleDetailPage({

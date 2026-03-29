@@ -29,6 +29,7 @@ Set these in `app/` env files:
 
 ```env
 NEXT_PUBLIC_DATA_SOURCE=mock|shopify
+NEXT_PUBLIC_SITE_URL=https://your-production-domain.com
 SHOPIFY_STORE_DOMAIN=
 SHOPIFY_STOREFRONT_API_VERSION=
 SHOPIFY_STOREFRONT_PUBLIC_TOKEN=

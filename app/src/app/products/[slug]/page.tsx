@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container, Separator, SimpleGrid, Stack } from "@chakra-ui/react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
@@ -10,11 +11,39 @@ import { KeySpecs } from "@/components/page-components/product-details/key-specs
 import { LargeImage } from "@/components/page-components/product-details/large-image";
 import { getProductDetailPageData } from "@/data/products/product-detail-page";
 import { TextContentBlock } from "@/components/page-components/text-content-block";
+import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 interface ProductDetailRouteProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ProductDetailRouteProps): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getProductDetailPageData(slug);
+
+  if (!data) {
+    return createMetadata({
+      title: buildPageTitle("Product not found"),
+      description: "The requested product could not be found.",
+      path: `/products/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  return createMetadata({
+    title: buildPageTitle(data.product.title),
+    description: createDescription(
+      data.product.subtitle,
+      data.product.description,
+      data.detail.textContentBlock?.text1,
+    ),
+    path: `/products/${data.product.slug}`,
+    image: data.detail.heroImage.src || data.product.image.src,
+  });
 }
 
 export default async function ProductDetailRoute({
