@@ -15,7 +15,7 @@ jobs:
       run:
         working-directory: app
     env:
-      NEXT_PUBLIC_DATA_SOURCE: shopify
+      NEXT_PUBLIC_DATA_SOURCE: mock
       SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
       SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
       SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
