@@ -25,6 +25,7 @@ import {
   homePageFieldKeys,
   shopifyPageMetaobjects,
 } from "../shopify/metaobjects/pages";
+import { homeContentBoxesMockData, homeIntroMockData, homeLargeImageMockData, homeProcessStepsMockData, homeQuoteMockData } from "../mock/home-page";
 
 interface ShopifyHomePageQueryData {
   metaobjects: {
@@ -82,7 +83,25 @@ export async function getHomePageData(): Promise<HomePageData> {
     return getShopifyHomePageData();
   }
 
-  return getFallbackHomePageData(await getBrandData());
+  return getMockHomePageData(await getBrandData());
+}
+
+function getMockHomePageData(
+  brand: Awaited<ReturnType<typeof getBrandData>>,
+): HomePageData {
+  return {
+    hero: {
+      title: brand.name,
+      subtitle: brand.slogan,
+      ...homeHeroCtaContent,
+    },
+    textContentBlock1: homeIntroMockData,
+    contentBoxes: homeContentBoxesMockData,
+    largeImage: homeLargeImageMockData,
+    textContentBlock2: homeIntroMockData,
+    processSteps: homeProcessStepsMockData,
+    quote: homeQuoteMockData,
+  };
 }
 
 function getFallbackHomePageData(
