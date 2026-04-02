@@ -1,33 +1,30 @@
 import {
+  getMediaImageReference,
+  getMetaobjectFields,
+  mapContentBoxes,
   mapMediaImageReference,
-  getMetaobjectTextValue,
-  parseStringList,
+  mapProcessSteps,
+  mapQuote,
   mapTextContentBlockFields,
-} from "@/data/mappers/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
+} from "@/data/mappers";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
-import type {
-  ShopifyMediaImageReference,
-  ShopifyMetaobjectField,
-  ShopifyScalarMetaobjectField,
-} from "@/types/shopify";
+import type { ShopifyMetaobjectField } from "@/types/shopify";
 import { isShopifyDataSource } from "@/data/source";
 import type { HomePageData } from "@/types/home";
-import type { ContentBoxIcon } from "@/components/page-components/home/content-boxes";
-import type { ProcessStepItem } from "@/components/page-components/home/process-steps";
+import { homeHeroCtaContent } from "../contents/home-hero-cta";
 import {
   homeContentBoxesFallbackData,
-  homeHeroFallbackData,
   homeLargeImageFallbackData,
   homeProcessStepsFallbackData,
   homeQuoteFallbackData,
   homeTextContentBlock1FallbackData,
   homeTextContentBlock2FallbackData,
 } from "../fallback/home-page-fallback";
+import { getBrandData } from "./brand-loader";
 import {
-  HOME_FIELD_KEYS,
-  HOME_PAGE_KEYS,
-} from "../shopify/metaobjects/home-metaobjects";
+  homePageFieldKeys,
+  shopifyPageMetaobjects,
+} from "../shopify/metaobjects/pages";
 
 interface ShopifyHomePageQueryData {
   metaobjects: {
@@ -40,7 +37,7 @@ interface ShopifyHomePageQueryData {
 
 const homePageQuery = `
   query HomePage {
-    metaobjects(type: "${shopifyMetaobjects.homePage.type}", first: 1) {
+    metaobjects(type: "${shopifyPageMetaobjects.homePage.type}", first: 1) {
       nodes {
         handle
         fields {
@@ -84,12 +81,19 @@ export async function getHomePageData(): Promise<HomePageData> {
   if (isShopifyDataSource()) {
     return getShopifyHomePageData();
   }
-  return getFallbackHomePageData();
+
+  return getFallbackHomePageData(await getBrandData());
 }
 
-function getFallbackHomePageData(): HomePageData {
+function getFallbackHomePageData(
+  brand: Awaited<ReturnType<typeof getBrandData>>,
+): HomePageData {
   return {
-    hero: homeHeroFallbackData,
+    hero: {
+      title: brand.name,
+      subtitle: brand.slogan,
+      ...homeHeroCtaContent,
+    },
     textContentBlock1: homeTextContentBlock1FallbackData,
     contentBoxes: homeContentBoxesFallbackData,
     largeImage: homeLargeImageFallbackData,
@@ -100,149 +104,54 @@ function getFallbackHomePageData(): HomePageData {
 }
 
 async function getShopifyHomePageData(): Promise<HomePageData> {
-  const fallback = getFallbackHomePageData();
+  const brand = await getBrandData();
+  const fallback = getFallbackHomePageData(brand);
   const data = await storefrontQuery<ShopifyHomePageQueryData>(homePageQuery);
   const homePage = data.metaobjects.nodes[0];
 
-  if (!homePage) return fallback;
+  if (!homePage) {
+    return fallback;
+  }
 
   const fields = homePage.fields;
 
   return {
     hero: {
-      ...fallback.hero,
+      title: brand.name,
+      subtitle: brand.slogan,
+      ...homeHeroCtaContent,
       backgroundImage:
         mapMediaImageReference(
-          getMediaImageReference(fields, HOME_PAGE_KEYS.HERO_IMAGE),
+          getMediaImageReference(fields, homePageFieldKeys.heroImage),
           "Home hero image",
         )?.src || fallback.hero.backgroundImage,
     },
     textContentBlock1:
       mapTextContentBlockFields(
-        getMetaobjectFields(fields, HOME_PAGE_KEYS.TEXT_CONTENT_1),
+        getMetaobjectFields(fields, homePageFieldKeys.textContent1),
         fallback.textContentBlock1,
       ) ?? fallback.textContentBlock1,
     contentBoxes: mapContentBoxes(
-      getMetaobjectFields(fields, HOME_PAGE_KEYS.CONTENT_BOXES),
+      getMetaobjectFields(fields, homePageFieldKeys.contentBoxes),
       fallback.contentBoxes,
     ),
     largeImage:
       mapMediaImageReference(
-        getMediaImageReference(fields, HOME_PAGE_KEYS.LARGE_IMAGE),
+        getMediaImageReference(fields, homePageFieldKeys.largeImage),
         "Home large image",
       ) || fallback.largeImage,
     textContentBlock2:
       mapTextContentBlockFields(
-        getMetaobjectFields(fields, HOME_PAGE_KEYS.TEXT_CONTENT_2),
+        getMetaobjectFields(fields, homePageFieldKeys.textContent2),
         fallback.textContentBlock2,
       ) ?? fallback.textContentBlock2,
     processSteps: mapProcessSteps(
-      getMetaobjectFields(fields, HOME_PAGE_KEYS.PROCESS_STEPS),
+      getMetaobjectFields(fields, homePageFieldKeys.processSteps),
       fallback.processSteps,
     ),
     quote: mapQuote(
-      getMetaobjectFields(fields, HOME_PAGE_KEYS.QUOTE),
+      getMetaobjectFields(fields, homePageFieldKeys.quote),
       fallback.quote,
     ),
-  };
-}
-
-// --- HELPERS ---
-
-function getFieldReference(
-  fields: ShopifyMetaobjectField[],
-  keys: readonly string[],
-) {
-  return fields.find((field) => keys.includes(field.key))?.reference;
-}
-
-function getMetaobjectFields(
-  fields: ShopifyMetaobjectField[],
-  keys: readonly string[],
-) {
-  const reference = getFieldReference(fields, keys);
-  if (!reference || reference.__typename !== "Metaobject") return undefined;
-  return reference.fields;
-}
-
-function getMediaImageReference(
-  fields: ShopifyMetaobjectField[],
-  keys: readonly string[],
-): ShopifyMediaImageReference | undefined {
-  const reference = getFieldReference(fields, keys);
-  if (!reference || reference.__typename !== "MediaImage") return undefined;
-  return reference;
-}
-
-function mapContentBoxes(
-  fields: ShopifyScalarMetaobjectField[] | undefined,
-  fallback: HomePageData["contentBoxes"],
-): HomePageData["contentBoxes"] {
-  if (!fields?.length) return fallback;
-
-  const titles = parseStringList(
-    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLES),
-  );
-  const texts = parseStringList(
-    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXTS),
-  );
-  const icons: ContentBoxIcon[] = ["tool", "award", "users", "heart"];
-
-  const items = titles
-    .map((title, index) => ({
-      icon: icons[index] || "tool",
-      title,
-      description: texts[index] || "",
-    }))
-    .filter((item) => item.title && item.description);
-
-  return items.length > 0 ? items : fallback;
-}
-
-function mapProcessSteps(
-  fields: ShopifyScalarMetaobjectField[] | undefined,
-  fallback: HomePageData["processSteps"],
-): HomePageData["processSteps"] {
-  if (!fields?.length) return fallback;
-
-  const titles = parseStringList(
-    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLE_LIST),
-  );
-  const texts = parseStringList(
-    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXT_LIST),
-  );
-  const icons: ProcessStepItem["icon"][] = ["zap", "tool", "shield"];
-
-  const items = titles
-    .map((title, index) => ({
-      number: String(index + 1).padStart(2, "0"),
-      icon: icons[index] || "tool",
-      title,
-      description: texts[index] || "",
-    }))
-    .filter((item) => item.title && item.description);
-
-  return items.length > 0 ? items : fallback;
-}
-
-function mapQuote(
-  fields: ShopifyScalarMetaobjectField[] | undefined,
-  fallback: HomePageData["quote"],
-): HomePageData["quote"] {
-  if (!fields?.length) return fallback;
-
-  const quote = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_BODY);
-  const author = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_AUTHOR);
-  const subtitle = getMetaobjectTextValue(
-    fields,
-    HOME_FIELD_KEYS.QUOTE_AUTHOR_TITLE,
-  );
-
-  if (!quote || !author) return fallback;
-
-  return {
-    quote,
-    author,
-    subtitle: subtitle || undefined,
   };
 }

@@ -1,22 +1,20 @@
+import { productsPageIntroMockData } from "@/data/mock/products/products-page-intro";
 import { productBasicMockData } from "@/data/mock/products/product-basic";
-import { productsIntroTextContentBlock } from "@/data/mock/shared/text-content-block";
 import {
+  getDetailPageProductHandles,
+  getDetailPageSpecs,
   mapProductBasicToListItem,
-  mapProductCardSpecs,
-  mapStorefrontProductToListItem,
+  mapProductsPageItems,
   mapTextContentBlockReference,
-} from "@/data/mappers/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
+} from "@/data/mappers";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
-import type {
-  ShopifyMetaobjectField,
-  ShopifyMetaobjectNode,
-  ShopifyProductNode,
-  ShopifyProductReference,
-  ShopifyProductsPageQueryData,
-} from "@/types/shopify";
+import type { ShopifyProductsPageQueryData } from "@/types/shopify";
 import { isShopifyDataSource } from "@/data/source";
-import type { ProductSummary, ProductsPageData } from "@/types/products";
+import type { ProductsPageData } from "@/types/products";
+import {
+  productsPageFieldKeys,
+  shopifyPageMetaobjects,
+} from "@/data/shopify/metaobjects/pages";
 
 const productsPageQuery = `
   query ProductsPageMetaobject($type: String!, $handle: String!) {
@@ -90,7 +88,7 @@ const productsPageQuery = `
         }
       }
     }
-    detailPages: metaobjects(type: "${shopifyMetaobjects.productDetailsPage.type}", first: 50) {
+    detailPages: metaobjects(type: "${shopifyPageMetaobjects.productDetailsPage.type}", first: 50) {
       nodes {
         handle
         fields {
@@ -129,7 +127,7 @@ export async function getProductsPageData(): Promise<ProductsPageData> {
 
 function getMockProductsPageData(): ProductsPageData {
   return {
-    textContentBlock: productsIntroTextContentBlock,
+    textContentBlock: productsPageIntroMockData,
     items: productBasicMockData.map(mapProductBasicToListItem),
   };
 }
@@ -138,8 +136,8 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   const data = await storefrontQuery<ShopifyProductsPageQueryData>(
     productsPageQuery,
     {
-      type: shopifyMetaobjects.productsPage.type,
-      handle: shopifyMetaobjects.productsPage.handle,
+      type: shopifyPageMetaobjects.productsPage.type,
+      handle: shopifyPageMetaobjects.productsPage.handle,
     },
   );
 
@@ -148,10 +146,10 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   }
 
   const introField = data.metaobject.fields.find(
-    (field) => field.key === "products_intro_text_content_block",
+    (field) => field.key === productsPageFieldKeys.introTextContentBlock,
   );
   const productsField = data.metaobject.fields.find(
-    (field) => field.key === "products_list",
+    (field) => field.key === productsPageFieldKeys.productsList,
   );
   const detailPageHandles = getDetailPageProductHandles(data.detailPages.nodes);
   const detailPageSpecs = getDetailPageSpecs(data.detailPages.nodes);
@@ -159,79 +157,12 @@ async function getShopifyProductsPageData(): Promise<ProductsPageData> {
   return {
     textContentBlock: mapTextContentBlockReference(
       introField,
-      productsIntroTextContentBlock,
+      productsPageIntroMockData,
     ),
-    items: mapProductsList(productsField, detailPageHandles, detailPageSpecs),
+    items: mapProductsPageItems(
+      productsField,
+      detailPageHandles,
+      detailPageSpecs,
+    ),
   };
-}
-
-function mapProductsList(
-  field: ShopifyMetaobjectField | undefined,
-  detailPageHandles: Set<string>,
-  detailPageSpecs: Map<string, ProductSummary["specs"]>,
-): ProductSummary[] {
-  const products = field?.references?.nodes ?? [];
-
-  return products
-    .filter((node): node is ShopifyProductNode => node.__typename === "Product")
-    .map((product) =>
-      mapStorefrontProductToListItem(
-        product,
-        detailPageHandles.has(product.handle),
-        detailPageSpecs.get(product.handle),
-      ),
-    );
-}
-
-function getDetailPageProductHandles(
-  detailPages: ShopifyMetaobjectNode[],
-): Set<string> {
-  return new Set(
-    detailPages
-      .map(
-        (detailPage) =>
-          detailPage.fields.find((field) => field.key === "product")?.reference,
-      )
-      .filter(
-        (reference): reference is ShopifyProductReference =>
-          reference != null && reference.__typename === "Product",
-      )
-      .map((reference) => reference.handle),
-  );
-}
-
-function getDetailPageSpecs(
-  detailPages: ShopifyMetaobjectNode[],
-): Map<string, ProductSummary["specs"]> {
-  return new Map(
-    detailPages
-      .map((detailPage) => {
-        const productReference = detailPage.fields.find(
-          (field) => field.key === "product",
-        )?.reference;
-        const keySpecsReference = detailPage.fields.find(
-          (field) => field.key === "key_specs",
-        )?.reference;
-
-        if (
-          !productReference ||
-          productReference.__typename !== "Product" ||
-          !keySpecsReference ||
-          keySpecsReference.__typename !== "Metaobject"
-        ) {
-          return undefined;
-        }
-
-        const specs = mapProductCardSpecs(keySpecsReference.fields, 3);
-
-        if (specs.length === 0) {
-          return undefined;
-        }
-
-        return [productReference.handle, specs] as const;
-      })
-      .filter((entry): entry is readonly [string, ProductSummary["specs"]] =>
-        Boolean(entry),
-      ),
-  );
 }

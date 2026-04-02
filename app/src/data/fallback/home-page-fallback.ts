@@ -6,16 +6,14 @@ import type {
   ProductsTextContentBlockData,
   ProductImageAsset,
 } from "@/types/products";
+import { homeHeroCtaContent } from "@/data/contents/home-hero-cta";
 
 // hero: HomeHeroData
 export const homeHeroFallbackData: HomeHeroData = {
   backgroundImage: "",
   title: "",
   subtitle: "",
-  primaryCtaText: "",
-  primaryCtaHref: "",
-  secondaryCtaText: "",
-  secondaryCtaHref: "",
+  ...homeHeroCtaContent,
 };
 
 // textContentBlock1: ProductsTextContentBlockData

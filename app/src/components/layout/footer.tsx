@@ -7,7 +7,7 @@ import {
   Stack,
   Image,
 } from "@chakra-ui/react";
-import type { BrandData } from "@/data/fallback/brand-fallback";
+import type { BrandData } from "@/types/brand";
 import { footerLabels } from "@/data/contents/footer-labels";
 import { getFooterData } from "@/data/loaders/footer";
 import Link from "next/link";

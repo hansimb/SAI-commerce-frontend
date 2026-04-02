@@ -1,9 +1,17 @@
-import { shopifyMetaobjects } from "../shopify/metaobjects/metaobjects";
 import { brandFallbackData } from "../fallback/brand-fallback";
 import { isShopifyDataSource } from "../source";
 import { storefrontQuery } from "../shopify/storefront-client";
-import { ShopifyMetaobjectField } from "../../types/shopify";
-import { BrandData } from "@/types/brand";
+import type { ShopifyMetaobjectField } from "../../types/shopify";
+import type { BrandData } from "@/types/brand";
+import {
+  getMediaImageReference,
+  getMetaobjectTextValue,
+  mapMediaImageReference,
+} from "../mappers";
+import {
+  brandFieldKeys,
+  shopifySharedMetaobjects,
+} from "../shopify/metaobjects/shared";
 
 export interface ShopifyBrandQueryData {
   metaobject: {
@@ -15,7 +23,7 @@ export interface ShopifyBrandQueryData {
 
 const brandQuery = `
   query SharedBrand($handle: String!) {
-    metaobject(handle: { type: "${shopifyMetaobjects.sharedBrandData.type}", handle: $handle }) {
+    metaobject(handle: { type: "${shopifySharedMetaobjects.brand.type}", handle: $handle }) {
       handle
       type
       fields {
@@ -42,7 +50,7 @@ export async function getBrandData(): Promise<BrandData> {
   }
 
   const data = await storefrontQuery<ShopifyBrandQueryData>(brandQuery, {
-    handle: shopifyMetaobjects.sharedBrandData.handle,
+    handle: shopifySharedMetaobjects.brand.handle,
   });
 
   if (!data.metaobject) {
@@ -52,33 +60,21 @@ export async function getBrandData(): Promise<BrandData> {
   const fields = data.metaobject.fields;
 
   return {
-    // Not even importing the mppers MESS for now:
-    name: getMetaobjectTextValue(fields, "name") || brandFallbackData.name,
+    name:
+      getMetaobjectTextValue(fields, brandFieldKeys.name) ||
+      brandFallbackData.name,
     slogan:
-      getMetaobjectTextValue(fields, "slogan") || brandFallbackData.slogan,
+      getMetaobjectTextValue(fields, brandFieldKeys.slogan) ||
+      brandFallbackData.slogan,
     logoVertical:
       mapMediaImageReference(
-        // Hardcoded metaobject names here also
-        getMediaImageReference(fields, ["logo_vertical", "logo-vertical"]),
+        getMediaImageReference(fields, brandFieldKeys.logoVertical),
         "Vertical brand logo",
       )?.src || brandFallbackData.logoVertical,
     logoHorizontal:
       mapMediaImageReference(
-        getMediaImageReference(fields, ["logo_horizontal", "logo-horizontal"]),
+        getMediaImageReference(fields, brandFieldKeys.logoHorizontal),
         "Horizontal brand logo",
       )?.src || brandFallbackData.logoHorizontal,
   };
-}
-
-function getMediaImageReference(
-  fields: ShopifyMetaobjectField[],
-  keys: string[],
-) {
-  const reference = fields.find((field) => keys.includes(field.key))?.reference;
-
-  if (!reference || reference.__typename !== "MediaImage") {
-    return undefined;
-  }
-
-  return reference;
 }

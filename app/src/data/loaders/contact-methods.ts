@@ -1,8 +1,12 @@
-import { ContactMethod } from "@/types/contact";
-import { shopifyMetaobjects } from "../shopify/metaobjects/metaobjects";
+import type { ContactMethod } from "@/types/contact";
 import { isShopifyDataSource } from "../source";
 import { contactMethodsFallbackData } from "../fallback/contact-fallback";
 import { storefrontQuery } from "../shopify/storefront-client";
+import { getMetaobjectTextValue } from "../mappers";
+import {
+  contactFieldKeys,
+  shopifySharedMetaobjects,
+} from "../shopify/metaobjects/shared";
 
 interface ShopifySharedContactQueryData {
   metaobject: {
@@ -15,7 +19,7 @@ interface ShopifySharedContactQueryData {
 
 const sharedContactQuery = `
   query SharedContact($handle: String!) {
-    metaobject(handle: { type: "${shopifyMetaobjects.sharedContactData.type}", handle: $handle }) {
+    metaobject(handle: { type: "${shopifySharedMetaobjects.contact.type}", handle: $handle }) {
       fields {
         key
         value
@@ -32,7 +36,7 @@ export async function getContactMethodsData(): Promise<ContactMethod[]> {
   const data = await storefrontQuery<ShopifySharedContactQueryData>(
     sharedContactQuery,
     {
-      handle: shopifyMetaobjects.sharedContactData.handle,
+      handle: shopifySharedMetaobjects.contact.handle,
     },
   );
 
@@ -40,9 +44,12 @@ export async function getContactMethodsData(): Promise<ContactMethod[]> {
     return contactMethodsFallbackData;
   }
 
-  const email = getFieldValue(data.metaobject.fields, "email");
-  const phone = getFieldValue(data.metaobject.fields, "phone");
-  const address = getFieldValue(data.metaobject.fields, "address");
+  const email = getMetaobjectTextValue(data.metaobject.fields, contactFieldKeys.email);
+  const phone = getMetaobjectTextValue(data.metaobject.fields, contactFieldKeys.phone);
+  const address = getMetaobjectTextValue(
+    data.metaobject.fields,
+    contactFieldKeys.address,
+  );
 
   const items: ContactMethod[] = [];
 
@@ -71,14 +78,4 @@ export async function getContactMethodsData(): Promise<ContactMethod[]> {
   }
 
   return items.length > 0 ? items : contactMethodsFallbackData;
-}
-
-function getFieldValue(
-  fields: Array<{
-    key: string;
-    value: string | null;
-  }>,
-  key: string,
-): string | undefined {
-  return fields.find((field) => field.key === key)?.value ?? undefined;
 }

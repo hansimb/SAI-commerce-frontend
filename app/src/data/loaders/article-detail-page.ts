@@ -1,4 +1,5 @@
 import { articleDetailDataBySlug } from "@/data/mock/articles-page";
+import { mapStorefrontArticleToDetailPage } from "@/data/mappers";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import { isShopifyDataSource } from "@/data/source";
 import type { ArticleDetailPageData } from "@/types/articles";
@@ -77,36 +78,5 @@ async function getShopifyArticleDetailPageData(
     return undefined;
   }
 
-  return {
-    slug: article.handle,
-    category: article.blog?.title || "Article",
-    title: article.title,
-    excerpt: article.excerpt || undefined,
-    author: article.authorV2?.name || undefined,
-    publishedAt: formatPublishedAt(article.publishedAt),
-    image: article.image
-      ? {
-          src: article.image.url,
-          alt: article.image.altText || article.title,
-        }
-      : undefined,
-    contentHtml: article.contentHtml || "",
-  };
-}
-
-function formatPublishedAt(value: string | null): string | undefined {
-  if (!value) {
-    return undefined;
-  }
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    year: "numeric",
-  }).format(date);
+  return mapStorefrontArticleToDetailPage(article);
 }

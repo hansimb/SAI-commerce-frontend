@@ -5,7 +5,7 @@ import { LargeImageSection } from "@/components/page-components/shared/large-ima
 import { ProcessSteps } from "@/components/page-components/home/process-steps";
 import { QuoteBlock } from "@/components/page-components/home/quote-block";
 import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
-import { getBrandData } from "@/data/fallback/brand-fallback";
+import { getBrandData } from "@/data/loaders/brand-loader";
 import { getHomePageData } from "@/data/loaders/home";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 import { Container, Separator } from "@chakra-ui/react";

@@ -1,10 +1,9 @@
-import {
-  articlesListMockData,
-  articlesPageIntroMockData,
-} from "@/data/mock/articles-page";
+import { articlesPageIntroContent } from "@/data/contents/articles-page-intro";
+import { mapStorefrontArticleToListItem } from "@/data/mappers";
+import { articlesListMockData } from "@/data/mock/articles-page";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import { isShopifyDataSource } from "@/data/source";
-import type { ArticleListItem, ArticlesPageData } from "@/types/articles";
+import type { ArticlesPageData } from "@/types/articles";
 
 interface ShopifyArticlesQueryData {
   articles: {
@@ -54,7 +53,7 @@ export async function getArticlesPageData(): Promise<ArticlesPageData> {
 
 function getMockArticlesPageData(): ArticlesPageData {
   return {
-    intro: articlesPageIntroMockData,
+    intro: articlesPageIntroContent,
     items: articlesListMockData,
   };
 }
@@ -64,58 +63,7 @@ async function getShopifyArticlesPageData(): Promise<ArticlesPageData> {
     await storefrontQuery<ShopifyArticlesQueryData>(articlesPageQuery);
 
   return {
-    intro: articlesPageIntroMockData,
+    intro: articlesPageIntroContent,
     items: data.articles.nodes.map(mapStorefrontArticleToListItem),
   };
-}
-
-function mapStorefrontArticleToListItem(
-  article: ShopifyArticlesQueryData["articles"]["nodes"][number],
-): ArticleListItem {
-  return {
-    slug: article.handle,
-    category: article.blog?.title || "Article",
-    title: article.title,
-    excerpt: article.excerpt || createExcerpt(article.contentHtml),
-    author: article.authorV2?.name,
-    publishedAt: formatPublishedAt(article.publishedAt),
-  };
-}
-
-function formatPublishedAt(value: string | null): string | undefined {
-  if (!value) {
-    return undefined;
-  }
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    year: "numeric",
-  }).format(date);
-}
-
-function createExcerpt(contentHtml: string | null): string {
-  if (!contentHtml) {
-    return "";
-  }
-
-  const plainText = contentHtml
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  if (!plainText) {
-    return "";
-  }
-
-  if (plainText.length <= 180) {
-    return plainText;
-  }
-
-  return `${plainText.slice(0, 177).trimEnd()}...`;
 }

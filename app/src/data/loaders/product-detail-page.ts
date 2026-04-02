@@ -2,24 +2,23 @@ import { productBasicDataBySlug } from "@/data/mock/products/product-basic";
 import { productCustomizationCardDataBySlug } from "@/data/mock/products/customization-card";
 import { productPageDataBySlug } from "@/data/mock/products/product-page";
 import {
+  getReferencedProductFromDetailPage,
   mapProductDetailsMetaobject,
   mapStorefrontProductToListItem,
-} from "@/data/mappers/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
+} from "@/data/mappers";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
-  ShopifyMetaobjectNode,
   ShopifyProductDetailPagesQueryData,
-  ShopifyProductNode,
 } from "@/types/shopify";
 import { isShopifyDataSource } from "@/data/source";
 import type { ProductDetailPageData } from "@/types/products";
+import { shopifyPageMetaobjects } from "@/data/shopify/metaobjects/pages";
 
 const ctaLabel = "Buy";
 
 const productDetailPagesQuery = `
   query ProductDetailPages {
-    detailPages: metaobjects(type: "${shopifyMetaobjects.productDetailsPage.type}", first: 50) {
+    detailPages: metaobjects(type: "${shopifyPageMetaobjects.productDetailsPage.type}", first: 50) {
       nodes {
         handle
         fields {
@@ -141,11 +140,11 @@ async function getShopifyProductDetailPageData(
   );
 
   const detailPage = data.detailPages.nodes.find(
-    (node) => getReferencedProduct(node)?.handle === slug,
+    (node) => getReferencedProductFromDetailPage(node)?.handle === slug,
   );
 
   const productReference = detailPage
-    ? getReferencedProduct(detailPage)
+    ? getReferencedProductFromDetailPage(detailPage)
     : undefined;
 
   if (!detailPage || !productReference) {
@@ -160,18 +159,4 @@ async function getShopifyProductDetailPageData(
     customization: undefined,
     ctaLabel,
   };
-}
-
-function getReferencedProduct(
-  detailPage: ShopifyMetaobjectNode,
-): ShopifyProductNode | undefined {
-  const reference = detailPage.fields.find(
-    (field) => field.key === "product",
-  )?.reference;
-
-  if (!reference || reference.__typename !== "Product") {
-    return undefined;
-  }
-
-  return reference as ShopifyProductNode;
 }

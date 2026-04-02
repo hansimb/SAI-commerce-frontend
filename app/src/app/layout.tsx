@@ -9,7 +9,7 @@ import { themeTokens } from "@/theme/tokens";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { hasArticlesContent } from "@/data/loaders/articles";
-import { getBrandData } from "@/data/fallback/brand-fallback";
+import { getBrandData } from "@/data/loaders/brand-loader";
 import { buildPageTitle, getMetadataBase, isProductionSite } from "@/lib/seo";
 
 const geistSans = Geist({

@@ -9,6 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { homeHeroCtaContent } from "@/data/contents/home-hero-cta";
 
 interface HeroProps {
   backgroundImage?: string;
@@ -24,10 +25,10 @@ export const Hero = ({
   backgroundImage = "/hero-bg.jpg",
   title = "Spectrum Audio Instruments",
   subtitle = "Vintage sound. Modern precision.",
-  primaryCtaText = "View products",
-  primaryCtaHref = "/products",
-  secondaryCtaText = "Contact",
-  secondaryCtaHref = "/contact",
+  primaryCtaText = homeHeroCtaContent.primaryCtaText,
+  primaryCtaHref = homeHeroCtaContent.primaryCtaHref,
+  secondaryCtaText = homeHeroCtaContent.secondaryCtaText,
+  secondaryCtaHref = homeHeroCtaContent.secondaryCtaHref,
 }: HeroProps) => {
   return (
     <Box
