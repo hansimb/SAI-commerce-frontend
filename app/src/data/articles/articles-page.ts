@@ -1,7 +1,7 @@
 import {
   articlesListMockData,
   articlesPageIntroMockData,
-} from "@/data/mock/articles";
+} from "@/data/mock/articles-page";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import { isShopifyDataSource } from "@/data/source";
 import type { ArticleListItem, ArticlesPageData } from "@/types/articles";
@@ -60,7 +60,8 @@ function getMockArticlesPageData(): ArticlesPageData {
 }
 
 async function getShopifyArticlesPageData(): Promise<ArticlesPageData> {
-  const data = await storefrontQuery<ShopifyArticlesQueryData>(articlesPageQuery);
+  const data =
+    await storefrontQuery<ShopifyArticlesQueryData>(articlesPageQuery);
 
   return {
     intro: articlesPageIntroMockData,

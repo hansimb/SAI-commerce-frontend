@@ -1,6 +1,6 @@
 import { isShopifyDataSource } from "@/data/source";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
-import { articlesListMockData } from "@/data/mock/articles";
+import { articlesListMockData } from "@/data/mock/articles-page";
 
 interface ShopifyArticlesPresenceQueryData {
   articles: {
@@ -33,8 +33,9 @@ function hasArticlesMockContent(): boolean {
 }
 
 async function hasArticlesShopifyContent(): Promise<boolean> {
-  const data =
-    await storefrontQuery<ShopifyArticlesPresenceQueryData>(articlesPresenceQuery);
+  const data = await storefrontQuery<ShopifyArticlesPresenceQueryData>(
+    articlesPresenceQuery,
+  );
 
   return data.articles.nodes.length > 0;
 }

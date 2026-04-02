@@ -24,6 +24,7 @@ import {
   homeTextContentBlock1FallbackData,
   homeTextContentBlock2FallbackData,
 } from "../fallback/home-page-fallback";
+import { HOME_FIELD_KEYS, HOME_PAGE_KEYS } from "../metaobjects/home-metaobjects";
 
 interface ShopifyHomePageQueryData {
   metaobjects: {
@@ -80,7 +81,6 @@ export async function getHomePageData(): Promise<HomePageData> {
   if (isShopifyDataSource()) {
     return getShopifyHomePageData();
   }
-
   return getFallbackHomePageData();
 }
 
@@ -99,82 +99,66 @@ function getFallbackHomePageData(): HomePageData {
 async function getShopifyHomePageData(): Promise<HomePageData> {
   const fallback = getFallbackHomePageData();
   const data = await storefrontQuery<ShopifyHomePageQueryData>(homePageQuery);
-
   const homePage = data.metaobjects.nodes[0];
 
-  if (!homePage) {
-    return fallback;
-  }
+  if (!homePage) return fallback;
 
   const fields = homePage.fields;
 
   return {
     hero: {
-      ...fallback.hero, // Why using fallback as default??? Real API data should be used
+      ...fallback.hero,
       backgroundImage:
         mapMediaImageReference(
-          // Why using hard coded metaobject names:???
-          getMediaImageReference(fields, ["hero_image", "hero-image"]),
+          getMediaImageReference(fields, HOME_PAGE_KEYS.HERO_IMAGE),
           "Home hero image",
         )?.src || fallback.hero.backgroundImage,
     },
     textContentBlock1:
       mapTextContentBlockFields(
-        getMetaobjectFields(fields, [
-          "text_content_block_1",
-          "text-content-block-1",
-        ]),
+        getMetaobjectFields(fields, HOME_PAGE_KEYS.TEXT_CONTENT_1),
         fallback.textContentBlock1,
       ) ?? fallback.textContentBlock1,
     contentBoxes: mapContentBoxes(
-      getMetaobjectFields(fields, ["content_boxes", "content-boxes"]),
+      getMetaobjectFields(fields, HOME_PAGE_KEYS.CONTENT_BOXES),
       fallback.contentBoxes,
     ),
     largeImage:
       mapMediaImageReference(
-        getMediaImageReference(fields, ["large_image", "large-image"]),
+        getMediaImageReference(fields, HOME_PAGE_KEYS.LARGE_IMAGE),
         "Home large image",
       ) || fallback.largeImage,
     textContentBlock2:
       mapTextContentBlockFields(
-        getMetaobjectFields(fields, [
-          "text_content_block_2",
-          "text-content-block-2",
-        ]),
+        getMetaobjectFields(fields, HOME_PAGE_KEYS.TEXT_CONTENT_2),
         fallback.textContentBlock2,
       ) ?? fallback.textContentBlock2,
     processSteps: mapProcessSteps(
-      getMetaobjectFields(fields, ["process_steps", "process-steps"]),
+      getMetaobjectFields(fields, HOME_PAGE_KEYS.PROCESS_STEPS),
       fallback.processSteps,
     ),
-    quote: mapQuote(getMetaobjectFields(fields, ["quote"]), fallback.quote),
+    quote: mapQuote(getMetaobjectFields(fields, HOME_PAGE_KEYS.QUOTE), fallback.quote),
   };
 }
 
-function getFieldReference(fields: ShopifyMetaobjectField[], keys: string[]) {
+// --- HELPERS ---
+
+function getFieldReference(fields: ShopifyMetaobjectField[], keys: readonly string[]) {
   return fields.find((field) => keys.includes(field.key))?.reference;
 }
 
-function getMetaobjectFields(fields: ShopifyMetaobjectField[], keys: string[]) {
+function getMetaobjectFields(fields: ShopifyMetaobjectField[], keys: readonly string[]) {
   const reference = getFieldReference(fields, keys);
-
-  if (!reference || reference.__typename !== "Metaobject") {
-    return undefined;
-  }
-
+  if (!reference || reference.__typename !== "Metaobject") return undefined;
   return reference.fields;
 }
 
 function getMediaImageReference(
   fields: ShopifyMetaobjectField[],
-  keys: string[],
+  keys: readonly string[],
 ): ShopifyMediaImageReference | undefined {
   const reference = getFieldReference(fields, keys);
-
-  if (!reference || reference.__typename !== "MediaImage") {
-    return undefined;
-  }
-
+  if (!reference || reference.__typename !== "MediaImage") return undefined;
   return reference;
 }
 
@@ -182,12 +166,10 @@ function mapContentBoxes(
   fields: ShopifyScalarMetaobjectField[] | undefined,
   fallback: HomePageData["contentBoxes"],
 ): HomePageData["contentBoxes"] {
-  if (!fields?.length) {
-    return fallback;
-  }
+  if (!fields?.length) return fallback;
 
-  const titles = parseStringList(getMetaobjectTextValue(fields, "titles"));
-  const texts = parseStringList(getMetaobjectTextValue(fields, "texts"));
+  const titles = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLES));
+  const texts = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXTS));
   const icons: ContentBoxIcon[] = ["tool", "award", "users", "heart"];
 
   const items = titles
@@ -205,12 +187,10 @@ function mapProcessSteps(
   fields: ShopifyScalarMetaobjectField[] | undefined,
   fallback: HomePageData["processSteps"],
 ): HomePageData["processSteps"] {
-  if (!fields?.length) {
-    return fallback;
-  }
+  if (!fields?.length) return fallback;
 
-  const titles = parseStringList(getMetaobjectTextValue(fields, "title"));
-  const texts = parseStringList(getMetaobjectTextValue(fields, "text"));
+  const titles = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLE_LIST));
+  const texts = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXT_LIST));
   const icons: ProcessStepItem["icon"][] = ["zap", "tool", "shield"];
 
   const items = titles
@@ -229,17 +209,13 @@ function mapQuote(
   fields: ShopifyScalarMetaobjectField[] | undefined,
   fallback: HomePageData["quote"],
 ): HomePageData["quote"] {
-  if (!fields?.length) {
-    return fallback;
-  }
+  if (!fields?.length) return fallback;
 
-  const quote = getMetaobjectTextValue(fields, "quote");
-  const author = getMetaobjectTextValue(fields, "author");
-  const subtitle = getMetaobjectTextValue(fields, "author_title");
+  const quote = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_BODY);
+  const author = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_AUTHOR);
+  const subtitle = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_AUTHOR_TITLE);
 
-  if (!quote || !author) {
-    return fallback;
-  }
+  if (!quote || !author) return fallback;
 
   return {
     quote,

@@ -1,5 +1,5 @@
 import { productBasicMockData } from "@/data/mock/products/product-basic";
-import { productsIntroTextContentBlock } from "@/data/mock/products/text-content-block";
+import { productsIntroTextContentBlock } from "@/data/mock/shared/text-content-block";
 import {
   mapProductBasicToListItem,
   mapProductCardSpecs,

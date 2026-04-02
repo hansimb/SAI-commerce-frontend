@@ -1,4 +1,4 @@
-import { articleDetailDataBySlug } from "@/data/mock/articles";
+import { articleDetailDataBySlug } from "@/data/mock/articles-page";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import { isShopifyDataSource } from "@/data/source";
 import type { ArticleDetailPageData } from "@/types/articles";
@@ -68,9 +68,8 @@ function getMockArticleDetailPageData(
 async function getShopifyArticleDetailPageData(
   slug: string,
 ): Promise<ArticleDetailPageData | undefined> {
-  const data = await storefrontQuery<ShopifyArticleDetailQueryData>(
-    articleDetailQuery,
-  );
+  const data =
+    await storefrontQuery<ShopifyArticleDetailQueryData>(articleDetailQuery);
 
   const article = data.articles.nodes.find((item) => item.handle === slug);
 
