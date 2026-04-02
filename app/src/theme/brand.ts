@@ -13,9 +13,9 @@ export const brandTheme = {
     heading: "#f5f5f5",
     border: "#333333",
     accent: {
-      bright: "#ff9d00",
-      default: "#db8700",
-      dim: "#ba7300",
+      bright: "#f06d36",
+      default: "#f06d36",
+      dim: "#f06d36",
     },
   },
   typography: {
