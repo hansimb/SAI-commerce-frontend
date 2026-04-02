@@ -1,8 +1,8 @@
 # SAI-commerce-frontend
 
-This repo has been originally made for Spectrum Audio Instruments  e-commerce frontend.
+This is official repository of Spectrum Audio Instruments e-commerce frontend.
 
-However this same project may be used and customized for any project, using shopify storefront API or other e-commerce backend.
+However this same project may be reused and customized for any project, using shopify storefront API or other e-commerce backend.
 
 Project architecture is inspired by clean architectural desgin. UI components and routes being content/data source agnostic. Data is coming form mock data or shopify storefront API.
 

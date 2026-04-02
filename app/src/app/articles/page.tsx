@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Container } from "@chakra-ui/react";
-import { ArticlesList } from "@/components/page-components/articles-list";
-import { TextContentBlock } from "@/components/page-components/text-content-block";
-import { getArticlesPageData } from "@/data/articles/articles-page";
+import { ArticlesList } from "@/components/page-components/articles/articles-list";
+import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
+import { getArticlesPageData } from "@/data/loaders/articles-page";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {

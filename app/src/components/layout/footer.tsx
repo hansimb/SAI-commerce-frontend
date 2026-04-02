@@ -7,8 +7,8 @@ import {
   Stack,
   Image,
 } from "@chakra-ui/react";
-import type { BrandData } from "@/data/brand";
-import { footerLabels } from "@/data/footer";
+import type { BrandData } from "@/types/brand";
+import { footerLabels } from "@/data/contents/footer-labels";
 import { getFooterData } from "@/data/loaders/footer";
 import Link from "next/link";
 

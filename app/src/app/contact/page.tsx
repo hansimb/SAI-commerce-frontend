@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, Stack } from "@chakra-ui/react";
 import { ContactMethodsCard } from "@/components/page-components/contact/contact-methods-card";
-import { getContactPageData } from "@/data/loaders/contact";
+import { getContactPageData } from "@/data/loaders/contact-page";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {

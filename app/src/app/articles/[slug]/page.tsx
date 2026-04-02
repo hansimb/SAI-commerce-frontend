@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Box, Container, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
-import { getArticleDetailPageData } from "@/data/articles/article-detail-page";
+import { getArticleDetailPageData } from "@/data/loaders/article-detail-page";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 interface ArticleDetailPageProps {

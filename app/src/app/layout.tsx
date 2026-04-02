@@ -9,7 +9,7 @@ import { themeTokens } from "@/theme/tokens";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { hasArticlesContent } from "@/data/loaders/articles";
-import { getBrandData } from "@/data/brand";
+import { getBrandData } from "@/data/loaders/brand-loader";
 import { buildPageTitle, getMetadataBase, isProductionSite } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -102,11 +102,20 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable}`}
       >
         <Provider>
-          <Box maxW={themeTokens.layoutWidth} mx="auto" w="full">
+          <Box
+            maxW={themeTokens.layoutWidth}
+            mx="auto"
+            w="full"
+            minH="100vh"
+            display="flex"
+            flexDirection="column"
+          >
             <CartProvider>
               <Header hasArticles={hasArticles} brand={brand} />
               <Separator />
-              {children}
+              <Box as="main" flex="1">
+                {children}
+              </Box>
               <Separator />
               <Footer brand={brand} />
               <CartSidebar />
