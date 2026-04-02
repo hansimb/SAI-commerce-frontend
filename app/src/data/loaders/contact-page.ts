@@ -1,7 +1,7 @@
-import { getContactMethodsData } from "@/data/fallback/contact-fallback";
 import { contactPageIntroData } from "@/data/contents/contact-page-intro";
 import { isShopifyDataSource } from "@/data/source";
 import type { ContactPageData } from "@/types/contact";
+import { getContactMethodsData } from "./contact-methods";
 
 export async function getContactPageData(): Promise<ContactPageData> {
   if (isShopifyDataSource()) {

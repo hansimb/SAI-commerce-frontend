@@ -5,8 +5,8 @@ import {
   mapProductCardSpecs,
   mapStorefrontProductToListItem,
   mapTextContentBlockReference,
-} from "@/data/products/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
+} from "@/data/mappers/mappers";
+import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMetaobjectField,

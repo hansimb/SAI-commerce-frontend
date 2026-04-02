@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { getArticlesPageData } from "@/data/articles/articles-page";
-import { getProductsPageData } from "@/data/products/products-page";
+import { getArticlesPageData } from "@/data/loaders/articles-page";
+import { getProductsPageData } from "@/data/loaders/products-page";
 import { getSiteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -37,11 +37,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ]
       : [];
 
-  const articleRoutes: MetadataRoute.Sitemap = articlesPageData.items.map((article) => ({
-    url: `${siteUrl}/articles/${article.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const articleRoutes: MetadataRoute.Sitemap = articlesPageData.items.map(
+    (article) => ({
+      url: `${siteUrl}/articles/${article.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }),
+  );
 
   const productRoutes: MetadataRoute.Sitemap = productsPageData.items
     .filter((product) => product.hasDetails)
@@ -51,5 +53,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-  return [...staticRoutes, ...articleIndexRoute, ...articleRoutes, ...productRoutes];
+  return [
+    ...staticRoutes,
+    ...articleIndexRoute,
+    ...articleRoutes,
+    ...productRoutes,
+  ];
 }

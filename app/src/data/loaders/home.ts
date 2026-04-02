@@ -3,8 +3,8 @@ import {
   getMetaobjectTextValue,
   parseStringList,
   mapTextContentBlockFields,
-} from "@/data/products/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
+} from "@/data/mappers/mappers";
+import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMediaImageReference,
@@ -24,7 +24,10 @@ import {
   homeTextContentBlock1FallbackData,
   homeTextContentBlock2FallbackData,
 } from "../fallback/home-page-fallback";
-import { HOME_FIELD_KEYS, HOME_PAGE_KEYS } from "../metaobjects/home-metaobjects";
+import {
+  HOME_FIELD_KEYS,
+  HOME_PAGE_KEYS,
+} from "../shopify/metaobjects/home-metaobjects";
 
 interface ShopifyHomePageQueryData {
   metaobjects: {
@@ -137,17 +140,26 @@ async function getShopifyHomePageData(): Promise<HomePageData> {
       getMetaobjectFields(fields, HOME_PAGE_KEYS.PROCESS_STEPS),
       fallback.processSteps,
     ),
-    quote: mapQuote(getMetaobjectFields(fields, HOME_PAGE_KEYS.QUOTE), fallback.quote),
+    quote: mapQuote(
+      getMetaobjectFields(fields, HOME_PAGE_KEYS.QUOTE),
+      fallback.quote,
+    ),
   };
 }
 
 // --- HELPERS ---
 
-function getFieldReference(fields: ShopifyMetaobjectField[], keys: readonly string[]) {
+function getFieldReference(
+  fields: ShopifyMetaobjectField[],
+  keys: readonly string[],
+) {
   return fields.find((field) => keys.includes(field.key))?.reference;
 }
 
-function getMetaobjectFields(fields: ShopifyMetaobjectField[], keys: readonly string[]) {
+function getMetaobjectFields(
+  fields: ShopifyMetaobjectField[],
+  keys: readonly string[],
+) {
   const reference = getFieldReference(fields, keys);
   if (!reference || reference.__typename !== "Metaobject") return undefined;
   return reference.fields;
@@ -168,8 +180,12 @@ function mapContentBoxes(
 ): HomePageData["contentBoxes"] {
   if (!fields?.length) return fallback;
 
-  const titles = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLES));
-  const texts = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXTS));
+  const titles = parseStringList(
+    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLES),
+  );
+  const texts = parseStringList(
+    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXTS),
+  );
   const icons: ContentBoxIcon[] = ["tool", "award", "users", "heart"];
 
   const items = titles
@@ -189,8 +205,12 @@ function mapProcessSteps(
 ): HomePageData["processSteps"] {
   if (!fields?.length) return fallback;
 
-  const titles = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLE_LIST));
-  const texts = parseStringList(getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXT_LIST));
+  const titles = parseStringList(
+    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TITLE_LIST),
+  );
+  const texts = parseStringList(
+    getMetaobjectTextValue(fields, HOME_FIELD_KEYS.TEXT_LIST),
+  );
   const icons: ProcessStepItem["icon"][] = ["zap", "tool", "shield"];
 
   const items = titles
@@ -213,7 +233,10 @@ function mapQuote(
 
   const quote = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_BODY);
   const author = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_AUTHOR);
-  const subtitle = getMetaobjectTextValue(fields, HOME_FIELD_KEYS.QUOTE_AUTHOR_TITLE);
+  const subtitle = getMetaobjectTextValue(
+    fields,
+    HOME_FIELD_KEYS.QUOTE_AUTHOR_TITLE,
+  );
 
   if (!quote || !author) return fallback;
 

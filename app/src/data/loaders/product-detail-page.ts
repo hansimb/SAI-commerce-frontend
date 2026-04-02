@@ -4,8 +4,8 @@ import { productPageDataBySlug } from "@/data/mock/products/product-page";
 import {
   mapProductDetailsMetaobject,
   mapStorefrontProductToListItem,
-} from "@/data/products/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
+} from "@/data/mappers/mappers";
+import { shopifyMetaobjects } from "@/data/shopify/metaobjects/metaobjects";
 import { storefrontQuery } from "@/data/shopify/storefront-client";
 import type {
   ShopifyMetaobjectNode,

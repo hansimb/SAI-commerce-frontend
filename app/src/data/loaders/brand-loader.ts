@@ -1,4 +1,4 @@
-import { shopifyMetaobjects } from "../shopify/metaobjects";
+import { shopifyMetaobjects } from "../shopify/metaobjects/metaobjects";
 import { brandFallbackData } from "../fallback/brand-fallback";
 import { isShopifyDataSource } from "../source";
 import { storefrontQuery } from "../shopify/storefront-client";

@@ -1,8 +1,9 @@
-import { getContactMethodsData } from "@/data/fallback/contact-fallback";
+
 import { hasArticlesContent } from "@/data/loaders/articles";
-import { getProductsPageData } from "@/data/products/products-page";
+import { getProductsPageData } from "@/data/loaders/products-page";
 import { getNavigationLinks } from "@/data/contents/navigation-links";
 import type { FooterData } from "@/types/footer";
+import { getContactMethodsData } from "./contact-methods";
 
 export async function getFooterData(): Promise<FooterData> {
   const { items } = await getProductsPageData();
