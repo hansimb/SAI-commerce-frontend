@@ -1,4 +1,5 @@
 export * from "./articles";
+export * from "./footer";
 export * from "./home";
 export * from "./media";
 export * from "./product-detail";
