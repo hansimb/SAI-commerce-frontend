@@ -14,7 +14,7 @@ import type {
   ShopifyProductNode,
   ShopifyProductReference,
   ShopifyProductsPageQueryData,
-} from "@/data/shopify/types";
+} from "@/types/shopify";
 import { isShopifyDataSource } from "@/data/source";
 import type { ProductSummary, ProductsPageData } from "@/types/products";
 
@@ -188,8 +188,9 @@ function getDetailPageProductHandles(
 ): Set<string> {
   return new Set(
     detailPages
-      .map((detailPage) =>
-        detailPage.fields.find((field) => field.key === "product")?.reference,
+      .map(
+        (detailPage) =>
+          detailPage.fields.find((field) => field.key === "product")?.reference,
       )
       .filter(
         (reference): reference is ShopifyProductReference =>

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { ContentBoxes } from "@/components/page-components/content-boxes";
-import { Hero } from "@/components/page-components/hero";
-import { LargeImageSection } from "@/components/page-components/large-image-section";
-import { ProcessSteps } from "@/components/page-components/process-steps";
-import { QuoteBlock } from "@/components/page-components/quote-block";
-import { TextContentBlock } from "@/components/page-components/text-content-block";
-import { getBrandData } from "@/data/brand";
+import { ContentBoxes } from "@/components/page-components/home/content-boxes";
+import { Hero } from "@/components/page-components/home/hero";
+import { LargeImageSection } from "@/components/page-components/shared/large-image-section";
+import { ProcessSteps } from "@/components/page-components/home/process-steps";
+import { QuoteBlock } from "@/components/page-components/home/quote-block";
+import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
+import { getBrandData } from "@/data/fallback/brand-fallback";
 import { getHomePageData } from "@/data/loaders/home";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 import { Container, Separator } from "@chakra-ui/react";

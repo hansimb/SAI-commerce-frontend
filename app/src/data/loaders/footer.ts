@@ -1,7 +1,7 @@
-import { getContactMethodsData } from "@/data/contact";
+import { getContactMethodsData } from "@/data/fallback/contact-fallback";
 import { hasArticlesContent } from "@/data/loaders/articles";
 import { getProductsPageData } from "@/data/products/products-page";
-import { getNavigationLinks } from "@/data/navigation-links";
+import { getNavigationLinks } from "@/data/contents/navigation-links";
 import type { FooterData } from "@/types/footer";
 
 export async function getFooterData(): Promise<FooterData> {
@@ -19,8 +19,8 @@ export async function getFooterData(): Promise<FooterData> {
         links: items
           .filter((product) => product.hasDetails)
           .map((product) => ({
-          label: product.title,
-          href: `/products/${product.slug}`,
+            label: product.title,
+            href: `/products/${product.slug}`,
           })),
       },
     ],

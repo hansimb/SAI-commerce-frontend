@@ -1,5 +1,5 @@
-import { getContactMethodsData } from "@/data/contact";
-import { contactPageIntroData } from "@/data/contact-page-intro";
+import { getContactMethodsData } from "@/data/fallback/contact-fallback";
+import { contactPageIntroData } from "@/data/contents/contact-page-intro";
 import { isShopifyDataSource } from "@/data/source";
 import type { ContactPageData } from "@/types/contact";
 

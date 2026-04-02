@@ -1,30 +1,17 @@
-import { mapMediaImageReference, getMetaobjectTextValue } from "@/data/products/mappers";
-import { shopifyMetaobjects } from "@/data/shopify/metaobjects";
-import { storefrontQuery } from "@/data/shopify/storefront-client";
-import type { ShopifyMetaobjectField } from "@/data/shopify/types";
-import { isShopifyDataSource } from "@/data/source";
+import { shopifyMetaobjects } from "../shopify/metaobjects";
+import { brandFallbackData } from "../fallback/brand-fallback";
+import { isShopifyDataSource } from "../source";
+import { storefrontQuery } from "../shopify/storefront-client";
+import { ShopifyMetaobjectField } from "../../types/shopify";
+import { BrandData } from "@/types/brand";
 
-export interface BrandData {
-  name: string;
-  slogan: string;
-  logoVertical?: string;
-  logoHorizontal?: string;
-}
-
-interface ShopifyBrandQueryData {
+export interface ShopifyBrandQueryData {
   metaobject: {
     handle: string;
     type: string;
     fields: ShopifyMetaobjectField[];
   } | null;
 }
-
-const brandFallbackData: BrandData = {
-  name: "Spectrum Audio Instruments",
-  slogan: "Vintage sound. Modern precision.",
-  logoVertical: "/logo_vertical.png",
-  logoHorizontal: "/logo_horizontal.png",
-};
 
 const brandQuery = `
   query SharedBrand($handle: String!) {
@@ -65,10 +52,13 @@ export async function getBrandData(): Promise<BrandData> {
   const fields = data.metaobject.fields;
 
   return {
+    // Not even importing the mppers MESS for now:
     name: getMetaobjectTextValue(fields, "name") || brandFallbackData.name,
-    slogan: getMetaobjectTextValue(fields, "slogan") || brandFallbackData.slogan,
+    slogan:
+      getMetaobjectTextValue(fields, "slogan") || brandFallbackData.slogan,
     logoVertical:
       mapMediaImageReference(
+        // Hardcoded metaobject names here also
         getMediaImageReference(fields, ["logo_vertical", "logo-vertical"]),
         "Vertical brand logo",
       )?.src || brandFallbackData.logoVertical,

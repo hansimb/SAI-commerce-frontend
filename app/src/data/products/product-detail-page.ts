@@ -11,7 +11,7 @@ import type {
   ShopifyMetaobjectNode,
   ShopifyProductDetailPagesQueryData,
   ShopifyProductNode,
-} from "@/data/shopify/types";
+} from "@/types/shopify";
 import { isShopifyDataSource } from "@/data/source";
 import type { ProductDetailPageData } from "@/types/products";
 
@@ -136,14 +136,17 @@ function getMockProductDetailPageData(
 async function getShopifyProductDetailPageData(
   slug: string,
 ): Promise<ProductDetailPageData | undefined> {
-  const data =
-    await storefrontQuery<ShopifyProductDetailPagesQueryData>(productDetailPagesQuery);
-
-  const detailPage = data.detailPages.nodes.find((node) =>
-    getReferencedProduct(node)?.handle === slug,
+  const data = await storefrontQuery<ShopifyProductDetailPagesQueryData>(
+    productDetailPagesQuery,
   );
 
-  const productReference = detailPage ? getReferencedProduct(detailPage) : undefined;
+  const detailPage = data.detailPages.nodes.find(
+    (node) => getReferencedProduct(node)?.handle === slug,
+  );
+
+  const productReference = detailPage
+    ? getReferencedProduct(detailPage)
+    : undefined;
 
   if (!detailPage || !productReference) {
     return undefined;
@@ -162,7 +165,9 @@ async function getShopifyProductDetailPageData(
 function getReferencedProduct(
   detailPage: ShopifyMetaobjectNode,
 ): ShopifyProductNode | undefined {
-  const reference = detailPage.fields.find((field) => field.key === "product")?.reference;
+  const reference = detailPage.fields.find(
+    (field) => field.key === "product",
+  )?.reference;
 
   if (!reference || reference.__typename !== "Product") {
     return undefined;

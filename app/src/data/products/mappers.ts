@@ -15,7 +15,7 @@ import type {
   ShopifyMetaobjectReference,
   ShopifyProductNode,
   ShopifyScalarMetaobjectField,
-} from "@/data/shopify/types";
+} from "@/types/shopify";
 
 const fallbackProductsTextContentBlock: ProductsTextContentBlockData = {
   thoughtTitle: "Products",
@@ -66,7 +66,9 @@ export function mapTextContentBlockReference(
     return fallback;
   }
 
-  return mapTextContentBlockFields(field.reference.fields, fallback) ?? fallback;
+  return (
+    mapTextContentBlockFields(field.reference.fields, fallback) ?? fallback
+  );
 }
 
 export function mapTextContentBlockFields(
@@ -95,7 +97,12 @@ export function mapProductCardSpecs(
   fields: ShopifyScalarMetaobjectField[] | undefined,
   limit?: number,
 ): ProductSpecItem[] {
-  return mapSpecsFromMetaobjectFields(fields, "spec_description", "spec_detail", limit);
+  return mapSpecsFromMetaobjectFields(
+    fields,
+    "spec_description",
+    "spec_detail",
+    limit,
+  );
 }
 
 export function mapSpecsFromMetaobjectFields(
@@ -299,17 +306,21 @@ function mapImageSpecsSection(
     return undefined;
   }
 
-  const image =
-    mapMediaImageReference(
-      getMetaobjectNestedReference<ShopifyMediaImageReference>(
-        fields,
-        "large_image",
-        "MediaImage",
-      ),
-      fallbackAlt,
-    );
+  const image = mapMediaImageReference(
+    getMetaobjectNestedReference<ShopifyMediaImageReference>(
+      fields,
+      "large_image",
+      "MediaImage",
+    ),
+    fallbackAlt,
+  );
 
-  const specs = mapSpecsFromMetaobjectFields(fields, "specs_titles", "specs_text", 4);
+  const specs = mapSpecsFromMetaobjectFields(
+    fields,
+    "specs_titles",
+    "specs_text",
+    4,
+  );
 
   if (!image || specs.length === 0) {
     return undefined;
@@ -327,7 +338,9 @@ function getMetaobjectFieldReference<TReference extends { __typename: string }>(
   key: string,
   typename: TReference["__typename"],
 ): TReference | undefined {
-  const field = fields.find((item) => item.key === key) as ShopifyMetaobjectField | undefined;
+  const field = fields.find((item) => item.key === key) as
+    | ShopifyMetaobjectField
+    | undefined;
   const reference = field?.reference;
 
   if (!reference || reference.__typename !== typename) {
@@ -374,5 +387,7 @@ function hasTextContentBlockContent(
     return false;
   }
 
-  return Boolean(block.thoughtTitle || block.mainTitle || block.text1 || block.text2);
+  return Boolean(
+    block.thoughtTitle || block.mainTitle || block.text1 || block.text2,
+  );
 }

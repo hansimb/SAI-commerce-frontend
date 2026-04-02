@@ -1,4 +1,4 @@
-import { contactMethodsFallbackData } from "@/data/contact";
+import { contactMethodsFallbackData } from "@/data/fallback/contact-fallback";
 import type { ContactPageData } from "@/types/contact";
 
 export const contactPageIntroData: ContactPageData = {

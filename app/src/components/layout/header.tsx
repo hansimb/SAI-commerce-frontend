@@ -15,8 +15,8 @@ import {
 import NextLink from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CartIconButton } from "@/components/cart/cart-icon-button";
-import { getNavigationLinks } from "@/data/navigation-links";
-import type { BrandData } from "@/data/brand";
+import { getNavigationLinks } from "@/data/contents/navigation-links";
+import type { BrandData } from "@/data/fallback/brand-fallback";
 
 const NavLink = ({
   label,

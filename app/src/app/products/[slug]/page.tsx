@@ -10,7 +10,7 @@ import { ImageSpecsSection } from "@/components/page-components/product-details/
 import { KeySpecs } from "@/components/page-components/product-details/key-specs";
 import { LargeImage } from "@/components/page-components/product-details/large-image";
 import { getProductDetailPageData } from "@/data/products/product-detail-page";
-import { TextContentBlock } from "@/components/page-components/text-content-block";
+import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 
 interface ProductDetailRouteProps {

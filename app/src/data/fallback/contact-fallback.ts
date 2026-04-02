@@ -14,13 +14,13 @@ interface ShopifySharedContactQueryData {
 
 export const contactMethodsFallbackData: ContactMethod[] = [
   {
-    label: "Email",
-    value: "studio@spectrum-audio.test",
+    label: "",
+    value: "",
     detail: "Best for project discussions and general inquiries",
   },
   {
-    label: "Phone",
-    value: "+358 40 123 4567",
+    label: "",
+    value: "",
     detail: "Available on weekdays during studio hours",
   },
   {

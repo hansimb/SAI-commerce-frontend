@@ -1,6 +1,6 @@
-import type { ContentBoxItem } from "@/components/page-components/content-boxes";
-import type { ProcessStepItem } from "@/components/page-components/process-steps";
-import type { QuoteBlockData } from "@/components/page-components/quote-block";
+import type { ContentBoxItem } from "@/components/page-components/home/content-boxes";
+import type { ProcessStepItem } from "@/components/page-components/home/process-steps";
+import type { QuoteBlockData } from "@/components/page-components/home/quote-block";
 import type { HomeHeroData } from "@/types/home";
 
 export const homeHeroMockData: HomeHeroData = {

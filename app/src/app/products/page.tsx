@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ProductCard } from "@/components/page-components/product-card";
-import { TextContentBlock } from "@/components/page-components/text-content-block";
+import { ProductCard } from "@/components/page-components/products/product-card";
+import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
 import { getProductsPageData } from "@/data/products/products-page";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
 import { Container, Separator } from "@chakra-ui/react";
