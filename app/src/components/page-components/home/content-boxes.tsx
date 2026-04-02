@@ -23,6 +23,10 @@ interface ContentBoxesProps {
 }
 
 export const ContentBoxes = ({ items }: ContentBoxesProps) => {
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <Box as="section" py={12}>
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={10}>

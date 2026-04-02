@@ -41,9 +41,9 @@ export function mapStorefrontArticleToDetailPage(
     slug: article.handle,
     category: article.blog?.title || "Article",
     title: article.title,
-    excerpt: article.excerpt || undefined,
-    author: article.authorV2?.name || undefined,
-    publishedAt: formatArticlePublishedAt(article.publishedAt),
+    excerpt: article.excerpt || "",
+    author: article.authorV2?.name || "",
+    publishedAt: formatArticlePublishedAt(article.publishedAt) || "",
     image: article.image
       ? {
           src: article.image.url,

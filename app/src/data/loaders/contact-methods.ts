@@ -3,6 +3,7 @@ import { isShopifyDataSource } from "../source";
 import { contactMethodsFallbackData } from "../fallback/contact-fallback";
 import { storefrontQuery } from "../shopify/storefront-client";
 import { getMetaobjectTextValue } from "../mappers";
+import { normalizeContactMethods } from "../predicates";
 import {
   contactFieldKeys,
   shopifySharedMetaobjects,
@@ -30,7 +31,7 @@ const sharedContactQuery = `
 
 export async function getContactMethodsData(): Promise<ContactMethod[]> {
   if (!isShopifyDataSource()) {
-    return contactMethodsFallbackData;
+    return normalizeContactMethods(contactMethodsFallbackData);
   }
 
   const data = await storefrontQuery<ShopifySharedContactQueryData>(
@@ -41,7 +42,7 @@ export async function getContactMethodsData(): Promise<ContactMethod[]> {
   );
 
   if (!data.metaobject) {
-    return contactMethodsFallbackData;
+    return normalizeContactMethods(contactMethodsFallbackData);
   }
 
   const email = getMetaobjectTextValue(data.metaobject.fields, contactFieldKeys.email);
@@ -77,5 +78,7 @@ export async function getContactMethodsData(): Promise<ContactMethod[]> {
     });
   }
 
-  return items.length > 0 ? items : contactMethodsFallbackData;
+  return items.length > 0
+    ? normalizeContactMethods(items)
+    : normalizeContactMethods(contactMethodsFallbackData);
 }

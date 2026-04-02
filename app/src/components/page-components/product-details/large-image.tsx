@@ -6,6 +6,10 @@ interface LargeImageProps {
 }
 
 export function LargeImage({ image }: LargeImageProps) {
+  if (!image.src) {
+    return null;
+  }
+
   return (
     <Stack gap={6}>
       <Box

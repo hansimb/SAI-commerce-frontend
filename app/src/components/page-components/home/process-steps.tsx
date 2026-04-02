@@ -20,6 +20,10 @@ interface ProcessStepsProps {
 }
 
 export const ProcessSteps = ({ steps }: ProcessStepsProps) => {
+  if (steps.length === 0) {
+    return null;
+  }
+
   return (
     <Box as="section" pb={12}>
       <SimpleGrid columns={{ base: 1, md: 3 }} gap={10}>

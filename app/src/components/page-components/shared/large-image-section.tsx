@@ -6,6 +6,10 @@ interface LargeImageSectionProps {
 }
 
 export function LargeImageSection({ image }: LargeImageSectionProps) {
+  if (!image.src) {
+    return null;
+  }
+
   return (
     <Box
       as="section"

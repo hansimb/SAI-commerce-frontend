@@ -1,5 +1,6 @@
 import { Box, Container, Heading, Text, Stack, Button } from "@chakra-ui/react";
 import Link from "next/link";
+import { hasTextContentBlockContent } from "@/data/predicates";
 
 interface TextContentBlockProps {
   thoughtTitle?: string;
@@ -18,6 +19,13 @@ export const TextContentBlock = ({
   ctaBtnText,
   href,
 }: TextContentBlockProps) => {
+  if (
+    !hasTextContentBlockContent({ thoughtTitle, mainTitle, text1, text2 }) &&
+    !(ctaBtnText && href)
+  ) {
+    return null;
+  }
+
   return (
     <Box as="section" pt={12} maxW={800} mx="auto">
       <Container maxW="container.lg">

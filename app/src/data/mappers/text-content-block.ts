@@ -4,6 +4,7 @@ import type {
   ShopifyScalarMetaobjectField,
 } from "@/types/shopify";
 import { textContentBlockFieldKeys } from "@/data/shopify/metaobjects/components";
+import { hasTextContentBlockContent } from "@/data/predicates";
 import { getMetaobjectTextValue } from "./shopify";
 
 export function mapTextContentBlockReference(
@@ -43,16 +44,4 @@ export function mapTextContentBlockFields(
   };
 
   return hasTextContentBlockContent(mapped) ? mapped : undefined;
-}
-
-function hasTextContentBlockContent(
-  block: ProductsTextContentBlockData | undefined,
-): boolean {
-  if (!block) {
-    return false;
-  }
-
-  return Boolean(
-    block.thoughtTitle || block.mainTitle || block.text1 || block.text2,
-  );
 }
