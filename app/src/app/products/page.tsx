@@ -3,7 +3,7 @@ import { ProductCard } from "@/components/page-components/products/product-card"
 import { TextContentBlock } from "@/components/page-components/shared/text-content-block";
 import { getProductsPageData } from "@/data/loaders/products-page";
 import { buildPageTitle, createDescription, createMetadata } from "@/lib/seo";
-import { Container, Separator } from "@chakra-ui/react";
+import { Box, Container, Separator } from "@chakra-ui/react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const productsPageData = await getProductsPageData();
@@ -25,7 +25,9 @@ export default async function ProductsList() {
 
   return (
     <Container>
-      <TextContentBlock {...productsPageData.textContentBlock} />
+      <Box mb={6}>
+        <TextContentBlock {...productsPageData.textContentBlock} />
+      </Box>
       <Separator />
       {productsPageData.items.map((product) => (
         <ProductCard key={product.slug} data={product} />

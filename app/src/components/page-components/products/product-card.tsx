@@ -20,19 +20,19 @@ interface ProductCardProps {
 
 export const ProductCard = ({ data }: ProductCardProps) => {
   return (
-    <Box as="section" py={10}>
-      <Flex direction={{ base: "column", md: "row" }} gap={8}>
-        <Box flex="1" p={6} rounded="lg">
+    <Box as="section" py={12}>
+      <Flex direction={{ base: "column", md: "row" }}>
+        <Box flex="1" rounded="lg">
           <Image
             src={data.image.src}
             alt={data.title}
-            w="full"
+            w={{ base: "auto", md: "500px" }}
             h="auto"
             rounded="md"
           />
         </Box>
 
-        <Box flex="1" p={6}>
+        <Box flex="1" py={2}>
           {data.categoryLabel ? (
             <Text
               textTransform="uppercase"
@@ -59,7 +59,7 @@ export const ProductCard = ({ data }: ProductCardProps) => {
           {data.description ? <Text mb={6}>{data.description}</Text> : null}
 
           {data.specs.length > 0 ? (
-            <Box mb={6}>
+            <Box my={8}>
               <ProductSpecsList specs={data.specs} />
             </Box>
           ) : null}

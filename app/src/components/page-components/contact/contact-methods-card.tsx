@@ -15,7 +15,7 @@ export function ContactMethodsCard({
   items,
 }: ContactMethodsCardProps) {
   return (
-    <Box borderWidth="1px" rounded="lg" p={8}>
+    <Box borderWidth="1px" rounded="lg" p={6}>
       <Text
         fontSize="sm"
         fontWeight="semibold"

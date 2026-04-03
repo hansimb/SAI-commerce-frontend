@@ -27,8 +27,8 @@ export const TextContentBlock = ({
   }
 
   return (
-    <Box as="section" pt={12} maxW={800} mx="auto">
-      <Container maxW="container.lg">
+    <Box as="section" pt={10} maxW={800} mx="auto">
+      <Container maxW="container.lg" px={0}>
         <Stack paddingY={3} textAlign="center">
           {thoughtTitle && (
             <Text
@@ -45,14 +45,14 @@ export const TextContentBlock = ({
           )}
 
           {mainTitle && (
-            <Heading p={3} as="h2" size="4xl" fontWeight="bold">
+            <Heading px={1} pb={4} as="h2" size="4xl" fontWeight="bold">
               {mainTitle}
             </Heading>
           )}
 
           <Stack pb={4}>
             {text1 && (
-              <Text pt={2} as="p" fontSize="md" lineHeight="tall">
+              <Text as="p" fontSize="md" lineHeight="tall">
                 {text1}
               </Text>
             )}

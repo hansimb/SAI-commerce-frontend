@@ -21,7 +21,7 @@ export default async function Footer({ brand }: FooterProps) {
 
   return (
     <Box bg="layoutBg">
-      <Flex gap={5} align="center" padding={10}>
+      <Flex align="center" p={{ base: 3, md: 10 }} pt={12}>
         <Container>
           <Stack direction={{ base: "column", md: "row" }} gap={12}>
             <Stack gap={4} align={{ base: "center", md: "stretch" }}>
