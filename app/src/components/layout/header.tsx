@@ -79,7 +79,8 @@ export default function Header({ hasArticles, brand }: HeaderProps) {
 
             <CartIconButton />
             <IconButton
-              margin={3}
+              margin={0}
+              variant={"outline"}
               size="md"
               aria-label="Open Menu"
               display={{ md: "none" }}

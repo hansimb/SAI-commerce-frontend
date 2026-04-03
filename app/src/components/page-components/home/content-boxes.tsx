@@ -28,14 +28,14 @@ export const ContentBoxes = ({ items }: ContentBoxesProps) => {
   }
 
   return (
-    <Box as="section" py={12}>
+    <Box as="section" py={4}>
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={10}>
         {items.map((item) => {
           const IconComponent = iconMap[item.icon];
 
           return (
             <Box key={item.title} borderWidth="1px" rounded="md" p={8}>
-              <Stack padding={4}>
+              <Stack padding={1}>
                 <Icon as={IconComponent} boxSize={8} />
                 <Heading as="h3" size="lg">
                   {item.title}

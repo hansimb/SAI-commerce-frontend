@@ -17,7 +17,7 @@ export const QuoteBlock = ({ data }: QuoteBlockProps) => {
 
   return (
     <Box as="section" maxW={1000} py={12} mx="auto">
-      <Stack padding={6} align="center" textAlign="center">
+      <Stack align="center" textAlign="center">
         <Text fontSize="3xl" fontStyle="italic">
           “{data.quote}”
         </Text>
