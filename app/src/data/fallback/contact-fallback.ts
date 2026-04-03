@@ -1,11 +1,11 @@
 import type { ContactMethod } from "@/types/contact";
 
 export const contactMethodsFallbackData: ContactMethod[] = [
-  // {
-  //   label: "",
-  //   value: "",
-  //   detail: "Best for project discussions and general inquiries",
-  // },
+  {
+    label: "Email",
+    value: "spectrumaudioinstruments@pm.me",
+    detail: "Best for project discussions and general inquiries",
+  },
   // {
   //   label: "",
   //   value: "",
