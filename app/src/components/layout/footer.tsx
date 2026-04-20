@@ -82,7 +82,7 @@ export default async function Footer({ brand }: FooterProps) {
               Report a problem
             </ReportProblemButton>
             <Text textAlign="center">
-              Copyright {new Date().getFullYear()} {brand.name}
+              © Copyright {new Date().getFullYear()} {brand.name}
             </Text>
           </Stack>
         </Container>
