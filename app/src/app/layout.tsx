@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import {
+  AgenticFixLoopProvider,
+  ReportProblemModal,
+} from "@hansimb/fix-loop-widget";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Provider } from "@/components/ui/provider";
 import Header from "@/components/layout/header";
@@ -101,27 +105,30 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable}`}
       >
-        <Provider>
-          <Box
-            maxW={themeTokens.layoutWidth}
-            mx="auto"
-            w="full"
-            minH="100vh"
-            display="flex"
-            flexDirection="column"
-          >
-            <CartProvider>
-              <Header hasArticles={hasArticles} brand={brand} />
-              <Separator />
-              <Box as="main" flex="1">
-                {children}
-              </Box>
-              <Separator />
-              <Footer brand={brand} />
-              <CartSidebar />
-            </CartProvider>
-          </Box>
-        </Provider>
+        <AgenticFixLoopProvider projectName="SAI-commerce-frontend">
+          <Provider>
+            <Box
+              maxW={themeTokens.layoutWidth}
+              mx="auto"
+              w="full"
+              minH="100vh"
+              display="flex"
+              flexDirection="column"
+            >
+              <CartProvider>
+                <Header hasArticles={hasArticles} brand={brand} />
+                <Separator />
+                <Box as="main" flex="1">
+                  {children}
+                </Box>
+                <Separator />
+                <Footer brand={brand} />
+                <CartSidebar />
+              </CartProvider>
+            </Box>
+            <ReportProblemModal />
+          </Provider>
+        </AgenticFixLoopProvider>
       </body>
     </html>
   );
