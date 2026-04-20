@@ -14,6 +14,7 @@ import { CartProvider } from "@/components/cart/cart-provider";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { hasArticlesContent } from "@/data/loaders/articles";
 import { getBrandData } from "@/data/loaders/brand-loader";
+import { getFixloopProjectName } from "@/lib/fixloop/env";
 import { buildPageTitle, getMetadataBase, isProductionSite } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -99,13 +100,14 @@ export default async function RootLayout({
 }>) {
   const hasArticles = await hasArticlesContent();
   const brand = await getBrandData();
+  const fixloopProjectName = getFixloopProjectName();
 
   return (
     <html suppressHydrationWarning lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable}`}
       >
-        <AgenticFixLoopProvider projectName="SAI-commerce-frontend">
+        <AgenticFixLoopProvider projectName={fixloopProjectName}>
           <Provider>
             <Box
               maxW={themeTokens.layoutWidth}
