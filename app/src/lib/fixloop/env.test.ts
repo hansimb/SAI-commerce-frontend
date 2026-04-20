@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { getFixloopProjectName } from "./env.ts";
+import { getFixloopProjectName, hasFixloopProjectName } from "./env.ts";
 
 test("getFixloopProjectName returns the configured project name", () => {
   process.env.AGENTIC_FIX_LOOP_PROJECT_NAME =
@@ -13,8 +13,14 @@ test("getFixloopProjectName returns the configured project name", () => {
   );
 });
 
-test("getFixloopProjectName throws when the project name is missing", () => {
+test("getFixloopProjectName returns undefined when the project name is missing", () => {
   delete process.env.AGENTIC_FIX_LOOP_PROJECT_NAME;
 
-  assert.throws(() => getFixloopProjectName(), /Missing AGENTIC_FIX_LOOP_PROJECT_NAME/);
+  assert.equal(getFixloopProjectName(), undefined);
+});
+
+test("hasFixloopProjectName is false when the project name is missing", () => {
+  delete process.env.AGENTIC_FIX_LOOP_PROJECT_NAME;
+
+  assert.equal(hasFixloopProjectName(), false);
 });

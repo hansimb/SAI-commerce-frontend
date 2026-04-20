@@ -101,36 +101,46 @@ export default async function RootLayout({
   const hasArticles = await hasArticlesContent();
   const brand = await getBrandData();
   const fixloopProjectName = getFixloopProjectName();
+  const shell = (
+    <Provider>
+      <Box
+        maxW={themeTokens.layoutWidth}
+        mx="auto"
+        w="full"
+        minH="100vh"
+        display="flex"
+        flexDirection="column"
+      >
+        <CartProvider>
+          <Header hasArticles={hasArticles} brand={brand} />
+          <Separator />
+          <Box as="main" flex="1">
+            {children}
+          </Box>
+          <Separator />
+          <Footer
+            brand={brand}
+            showReportProblemButton={Boolean(fixloopProjectName)}
+          />
+          <CartSidebar />
+        </CartProvider>
+      </Box>
+      {fixloopProjectName ? <ReportProblemModal /> : null}
+    </Provider>
+  );
 
   return (
     <html suppressHydrationWarning lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable}`}
       >
-        <AgenticFixLoopProvider projectName={fixloopProjectName}>
-          <Provider>
-            <Box
-              maxW={themeTokens.layoutWidth}
-              mx="auto"
-              w="full"
-              minH="100vh"
-              display="flex"
-              flexDirection="column"
-            >
-              <CartProvider>
-                <Header hasArticles={hasArticles} brand={brand} />
-                <Separator />
-                <Box as="main" flex="1">
-                  {children}
-                </Box>
-                <Separator />
-                <Footer brand={brand} />
-                <CartSidebar />
-              </CartProvider>
-            </Box>
-            <ReportProblemModal />
-          </Provider>
-        </AgenticFixLoopProvider>
+        {fixloopProjectName ? (
+          <AgenticFixLoopProvider projectName={fixloopProjectName}>
+            {shell}
+          </AgenticFixLoopProvider>
+        ) : (
+          shell
+        )}
       </body>
     </html>
   );

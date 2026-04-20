@@ -15,9 +15,13 @@ import Link from "next/link";
 
 interface FooterProps {
   brand: BrandData;
+  showReportProblemButton?: boolean;
 }
 
-export default async function Footer({ brand }: FooterProps) {
+export default async function Footer({
+  brand,
+  showReportProblemButton = false,
+}: FooterProps) {
   const footerData = await getFooterData();
 
   return (
@@ -78,9 +82,11 @@ export default async function Footer({ brand }: FooterProps) {
 
           <Separator mt={10} />
           <Stack pt={8} gap={3} align="center">
-            <ReportProblemButton mode="embedded" appearance="text">
-              Report a problem
-            </ReportProblemButton>
+            {showReportProblemButton ? (
+              <ReportProblemButton mode="embedded" appearance="text">
+                Report a problem
+              </ReportProblemButton>
+            ) : null}
             <Text textAlign="center">
               © Copyright {new Date().getFullYear()} {brand.name}
             </Text>
