@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import {
+  AgenticFixLoopProvider,
+  ReportProblemModal,
+} from "@hansimb/fix-loop-widget";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Provider } from "@/components/ui/provider";
 import Header from "@/components/layout/header";
@@ -10,6 +14,7 @@ import { CartProvider } from "@/components/cart/cart-provider";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { hasArticlesContent } from "@/data/loaders/articles";
 import { getBrandData } from "@/data/loaders/brand-loader";
+import { getFixloopProjectName } from "@/lib/fixloop/env";
 import { buildPageTitle, getMetadataBase, isProductionSite } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -95,33 +100,47 @@ export default async function RootLayout({
 }>) {
   const hasArticles = await hasArticlesContent();
   const brand = await getBrandData();
+  const fixloopProjectName = getFixloopProjectName();
+  const shell = (
+    <Provider>
+      <Box
+        maxW={themeTokens.layoutWidth}
+        mx="auto"
+        w="full"
+        minH="100vh"
+        display="flex"
+        flexDirection="column"
+      >
+        <CartProvider>
+          <Header hasArticles={hasArticles} brand={brand} />
+          <Separator />
+          <Box as="main" flex="1">
+            {children}
+          </Box>
+          <Separator />
+          <Footer
+            brand={brand}
+            showReportProblemButton={Boolean(fixloopProjectName)}
+          />
+          <CartSidebar />
+        </CartProvider>
+      </Box>
+      {fixloopProjectName ? <ReportProblemModal /> : null}
+    </Provider>
+  );
 
   return (
     <html suppressHydrationWarning lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable}`}
       >
-        <Provider>
-          <Box
-            maxW={themeTokens.layoutWidth}
-            mx="auto"
-            w="full"
-            minH="100vh"
-            display="flex"
-            flexDirection="column"
-          >
-            <CartProvider>
-              <Header hasArticles={hasArticles} brand={brand} />
-              <Separator />
-              <Box as="main" flex="1">
-                {children}
-              </Box>
-              <Separator />
-              <Footer brand={brand} />
-              <CartSidebar />
-            </CartProvider>
-          </Box>
-        </Provider>
+        {fixloopProjectName ? (
+          <AgenticFixLoopProvider projectName={fixloopProjectName}>
+            {shell}
+          </AgenticFixLoopProvider>
+        ) : (
+          shell
+        )}
       </body>
     </html>
   );
