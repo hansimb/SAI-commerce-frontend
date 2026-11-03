@@ -88,7 +88,8 @@ export default async function Footer({
               </ReportProblemButton>
             ) : null}
             <Text textAlign="center">
-              © Copyright {new Date().getFullYear()} {brand.name}
+              © Copyright {new Date().getFullYear()} {brand.name}. Site version:
+              0.1.0
             </Text>
           </Stack>
         </Container>
